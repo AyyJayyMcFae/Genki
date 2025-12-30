@@ -1,0 +1,1801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GENKI - Streetwear Label</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use Inter font family -->
+    <script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          brand: {
+            neon: '#8BFF5B',
+            ink: '#0a0a0f',
+            fatigue: '#5b4f36',
+            dusty: '#e49182',
+            navy: '#1a2a4a',
+            maroon: '#4a1010',
+          },
+        },
+      },
+    },
+  }
+</script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Noto+Sans+JP:wght@400;700;900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d0d0d; /* Dark background for streetwear aesthetic */
+            color: #f7f7f7;
+            scroll-behavior: smooth;
+            margin: 0; /* remove default body margin so hero sits at the top */
+        }
+        /* Custom height for the full viewport hero section */
+        .hero-height { min-height: 100vh; }
+        /* Utility class for routing - initially hidden by default */
+        .page-content { display: none; }
+        /* Fallback: Show home page if JS fails */
+        #home-page { display: block; }
+
+        /* ---- CLEAN HERO ANIMATION (replaces character scramble) ---- */
+        #hero-title {
+            font-family: 'Inter', 'Noto Sans JP', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, sans-serif,;
+            letter-spacing: .15em;
+            text-shadow: 0 4px 40px rgba(255,255,255,.08);
+            transition: opacity .6s ease, transform .6s ease;
+            will-change: opacity, transform, letter-spacing;
+        }
+        /* fade/slide out */
+        #hero-title.is-out { opacity: 0; transform: translateY(10px); letter-spacing: .25em; }
+        /* subtle entrance pop */
+        #hero-title.is-in { opacity: 1; transform: translateY(0); letter-spacing: .15em; }
+
+        /* --- Search Bar Visibility Fix --- */
+        #search-input-container {
+        position: absolute;
+        right: calc(100% + 8px);
+        top: 50%;
+        transform: translateY(-50%);    
+        width: 0;
+        opacity: 0;
+        overflow: hidden;
+        pointer-events: none;
+        transition: width 0.3s ease-out, opacity 0.3s ease-out;
+        display: flex;
+        align-items: center;
+      }
+        #search-input-container.active { width: 280px; opacity: 1; pointer-events: auto; }
+        #search-input-container input { padding-right: 40px; }
+    /* Cart drawer */
+        #cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.5); opacity: 0; pointer-events: none; transition: opacity .25s ease; z-index: 49; }
+        #cart-drawer { position: fixed; top: 0; right: -420px; height: 100vh; width: 360px; max-width: 90vw; background: #0b0b0b; border-left: 1px solid rgba(255,255,255,.1); box-shadow: -12px 0 40px rgba(0,0,0,.5); transition: right .3s ease; z-index: 50; display: flex; flex-direction: column; }
+        #cart-drawer.open { right: 0; }
+        #cart-overlay.open { opacity: 1; pointer-events: auto; }
+        .cart-line { display: grid; grid-template-columns: 64px 1fr auto; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,.06); }
+        .qty-btn { width: 28px; height: 28px; border: 1px solid rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center; }
+        .price-sm { color: #cfcfcf; }
+    </style>
+</head>
+<body>
+
+   <!-- Overlay Navbar -->
+    <header id="main-header" class="fixed top-0 left-0 w-full z-50 pointer-events-auto transition-all duration-300">
+        <div id="nav-inner" class="w-full px-4 sm:px-6 lg:px-8 py-6 flex justify-between items-center transition-all duration-300">
+            <div id="logo-container" class="opacity-0 transition-opacity duration-300">
+                <a href="#home" id="home-link" class="text-xl font-bold tracking-widest text-white">GENKI / 元気</a>
+            </div>
+            <nav class="flex space-x-4 items-center">
+                <!-- Search -->
+                <div id="search-toggle-container" class="relative">
+                    <button id="search-toggle-button" aria-label="Search" class="p-2 text-white/90 hover:text-white transition duration-150 hover:bg-white/10 z-10" onclick="toggleSearchInput(event)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    </button>
+                    <div id="search-input-container" class="bg-neutral-800 shadow-xl border border-white/10">
+                        <input type="text" id="header-search-input" placeholder="Search products..." class="w-full h-10 p-2 bg-transparent text-white text-sm focus:outline-none">
+                        <button aria-label="Submit Search" class="absolute right-0 top-0 h-full w-10 text-white/70 hover:text-white transition" onclick="performSearchAndRoute()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto"><line x1="21" y1="21" x2="16.65" y2="16.65"></line><circle cx="11" cy="11" r="8"></circle></svg>
+                        </button>
+                    </div>
+                </div>
+                <button aria-label="Login" class="p-2 text-white/90 hover:text-white transition duration-150 hover:bg-white/10">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                </button>
+                <button aria-label="Wishlist" class="p-2 text-white/90 hover:text-white transition duration-150 hover:bg-white/10">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
+                </button>
+                <button id="cart-toggle" aria-label="Shopping Bag" class="relative p-2 text-white/90 hover:text-white transition duration-150 hover:bg-white/10">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                    <span id="cart-count" class="absolute -top-1 -right-1 min-w-5 h-5 px-1 bg-white text-[11px] text-black rounded-full flex items-center justify-center font-bold">0</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+    </header>
+
+
+    <!-- MAIN CONTENT CONTAINER (SPA) -->
+    <main id="app-container" class="pt-0">
+        <!-- 1. HOME PAGE (Hero & Featured) -->
+    <div id="home-page" class="page-content">
+        <!-- Hero Section -->
+         <!-- Hero background layer -->
+<div class="absolute inset-0 -z-10 pointer-events-none">
+  <img
+    src="https://res.cloudinary.com/dzhvdoifb/image/upload/v1762066135/WtBAmJy_nidtmq.webp"
+    alt=""
+    class="w-full h-full object-cover"
+    loading="eager"
+  />
+  <!-- Contrast safety overlay -->
+  <div class="absolute inset-0 bg-black/60"></div>
+</div>
+
+        <section class="hero-height flex flex-col justify-center items-center relative px-6 text-center">
+           
+
+            <h1 id="hero-title" class="text-6xl sm:text-8xl md:text-[12rem] lg:text-[16rem] leading-none tracking-tighter uppercase mb-4">
+                <!-- Text Injected by JS -->
+            </h1>
+            <p class="text-[10px] md:text-xs tracking-[0.3em] uppercase opacity-60"><!-- Season 00: Urban Dystopia -->Live lively</p>
+            
+            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce cursor-pointer" onclick="document.getElementById('featured-section').scrollIntoView()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
+            </div>
+        </section>
+
+
+            <!-- NEW ITEMS -->
+            <section id="new-arrivals-section" class="py-20 md:py-24 bg-[#0d0d0d]">
+                <div class="px-4 sm:px-6 lg:px-8">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-10 text-white border-b border-white/10 pb-4">NEW ARRIVALS</h2>
+                    <div id="new-items-carousel" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6 overflow-hidden">
+                        <!-- Cards kept identical to your original -->
+                        <div class="bg-transparent overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-[1.02] transition duration-300 border border-white/10 cursor-pointer" onclick="window.location.hash='#genki-esquire-jacket'">
+                            <div class="relative overflow-hidden">
+                                <img src="https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176681305211008-2.png" alt="Genki Esquire Packable Jacket" class="w-full h-64 object-cover transition duration-300 hover:opacity-80" onerror="this.onerror=null;this.src='https://placehold.co/600x600/222222/ffffff?text=Genki+Esquire+Packable+Jacket'">
+                                <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">NEW</span>
+                            </div>
+                            <div class="p-4 text-center">
+                                <h3 class="text-lg font-semibold text-white mb-1">Genki Esquire Packable Jacket</h3>
+                                <p class="text-sm text-gray-400 mb-3">$40.00</p>
+                                <div class="flex justify-center space-x-2">
+                                    <div class="w-4 h-4 bg-black border border-white/50" title="Black"></div>
+                                    <div class="w-4 h-4 bg-gray-500 border border-gray-600" title="Grey"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-transparent overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-[1.02] transition duration-300 border border-white/10 cursor-pointer" onclick="window.location.hash='#acd-kancho-hancho-shirt'">
+                            <div class="relative overflow-hidden">
+                                <img src="https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176586211717117-1.png" alt="ACD Kancho Hancho Button Up Shirt" class="w-full h-64 object-cover transition duration-300 hover:opacity-80" onerror="this.onerror=null;this.src='https://placehold.co/600x600/1a1a1a/ffffff?text=Cropped+Hoodie'">
+                              <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">NEW</span>
+                            </div>
+                            <div class="p-4 text-center">
+                                <h3 class="text-lg font-semibold text-white mb-1">ACD Kancho Hancho Button Up Shirt</h3>
+                                <p class="text-sm text-gray-400 mb-3">$50.00</p>
+                            </div>
+                        </div>
+                        <div class="bg-transparent overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-[1.02] transition duration-300 border border-white/10 cursor-pointer" onclick="window.location.hash='#genki-sakura-hoodie'">
+                            <div class="relative overflow-hidden">
+                                <img src="https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17658626415530-0.png" alt="Genki Sakura Heavy Hoodie" class="w-full h-64 object-cover transition duration-300 hover:opacity-80" onerror="this.onerror=null;this.src='https://placehold.co/600x600/4a4a4a/ffffff?text=Sakura+Hoodie'">
+                              <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">NEW</span>
+                            </div>
+                            <div class="p-4 text-center">
+                                <h3 class="text-lg font-semibold text-white mb-1">Genki Sakura Heavy Hoodie</h3>
+                                <p class="text-sm text-gray-400 mb-3">$40.00</p>
+                            </div>
+                        </div>
+                        <div class="bg-transparent overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-[1.02] transition duration-300 hidden md:block border border-white/10 cursor-pointer" onclick="window.location.hash='#acd-neko-pastel-cap'">
+                            <div class="relative overflow-hidden">
+                                <img src="https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509539212418-2.png" alt="ACD Neko Pastel Baseball Cap" class="w-full h-64 object-cover transition duration-300 hover:opacity-80" onerror="this.onerror=null;this.src='https://placehold.co/600x600/d6d6d6/000000?text=Pastel+Neko+Cap'">
+                              <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">NEW</span>
+                            </div>
+                            <div class="p-4 text-center">
+                                <h3 class="text-lg font-semibold text-white mb-1">ACD Neko Pastel Baseball Cap</h3>
+                                <p class="text-sm text-gray-400 mb-3">$28.10</p>
+                            </div>
+                        </div>
+                        <div class="bg-transparent overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-[1.02] transition duration-300 hidden xl:block border border-white/10 cursor-pointer" onclick="window.location.hash='#genki-maga-snapback'">
+                            <div class="relative overflow-hidden">
+                                <img src="https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17617999204796-0.png" alt="[GENKI] Make America Genki Again Electric Blue Snapback" class="w-full h-64 object-cover transition duration-300 hover:opacity-80" onerror="this.onerror=null;this.src='https://placehold.co/600x600/0000ff/ffffff?text=Electric+Blue+Snapback'">
+                              <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">NEW</span>
+                            </div>
+                            <div class="p-4 text-center">
+                                <h3 class="text-lg font-semibold text-white mb-1">Make America Genki Again Snapback</h3>
+                                <p class="text-sm text-gray-400 mb-3">$30.00</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center mt-10 space-x-4">
+                        <a href="#new" class="inline-block px-8 py-3 bg-neutral-600 text-white font-semibold uppercase tracking-widest text-sm border border-neutral-500 hover:bg-gray-200 hover:text-black transition duration-150">Shop New</a>
+                        <a href="#shop" class="inline-block px-8 py-3 bg-neutral-600 text-white font-semibold uppercase tracking-widest text-sm border border-neutral-500 hover:bg-gray-200 hover:text-black transition duration-150">Shop All</a>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 1.3 LOOKBOOK TILE WALL (Full Width Content) -->
+            <section class="py-20 md:py-24 bg-[#0d0d0d]">
+                <div class="w-full px-0">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-10 text-white border-b border-white/10 pb-4 text-center">LOOKBOOK</h2>
+
+                        <!-- Full-bleed photo wall: zero gap so images touch the edges; smaller gaps on md -->
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-0 md:gap-1">
+                            <div class="col-span-2 row-span-2 overflow-hidden">
+                                <a href="#lookbook-1"><img src="https://res.cloudinary.com/dzhvdoifb/image/upload/v1762748929/2hW9VA8_nnfzy0.webp" alt="Lookbook Image 1" class="w-full h-full object-cover transition-transform duration-300 cursor-pointer" style="max-height:70vh;"></a>
+                            </div>
+                            <div class="col-span-2 overflow-hidden">
+                                <a href="#lookbook-2"><img src="https://res.cloudinary.com/dzhvdoifb/image/upload/v1762748940/I0P8IHJ_oxbf46.webp" alt="Lookbook Image 2" class="w-full h-full object-cover transition-transform duration-300 cursor-pointer" style="max-height:40vh;"></a>
+                            </div>
+                            <div class="overflow-hidden">
+                                <a href="#lookbook-3"><img src="https://res.cloudinary.com/dzhvdoifb/image/upload/v1762748935/0AA3u2l_iwzzvt.webp" alt="Lookbook Image 3" class="w-full h-full object-cover transition-transform duration-300 cursor-pointer"></a>
+                            </div>
+                            <div class="overflow-hidden">
+                                <a href="#lookbook-4"><img src="https://res.cloudinary.com/dzhvdoifb/image/upload/v1762752906/6EiT5o1_nhvhwf.webp" alt="Lookbook Image 4" class="w-full h-full object-cover transition-transform duration-300 cursor-pointer"></a>
+                            </div>
+                        </div>
+
+                    <!-- Button is sharp -->
+                    <div class="text-center mt-10">
+                        <a href="#lookbook-main" class="inline-block px-8 py-3 bg-neutral-600 text-white font-semibold uppercase tracking-widest text-sm border border-neutral-500 hover:bg-gray-200 hover:text-black transition duration-150">View Full Lookbook</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <!-- ============================================== -->
+        <!-- 2. SHOP NEW PAGE (Pure Grid) - All cards are sharp -->
+        <!-- ============================================== -->
+        <div id="new-page" class="page-content py-24">
+            <div class="px-4 sm:px-6 lg:px-8">
+                <h2 class="text-5xl font-extrabold mb-12 text-white tracking-tighter">NEW ARRIVALS 2025 / Q4</h2>
+                
+                <!-- ACCENT CHANGE: border-red-600 -> border-white/20 -->
+                <p class="text-gray-400 mb-8 max-w-4xl border-l-4 border-white/20 pl-4">Introducing the latest drops from GENKI. Limited runs focused on technical fabrics, oversized fits, and distressed finishes. Everything here is fresh.</p>
+
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                    <!-- Product Card 1: Esquire Jacket -->
+                    <div class="bg-transparent overflow-hidden shadow-lg border border-white/10 cursor-pointer hover:border-white" onclick="window.location.hash='#genki-esquire-jacket'">
+                        <div class="relative overflow-hidden">
+                            <img src="https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176681305211008-2.png" alt="ACD Unisex Organic Sweatshirt" class="w-full h-80 object-cover">
+                          <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">NEW</span>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-white mb-1">Genki Esquire Paclable Jacket</h3>
+                            <p class="text-sm text-gray-400">$34.00</p>
+                        </div>
+                    </div>
+                    <!-- Product Card 2:kancho Hancho Button Up -->
+                    <div class="bg-transparent overflow-hidden shadow-lg border border-white/10 cursor-pointer hover:border-white" onclick="window.location.hash='#acd-kancho-hancho-shirt'">
+                        <div class="relative overflow-hidden">
+                            <img src="https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176586211717117-1.png" alt="ACD Kancho Hancho Button Up" class="w-full h-80 object-cover">
+                          <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">NEW</span>   
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-white mb-1">ACD Kancho Hancho Button Up</h3>
+                            <p class="text-sm text-gray-400">$41.00</p>
+                        </div>
+                    </div>
+                    <!-- Product Card 3: Genki Sakura Heavy Hoodie -->
+                    <div class="bg-transparent overflow-hidden shadow-lg border border-white/10 cursor-pointer hover:border-white" onclick="window.location.hash='#genki-sakura-hoodie'">
+                        <div class="relative overflow-hidden">
+                            <img src="https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17658626415530-0.png" alt="Genki Sakura Heavy Hoodie" class="w-full h-80 object-cover">
+                          <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">NEW</span>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-white mb-1">Genki Sakura Heavy Hoodie</h3>
+                            <p class="text-sm text-gray-400">$38.00</p>
+                        </div>
+                    </div>
+                    <!-- Product Card 4: ACD Neko Pastel Baseball Cap -->
+                    <div class="bg-transparent overflow-hidden shadow-lg border border-white/10 cursor-pointer hover:border-white" onclick="window.location.hash='#acd-neko-pastel-cap'">
+                        <div class="relative overflow-hidden">
+                            <img src="https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509539212418-2.png" alt="ACD Neko Pastel Baseball Cap" class="w-full h-80 object-cover">
+                          <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">NEW</span> 
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-white mb-1">ACD Neko Pastel Baseball Cap</h3>
+                            <p class="text-sm text-gray-400">$28.10</p>
+                        </div>
+                    </div>
+                    <!-- Product Card 5: GENKI Make America Genki Again Snapback -->
+                    <div class="bg-transparent overflow-hidden shadow-lg border border-white/10 cursor-pointer hover:border-white" onclick="window.location.hash='#genki-maga-snapback'">
+                        <div class="relative overflow-hidden">
+                            <img src="https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17617999204796-0.png" alt="[GENKI] Make America Genki Again Electric Blue Snapback" class="w-full h-80 object-cover">
+                          <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">NEW</span>
+                            
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-white mb-1">Make America Genki Again Snapback</h3>
+                            <p class="text-sm text-gray-400">$30.00</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- 3. SHOP ALL PAGE (Categorized View) - Now handles dynamic product rendering/search -->
+        <!-- ============================================== -->
+        <div id="shop-page" class="page-content py-24">
+            <div class="px-4 sm:px-6 lg:px-8">
+                <h2 id="shop-title" class="text-5xl font-extrabold mb-12 text-white tracking-tighter">ALL PRODUCTS</h2>
+
+                <div class="flex flex-col md:flex-row gap-8">
+                    <!-- Sidebar (Categories/Filters) - Now sharp -->
+                    <aside class="w-full md:w-64 flex-shrink-0 bg-neutral-800/50 p-6 border border-white/10">
+                        <h3 class="text-xl font-bold mb-4 border-b border-white/10 pb-2">CATEGORIES</h3>
+                        <ul class="space-y-2">
+                            <!-- Category links are functional with filtering (Counts updated for new 10 products) -->
+                            <li><a href="#shop/category-all" class="text-white hover:text-white/70 transition block" data-category="all" data-label="All Products">All Products</a></li>
+                            <li><a href="#shop/category-tops" class="text-white hover:text-white/70 transition block" data-category="Tops" data-label="Tops">Tops</a></li>
+                            <li><a href="#shop/category-bottoms" class="text-white hover:text-white/70 transition block" data-category="Bottoms" data-label="Bottoms">Bottoms</a></li>
+                            <li><a href="#shop/category-outerwear" class="text-white hover:text-white/70 transition block" data-category="Outerwear" data-label="Outerwear">Outerwear</a></li>
+                            <li><a href="#shop/category-accessories" class="text-white hover:text-white/70 transition block" data-category="Accessories" data-label="Accessories">Accessories</a></li>
+                        </ul>
+                        
+                        <h3 class="text-xl font-bold mt-8 mb-4 border-b border-white/10 pb-2">FILTER</h3>
+                        <div class="space-y-3 text-sm">
+                            <p class="text-gray-300">Basic Filters (Static for Demo)</p>
+                            <label class="flex items-center text-gray-300">
+                                <input type="checkbox" class="form-checkbox text-white bg-gray-700 border-gray-600 mr-2 focus:ring-2 focus:ring-white">
+                                In Stock
+                            </label>
+                            <label class="flex items-center text-gray-500">
+                                <input type="checkbox" checked class="form-checkbox text-white bg-gray-700 border-gray-600 mr-2 focus:ring-2 focus:ring-white">
+                                On Sale
+                            </label>
+                        </div>
+                    </aside>
+
+                    <!-- Product Grid (Main Content) - DYNAMICALLY POPULATED HERE -->
+                 <!---->   <section class="flex-1">
+                        <div id="shop-product-grid" class="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                            <!-- Products will be injected by JavaScript here -->
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- 3b. ABOUT PAGE -->
+        <!-- ============================================== -->
+        <div id="about-page" class="page-content py-24">
+            <div class="px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto space-y-10">
+                <div class="flex flex-col lg:flex-row gap-10 lg:items-center">
+                    <div class="space-y-4">
+                        <p class="text-xs uppercase tracking-[0.35em] text-white/60">About Genki</p>
+                        <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">Streetwear built for real life, not just the gram.</h1>
+                        <p class="text-gray-300 leading-relaxed">GENKI is an independent label shaped by the cities we move through and the people who wear our stuff daily. We design practical, durable pieces with bold graphics and playful drops—then hand the mic to the community to show how it really lives.</p>
+                        <div class="flex flex-wrap gap-3">
+                            <a href="#shop" class="px-6 py-3 bg-white text-black font-semibold uppercase tracking-widest text-sm hover:bg-gray-200 transition">Shop the collection</a>
+                            <a href="#lookbook-main" class="px-6 py-3 border border-white/30 text-white font-semibold uppercase tracking-widest text-sm hover:border-white transition">See the lookbook</a>
+                        </div>
+                    </div>
+                    <div class="relative flex-1">
+                        <div class="absolute inset-4 bg-gradient-to-br from-white/10 via-white/5 to-transparent blur-3xl pointer-events-none"></div>
+                        <img src="https://res.cloudinary.com/dzhvdoifb/image/upload/v1762748940/I0P8IHJ_oxbf46.webp" alt="GENKI look" class="relative w-full h-full object-cover border border-white/10 shadow-2xl">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-neutral-900/60 border border-white/10 p-6 space-y-2">
+                        <p class="text-xs uppercase tracking-[0.3em] text-white/50">Who we are</p>
+                        <h3 class="text-xl font-semibold">Independent & community-led</h3>
+                        <p class="text-gray-400 text-sm">Small team, big output. We drop limited runs and amplify photos from the people actually wearing them.</p>
+                    </div>
+                    <div class="bg-neutral-900/60 border border-white/10 p-6 space-y-2">
+                        <p class="text-xs uppercase tracking-[0.3em] text-white/50">What we make</p>
+                        <h3 class="text-xl font-semibold">Utility with attitude</h3>
+                        <p class="text-gray-400 text-sm">Oversized hoods, packable layers, graphic tees, and accessories built to survive late nights and early trains.</p>
+                    </div>
+                    <div class="bg-neutral-900/60 border border-white/10 p-6 space-y-2">
+                        <p class="text-xs uppercase tracking-[0.3em] text-white/50">Why we do it</p>
+                        <h3 class="text-xl font-semibold">Make life less beige</h3>
+                        <p class="text-gray-400 text-sm">We’re here to add color and character to everyday fits—made to be worn hard, not kept in the closet.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="bg-neutral-900/60 border border-white/10 p-4 text-center">
+                        <div class="text-3xl font-bold text-white">50+</div>
+                        <p class="text-xs uppercase tracking-[0.2em] text-gray-400 mt-2">Unique SKUs</p>
+                    </div>
+                    <div class="bg-neutral-900/60 border border-white/10 p-4 text-center">
+                        <div class="text-3xl font-bold text-white">12</div>
+                        <p class="text-xs uppercase tracking-[0.2em] text-gray-400 mt-2">Cities repped</p>
+                    </div>
+                    <div class="bg-neutral-900/60 border border-white/10 p-4 text-center">
+                        <div class="text-3xl font-bold text-white">Community</div>
+                        <p class="text-xs uppercase tracking-[0.2em] text-gray-400 mt-2">Lookbook first</p>
+                    </div>
+                    <div class="bg-neutral-900/60 border border-white/10 p-4 text-center">
+                        <div class="text-3xl font-bold text-white">Made to last</div>
+                        <p class="text-xs uppercase tracking-[0.2em] text-gray-400 mt-2">Stitch & fabric tested</p>
+                    </div>
+                </div>
+
+                <div class="bg-neutral-900/50 border border-white/10 p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <p class="text-xs uppercase tracking-[0.3em] text-white/50">Community</p>
+                        <h3 class="text-2xl font-bold mb-2">Send us your fits</h3>
+                        <p class="text-gray-300 text-sm mb-3">We feature user shots in the lookbook. Tag us or drop a link and we’ll shout you out.</p>
+                        <a href="#lookbook-main" class="text-sm underline underline-offset-4 hover:text-white transition">View the lookbook</a>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2">
+                        <img src="https://res.cloudinary.com/dzhvdoifb/image/upload/v1762748929/2hW9VA8_nnfzy0.webp" alt="Look 1" class="h-28 w-full object-cover border border-white/10">
+                        <img src="https://res.cloudinary.com/dzhvdoifb/image/upload/v1762748940/I0P8IHJ_oxbf46.webp" alt="Look 2" class="h-28 w-full object-cover border border-white/10">
+                        <img src="https://res.cloudinary.com/dzhvdoifb/image/upload/v1762752906/6EiT5o1_nhvhwf.webp" alt="Look 3" class="h-28 w-full object-cover border border-white/10">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- 3c. COLLABS PAGE -->
+        <!-- ============================================== -->
+        <div id="collabs-page" class="page-content py-24">
+            <div class="px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto space-y-8">
+                <div class="flex flex-col lg:flex-row gap-8 lg:items-center">
+                    <div class="space-y-4">
+                        <p class="text-xs uppercase tracking-[0.35em] text-white/60">Collabs</p>
+                        <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">Let’s build something together.</h1>
+                        <p class="text-gray-300 leading-relaxed">We collaborate with artists, bands, crews, and brands that share our love for bold graphics and functional gear. Limited drops, small runs, big impact.</p>
+                        <div class="flex flex-wrap gap-3">
+                            <a href="mailto:collabs@genki.studio" class="px-6 py-3 bg-white text-black font-semibold uppercase tracking-widest text-sm hover:bg-gray-200 transition">Email collabs@genki.studio</a>
+                            <a href="#new" class="px-6 py-3 border border-white/30 text-white font-semibold uppercase tracking-widest text-sm hover:border-white transition">View recent drops</a>
+                        </div>
+                    </div>
+                    <div class="relative flex-1">
+                        <div class="absolute inset-4 bg-gradient-to-br from-white/10 via-white/5 to-transparent blur-3xl pointer-events-none"></div>
+                        <img src="https://res.cloudinary.com/dzhvdoifb/image/upload/v1762748929/2hW9VA8_nnfzy0.webp" alt="Collab visual" class="relative w-full h-full object-cover border border-white/10 shadow-2xl">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-neutral-900/60 border border-white/10 p-6 space-y-2">
+                        <p class="text-xs uppercase tracking-[0.3em] text-white/50">Types</p>
+                        <h3 class="text-xl font-semibold">Artist & band merch</h3>
+                        <p class="text-gray-400 text-sm">Short-run tees, hoods, hats, and accessories with split revenue and shared promo.</p>
+                    </div>
+                    <div class="bg-neutral-900/60 border border-white/10 p-6 space-y-2">
+                        <p class="text-xs uppercase tracking-[0.3em] text-white/50">Process</p>
+                        <h3 class="text-xl font-semibold">Co-design sprints</h3>
+                        <p class="text-gray-400 text-sm">We swap moodboards, prototypes, and samples fast—then drop limited capsules.</p>
+                    </div>
+                    <div class="bg-neutral-900/60 border border-white/10 p-6 space-y-2">
+                        <p class="text-xs uppercase tracking-[0.3em] text-white/50">Distribution</p>
+                        <h3 class="text-xl font-semibold">Shared spotlight</h3>
+                        <p class="text-gray-400 text-sm">Featured in our shop, lookbook, and socials with your channels co-promoting.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- 3d. CONTACT PAGE -->
+        <!-- ============================================== -->
+        <div id="contact-page" class="page-content py-24">
+            <div class="px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto space-y-8">
+                <div class="space-y-3">
+                    <p class="text-xs uppercase tracking-[0.35em] text-white/60">Contact</p>
+                    <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">Hit us up.</h1>
+                    <p class="text-gray-300 leading-relaxed">Questions, sizing help, wholesale, or press? Drop a line and we’ll get back fast.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-neutral-900/60 border border-white/10 p-6 space-y-3">
+                        <h3 class="text-xl font-semibold">General</h3>
+                        <p class="text-gray-400 text-sm">Email: <a href="mailto:hello@genki.studio" class="underline underline-offset-4 hover:text-white">hello@genki.studio</a></p>
+                        <p class="text-gray-400 text-sm">DM: @genki.street on IG/TikTok</p>
+                    </div>
+                    <div class="bg-neutral-900/60 border border-white/10 p-6 space-y-3">
+                        <h3 class="text-xl font-semibold">Collabs & Press</h3>
+                        <p class="text-gray-400 text-sm">Email: <a href="mailto:collabs@genki.studio" class="underline underline-offset-4 hover:text-white">collabs@genki.studio</a></p>
+                        <p class="text-gray-400 text-sm">Press kit on request.</p>
+                    </div>
+                </div>
+
+                <div class="bg-neutral-900/50 border border-white/10 p-6 space-y-4">
+                    <h3 class="text-xl font-semibold">Need help fast?</h3>
+                    <p class="text-gray-300 text-sm">Check FAQs or ping us with your order number for returns/exchanges.</p>
+                    <div class="flex flex-wrap gap-3">
+                        <a href="#shop" class="px-5 py-3 bg-white text-black font-semibold uppercase tracking-widest text-xs hover:bg-gray-200 transition">Shop</a>
+                        <a href="#lookbook-main" class="px-5 py-3 border border-white/30 text-white font-semibold uppercase tracking-widest text-xs hover:border-white transition">Lookbook</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- 4. LOOKBOOK ITEM PAGE (single look detail) -->
+        <div id="lookbook-item-page" class="page-content py-24">
+            <div class="px-4 sm:px-6 lg:px-8">
+                <a href="#home" class="text-sm text-gray-400 hover:text-white mb-6 flex items-center transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="m15 18-6-6 6-6"></path></svg>
+                    Back to Home
+                </a>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-4 items-start">
+                    <div>
+                        <img id="look-main-image" src="https://placehold.co/1200x1600/222222/cccccc?text=Look+Main" alt="Look Main" class="w-full object-cover shadow-xl border border-white/10">
+                    </div>
+                    <div class="space-y-6">
+                        <h1 id="look-title" class="text-4xl md:text-5xl font-extrabold">Look Title</h1>
+                        <p id="look-caption" class="text-gray-400">A short caption and styling notes for this look.</p>
+                        <div>
+                            <a id="look-linked-product" href="#" class="inline-block px-6 py-3 bg-white text-black font-semibold uppercase tracking-widest text-sm hover:bg-gray-200 transition">View Product</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- 4b. LOOKBOOK MAIN PAGE (Full gallery of user + brand photos) -->
+        <!-- ============================================== -->
+        <div id="lookbook-main-page" class="page-content py-24">
+            <div class="px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto space-y-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-xs uppercase tracking-[0.35em] text-white/60">Lookbook</p>
+                        <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">People & Fits</h1>
+                        <p class="text-gray-400 max-w-2xl mt-2">Submissions from the GENKI community plus in-house looks we shoot for fun.</p>
+                    </div>
+                    <a href="#home" class="text-sm text-gray-400 hover:text-white transition underline underline-offset-4">Back</a>
+                </div>
+
+                <div id="lookbook-main-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                    <!-- Cards injected via JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- 5. PRODUCT DETAIL PAGE (Placeholder for any product click) -->
+        <!-- ============================================== -->
+        <div id="product-page" class="page-content py-24">
+            <div class="px-4 sm:px-6 lg:px-8 max-w-7xl">
+                <!-- ACCENT CHANGE: hover:text-red-600 -> hover:text-white -->
+                <a href="#shop" class="text-sm text-gray-400 hover:text-white mb-6 flex items-center transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="m15 18-6-6 6-6"></path></svg>
+                    Back to All Products
+                </a>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-4">
+                    <!-- Image Gallery (All images and containers are sharp) -->
+                    <div class="space-y-4">
+                        <img id="product-main-image" src="https://placehold.co/1200x1600/333333/ffffff?text=Oversized+Hoodie+%28Front%29" alt="Product Main Image" class="w-full object-cover shadow-xl border border-white/10">
+                        <div id="product-thumbs" class="grid grid-cols-3 gap-4">
+                            <img data-index="0" class="product-thumb w-full h-32 object-cover border border-white/10 cursor-pointer hover:opacity-80 transition" src="https://placehold.co/600x600/444444/ffffff?text=Detail+1" alt="Thumb 1">
+                            <img data-index="1" class="product-thumb w-full h-32 object-cover border border-white/10 cursor-pointer hover:opacity-80 transition" src="https://placehold.co/600x600/555555/ffffff?text=Detail+2" alt="Thumb 2">
+                            <img data-index="2" class="product-thumb w-full h-32 object-cover border border-white/10 cursor-pointer hover:opacity-80 transition" src="https://placehold.co/600x600/666666/ffffff?text=Back+View" alt="Thumb 3">
+                        </div>
+                    </div>
+                    <!-- Product Details -->
+                    <div class="space-y-8">
+                        <div class="border-b border-white/10 pb-6">
+                            <span id="product-badge" class="text-xs font-medium uppercase tracking-widest text-white border border-white/50 px-1 py-0.5 inline-block">New Arrival</span>
+                            <h1 id="product-title" class="text-4xl md:text-5xl font-extrabold mt-1 mb-2">The 'GHOST' Oversized Hoodie</h1>
+                            <p id="product-price" class="text-3xl font-light text-white">$120.00  </p>
+                        </div>
+
+                        <!-- Color Selector (Accent border is white) -->
+                        <div>
+                            <p class="text-lg font-semibold mb-3">Color: <span id="product-color-name" class="text-white">Black</span></p>
+                            <div id="product-colors" class="flex space-x-3">
+                                <!-- Colors dynamically injected by JS -->
+                            </div>
+                        </div>
+
+                        <!-- Size Selector (Selected fill is white) -->
+                        <div>
+                            <p class="text-lg font-semibold mb-3">Size: <span class="text-white">M</span></p>
+                            <div class="grid grid-cols-4 gap-2 max-w-sm">
+                                <button class="border border-white/20 p-2 hover:bg-white/10 transition">S</button>
+                                <button class="border border-white/20 p-2 bg-white text-black font-bold hover:bg-gray-200 transition">M</button>
+                                <button class="border border-white/20 p-2 hover:bg-white/10 transition">L</button>
+                                <button class="border border-white/20 p-2 opacity-50 cursor-not-allowed" disabled>XL (Out)</button>
+                            </div>
+                            <a href="#size-guide" class="text-sm text-gray-500 mt-2 block hover:text-white transition">View Size Guide</a>
+                        </div>
+                        
+                        <!-- Add to Cart Button is sharp -->
+                        <button id="product-add-to-cart" class="w-full py-4 bg-white text-black font-extrabold uppercase tracking-widest text-lg hover:bg-gray-200 transition duration-150 shadow-2xl">ADD TO CART</button>
+
+                        <!-- Description -->
+                        <div>
+                            <p class="text-lg font-semibold mb-3">Details & Fit</p>
+                            <ul id="product-details-list" class="text-gray-400 text-sm space-y-2 list-disc list-inside">
+                                <!-- details populated by JS -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </main>
+
+     <!-- Cart overlay & drawer -->
+    <div id="cart-overlay"></div>
+    <aside id="cart-drawer" class="text-white">
+        <div class="p-4 border-b border-white/10 flex items-center justify-between">
+            <h3 class="text-xl font-bold tracking-widest">CART</h3>
+            <button id="cart-close" class="p-2 hover:bg-white/10" aria-label="Close cart">✕</button>
+        </div>
+        <div id="cart-items" class="flex-1 overflow-auto p-4"></div>
+        <div class="p-4 border-t border-white/10 space-y-3">
+            <div class="flex items-center justify-between text-lg"><span>Subtotal</span><span id="cart-subtotal" class="font-bold">$0.00</span></div>
+            <button id="checkout-btn" class="w-full py-3 bg-white text-black font-extrabold uppercase tracking-widest hover:bg-gray-200">Checkout</button>
+            <p class="text-xs text-gray-400">Taxes and shipping calculated at checkout.</p>
+        </div>
+    </aside>
+    
+     <script>
+    // ------- Minimal Cart Module (localStorage) -------
+    (function(){
+      const STORAGE_KEY = 'genki_cart_v1';
+      const state = { items: [] }; // {id, title, priceCents, qty, color, size, image}
+      const $ = sel => document.querySelector(sel);
+      const $$ = sel => Array.from(document.querySelectorAll(sel));
+
+      function money(cents){ return `$${(cents/100).toFixed(2)}`; }
+      function parsePriceToCents(text){
+        if(!text) return 0; const n = parseFloat(text.replace(/[^0-9.]/g,'')); return Math.round(n*100);
+      }
+      function save(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state.items)); }
+      function load(){ try{ state.items = JSON.parse(localStorage.getItem(STORAGE_KEY))||[]; }catch(e){ state.items=[]; } }
+
+      function add(item){
+        const key = `${item.id}|${item.color||''}|${item.size||''}`;
+        const existing = state.items.find(x => `${x.id}|${x.color||''}|${x.size||''}` === key);
+        if(existing){ existing.qty += item.qty||1; }
+        else { state.items.push(Object.assign({qty:1}, item)); }
+        save(); render();
+      }
+      function remove(index){ state.items.splice(index,1); save(); render(); }
+      function updateQty(index, delta){ const it = state.items[index]; if(!it) return; it.qty = Math.max(1, it.qty+delta); save(); render(); }
+      function subtotal(){ return state.items.reduce((s,it)=> s + it.priceCents * it.qty, 0); }
+
+      function render(){
+        const list = $('#cart-items'); const sub = $('#cart-subtotal'); const badge = $('#cart-count');
+        list.innerHTML = '';
+        state.items.forEach((it, i)=>{
+          const row = document.createElement('div'); row.className='cart-line';
+          row.innerHTML = `
+            <img src="${it.image||'https://placehold.co/120x120'}" alt="${it.title}" class="w-16 h-16 object-cover border border-white/10"/>
+            <div>
+              <div class="font-semibold">${it.title}</div>
+              <div class="text-xs text-gray-400">${it.color||''} ${it.size? '· '+it.size:''}</div>
+              <div class="mt-2 inline-flex items-center space-x-2">
+                <button class="qty-btn" data-idx="${i}" data-delta="-1">-</button>
+                <span>${it.qty}</span>
+                <button class="qty-btn" data-idx="${i}" data-delta="1">+</button>
+              </div>
+            </div>
+            <div class="text-right">
+              <div class="price-sm">${money(it.priceCents)}</div>
+              <button class="mt-6 text-xs text-gray-400 hover:text-white" data-remove="${i}">Remove</button>
+            </div>`;
+          list.appendChild(row);
+        });
+        sub.textContent = money(subtotal());
+        const count = state.items.reduce((n,it)=>n+it.qty,0);
+        if(badge){ badge.textContent = count; }
+      }
+
+      function open(){ $('#cart-overlay').classList.add('open'); $('#cart-drawer').classList.add('open'); }
+      function close(){ $('#cart-overlay').classList.remove('open'); $('#cart-drawer').classList.remove('open'); }
+
+      function wireBasics(){
+        const toggle = $('#cart-toggle'); if(toggle) toggle.addEventListener('click', open);
+        const closeBtn = $('#cart-close'); if(closeBtn) closeBtn.addEventListener('click', close);
+        const overlay = $('#cart-overlay'); if(overlay) overlay.addEventListener('click', close);
+        const list = $('#cart-items');
+        list.addEventListener('click', (e)=>{
+          const btn = e.target.closest('button'); if(!btn) return;
+          if(btn.dataset.idx && btn.dataset.delta){ updateQty(parseInt(btn.dataset.idx,10), parseInt(btn.dataset.delta,10)); }
+          if(btn.dataset.remove){ remove(parseInt(btn.dataset.remove,10)); }
+        });
+        const checkoutBtn = $('#checkout-btn');
+        if(checkoutBtn){ checkoutBtn.addEventListener('click', ()=>{
+          // Placeholder: dump cart to console, or redirect to a checkout page
+          alert('Checkout placeholder — integrate Stripe/PayPal later');
+        }); }
+      }
+
+      // Enhance New Arrivals cards with quick "Add" buttons
+      function enhanceNewArrivals(){
+        const cards = $$('#new-items-carousel .cursor-pointer');
+        cards.forEach(card => {
+          if(card.querySelector('.quick-add')) return; // avoid dupes
+          const titleEl = card.querySelector('h3');
+          const priceEl = card.querySelector('p');
+          const imgEl = card.querySelector('img');
+          const idMatch = (card.getAttribute('onclick')||'').match(/#([a-z0-9-]+)/i);
+          const id = idMatch ? idMatch[1] : (titleEl? titleEl.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g,'-') : 'genki-item');
+          const addBtn = document.createElement('button');
+          addBtn.className = 'quick-add absolute bottom-3 left-3 px-3 py-1 bg-white text-black text-xs font-bold tracking-widest hover:bg-gray-200';
+          addBtn.textContent = 'ADD';
+          addBtn.addEventListener('click', (e)=>{
+            e.stopPropagation();
+            add({
+              id,
+              title: titleEl? titleEl.textContent.trim():'GENKI Item',
+              priceCents: parsePriceToCents(priceEl? priceEl.textContent:''),
+              qty: 1,
+              color: undefined,
+              size: undefined,
+              image: imgEl? imgEl.src: undefined
+            });
+            open();
+          });
+          card.style.position='relative';
+          card.appendChild(addBtn);
+        });
+      }
+
+      // Public API if needed elsewhere
+      window.Cart = { add, remove, updateQty, open };
+
+      load();
+      wireBasics();
+      enhanceNewArrivals();
+      render();
+    })();
+    </script>
+
+    <!-- --- END MAIN CONTENT --- -->
+
+    <!-- FOOTER - FULL WIDTH -->
+    <footer class="bg-black border-t border-white/10 mt-12 py-10">
+        <div class="w-full px-4 sm:px-6 lg:px-8 text-center text-gray-400">
+            <p class="text-xl font-bold tracking-widest mb-4">GENKI</p>
+            <div class="flex justify-center space-x-6 text-sm mb-6">
+                <!-- Footer links are now functional -->
+                <a href="#shop" class="hover:text-white transition">Shop</a>
+                <a href="#about" class="hover:text-white transition">About</a>
+                <a href="#collabs" class="hover:text-white transition">Collabs</a>
+                <a href="#contact" class="hover:text-white transition">Contact</a>
+            </div>
+            <p class="text-xs">&copy; 2023 GENKI Streetwear. All rights reserved.</p>
+        </div>
+    </footer>
+
+
+    <script>
+        // --- JAVASCRIPT FOR DYNAMIC BEHAVIOR ---
+
+        // 1. Centralized Product Data (Updated to be a single source of truth)
+        const PRODUCTS = [
+            // --- NEW PRODUCT: ACD Unisex Organic Sweatshirt ---
+            {
+                id: 'acd-organic-sweatshirt',
+                title: "ACD Unisex Organic Sweatshirt",
+                price: "$40.00  ",
+                badge: 'ACD Sketch',
+                category: 'Tops',
+                keywords: 'sweatshirt unisex organic casual sketch artwork ali can\'t draw',
+                images: [
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712698-5.png', 
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712698-2.png',
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712698-1.png',
+                ],
+                colors: [
+                    { name: 'Black', color: 'bg-black' },
+                    { name: 'Grey', color: 'bg-gray-500' },
+                    { name: 'Blue', color: 'bg-blue-600' },
+                    { name: 'Green', color: 'bg-green-700' },
+                    { name: 'Brown', color: 'bg-amber-800' }
+                ],
+                details: [
+                    'Organic cotton material for sustainability.',
+                    'Unisex fit, suitable for all.',
+                    'Features the "Ali Can\'t Draw" Sketch #014 graphic.',
+                    'Ribbed cuffs and hem.'
+                ]
+                
+            },
+
+            // --- NEW PRODUCT: Two Faced Hoodie ---
+            {
+                id: 'acd-two-faced-hoodie',
+                title: "ACD Two Faced Hoodie",
+                price: "$50.00  ",
+                badge: '',
+                category: 'Tops',
+                keywords: 'sweatshirt unisex organic casual sketch artwork ali can\'t draw',
+                images: [
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602693618730-12.png', 
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602693618730-13.png',
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602693618730-3.png',
+                ],
+                colors: [
+                    
+                ],
+                details: [
+                    'Organic cotton material for sustainability.',
+                    'Unisex fit, suitable for all.',
+                    'Ribbed cuffs and hem.'
+                ]
+                
+            },
+
+            // --- NEW PRODUCT: Genki Rainman Heavy T-shirt ---
+            {
+                id: 'acd-genki-rainman-heavy-shirt',
+                title: "ACD Genki Rainman Heavy T-shirt",
+                price: "$30.00  ",
+                badge: '',
+                category: 'Tops',
+                keywords: 'tshirt unisex heavy kanji loud artwork ali can\'t draw',
+                images: [
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602337217700-1.png', 
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602337217700-2.png',
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602337217700-0.png',
+                ],
+                colors: [
+                    { name: 'Moss', color: 'bg-lime-900' },
+                    { name: 'Navy', color: 'bg-slate-800' },
+                    { name: 'Graphite', color: 'bg-neutral-700' },
+                    { name: 'Watermelon', color: 'bg-rose-400' },
+                ],
+                details: [
+                    'Organic cotton material for sustainability.',
+                    'Unisex fit, suitable for all.',
+                    'Features the "Ali Can\'t Draw" Sketch #014 graphic.',
+                    'Ribbed cuffs and hem.'
+                ]
+                
+            },
+
+            // --- NEW PRODUCT: Genki Sport Fitted T-shirt ---
+            {
+                id: 'genki-sport-fitted-tee',
+                title: 'Genki Sport Fitted T-shirt',
+                price: '$30.00  ',
+                badge: '',
+                category: 'Tops',
+                keywords: 'fitted t-shirt sport breathable lightweight comfortable genki',
+                images: [
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17349048674886-0.png', 
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17349048674886-2.png',
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17349048674886-1.png',
+                ],
+                colors: [
+                    { name: 'White', color: 'bg-white' },
+                    { name: 'Black', color: 'bg-black' },
+                    { name: 'Grey', color: 'bg-gray-500' },
+                    { name: 'Blue', color: 'bg-blue-600' }
+                ],
+                details: [
+                    'Lightweight and breathable fabric for active wear.',
+                    'Fitted cut for a sleek look.',
+                    'Features the GENKI logo on the chest.'
+                ]
+            },
+
+            // ---- NEW PRODUCT: 
+
+            // --- NEW PRODUCT: Genki Sport Fleece Joggers ---
+            {
+                id: 'genki-sport-fleece-joggers',
+                title: 'Genki Sport Fleece Joggers',
+                price: '$45.00  ',
+                badge: '',
+                category: 'Bottoms',
+                keywords: 'fleece joggers sport comfortable warm genki activewear',
+                images: [
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602526613839-0.png', 
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602526613839-1.png',
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602526613839-3.png',
+                ],
+                colors: [
+                     { name: 'Maroon', color: 'bg-brand-maroon' },
+                     { name: 'Black', color: 'bg-black' },
+                    { name: 'Rose', color: 'bg-brand-dusty' },
+                    { name: 'Fatigue Green', color: 'bg-brand-fatigue' },
+                    { name: 'Navy', color: 'bg-brand-navy' }
+                   
+                ],
+                details: [
+                    'Soft fleece material for warmth and comfort.',
+                    'Elastic waistband with drawstring for adjustable fit.',
+                    'Features the GENKI logo on the thigh.'
+                ]
+            },
+
+            // --- NEW PRODUCT: ACD 4 AM Vibes Heavy Tee ---
+            {
+                id: 'acd-4am-vibes-tee',
+                title: 'ACD 4 AM Vibes Heavy Tee',
+                price: '$30.00  ',
+                badge: 'ACD Sketch',
+                category: 'Tops',
+                keywords: 'heavy tee 4 am vibes acd sketch comfortable durable artwork ali can\'t draw',
+                images: [
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17653149238850-4.png', 
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17653149238850-1.png',
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17653149238850-3.png',
+                ],
+                colors: [
+                    { name: 'Black', color: 'bg-black' },
+                    { name: 'White', color: 'bg-white' },
+                    { name: 'Navy', color: 'bg-blue-900' },
+                    { name: 'Maroon', color: 'bg-red-900' }
+                ],
+                details: [
+                    'Heavyweight fabric for durability.',
+                    'Relaxed fit for comfort.',
+                    'Features the "4 AM Vibes" ACD Sketch graphic.'
+                ],
+            },
+
+            // --- NEW PRODUCT: ACD Neko Pastel Baseball Cap ---
+            {
+                id: 'acd-neko-pastel-cap',
+                title: 'ACD Neko Pastel Baseball Cap',
+                price: '$30.00  ',
+                badge: 'ACD Sketch',
+                category: 'Accessories',
+                keywords: 'cap pastel neko baseball adjustable lightweight japanese cat hat artwork ali can\'t draw',
+                images: [
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509539212418-2.png', 
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509539212418-0.png',
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509539212418-3.png',
+                ],
+                colors: [
+                    { name: 'Pastel Pink', color: 'bg-pink-50' },
+                    { name: 'Pastel Lemon', color: 'bg-yellow-50' },
+                    { name: 'White', color: 'bg-white' },
+                    { name: 'Pastel Blue', color: 'bg-blue-50' }
+                ],
+                details: [
+                    'Adjustable fit ensures comfort.',
+                    'Soft pastel color tones for a lighter aesthetic.',
+                    'Features the Japanese Neko (Cat) graphic.'
+                ]
+            },
+           
+            // --- NEW PRODUCT: GENKI Tour Beanie ---
+            {
+                id: 'genki-tour-beanie',
+                title: 'GENKI Tour Beanie',
+                price: '$25.00  ',
+                badge: 'Tour',
+                category: 'Accessories',
+                keywords: 'beanie tour genki warm comfortable winter knit hat',
+                images: [
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173545228912882-0.png', // New Image
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17548682826350-2.png',
+                ],
+                colors: [
+                    { name: 'Black', color: 'bg-black' },
+                    { name: 'Grey', color: 'bg-gray-500' },
+                    { name: 'Navy', color: 'bg-blue-900' }
+                ],
+                location: [
+                    {   name: 'New York'},
+                    {   name: 'Texas'},
+                    {   name: 'Amsterdam' }
+                ],
+                details: [
+                    'Warm and comfortable knit material.',
+                    'Features embroidered GENKI Tour logo.',
+                    'One size fits most.'
+                ]
+            },
+
+            // --- NEW PRODUCT: GENKI Make America Genki Again Electric Blue Snapback ---
+            {
+                id: 'genki-maga-snapback',
+                title: '[GENKI] Make America Genki Again Electric Blue Snapback',
+                price: '$30.00  ',
+                badge: '',
+                category: 'Accessories',
+                keywords: 'snapback electric blue genki cap maga political parody hat',
+                images: [
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17617999204796-0.png', // New Image
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17617999204796-3.png',
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17617999204796-6.png',
+                ],
+                colors: [
+                    { name: 'Electric Blue', color: 'bg-blue-400' },
+                    { name: 'Black', color: 'bg-black' }
+                ],
+                details: [
+                    'Vibrant electric blue brim and accents.',
+                    'Classic snapback style with adjustable closure.',
+                    'Features bold Genki statement branding.'
+                ]
+            },
+            // --- NEW PRODUCT: Genki Sakura Heavy Hoodie ---
+            {
+                id: 'genki-sakura-hoodie',
+                title: 'Genki Sakura Heavy Hoodie',
+                price: '$40.00  ',
+                badge: '',
+                category: 'Tops',
+                keywords: 'hoodie heavy sakura genki thick warm comfortable japanese flower',
+                images: [
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17658626415530-0.png',
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17658626415530-1.png',
+                ],
+                colors: [
+                { name: 'Black', color: 'bg-black', images: [
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17658626415530-0.png',
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17658626415530-1.png',
+                ] },
+                { name: 'Pink', color: 'bg-pink-200' },     // Changed from 600 to 200
+                { name: 'Maroon', color: 'bg-red-950' },    // Darker, deep maroon
+                { name: 'Forest Green', color: 'bg-emerald-950' }, // Very dark green
+                { name: 'Blue', color: 'bg-blue-300' }      // Changed from 800 to 300
+                ],
+                details: [
+                    'Thick, heavyweight material for maximum warmth.',
+                    'Unique minimalist embroidered Sakura logo.',
+                    'Comfortable and durable.'
+                ]
+            },
+         
+            
+             // --- NEW PRODUCT: Genki Sakura Heavy Hoodie ---
+            {
+                id: 'genki-skull-hoodie',
+                title: 'Genki Skull Hoodie',
+                price: '$40.00  ',
+                badge: '',
+                category: 'Tops',
+                keywords: 'hoodie heavy skull genki thick warm comfortable japanese flower',
+                images: [
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173449331512997-0.png', // New Image
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173449331512997-2.png',
+                ],
+                colors: [
+                    { name: 'Sand', color: 'bg-gold' },
+                    { name: 'Pink', color: 'bg-pink-600' },
+                    { name: 'Maroon', color: 'bg-red-800' },
+                    { name: 'Forest Green', color: 'bg-green-900' },
+                    { name: 'Blue', color: 'bg-blue-800' }
+                ],
+                details: [
+                    'Thick, heavyweight material for maximum warmth.',
+                    'Unique minimalist embroidered Sakura logo.',
+                    'Comfortable and durable.'
+                ]
+            },
+            // --- NEW PRODUCT: Genki Esquire Packable Jacket ---
+            {
+                id: 'genki-esquire-jacket',
+                title: 'Genki Esquire Packable Jacket',
+                price: '$45.00  ',
+                badge: '',
+                category: 'Tops',
+                keywords: 'jacket packable esquire genki lightweight warm comfortable',
+                images: [
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176681305211008-2.png', // New Image
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176681305211008-0.png',
+                ],
+                colors: [
+                    { name: 'Black', color: 'bg-gold' },
+                    { name: 'Gold', color: 'bg-yellow-600' },
+                    { name: 'Royal blue', color: 'bg-blue-800' },
+                    { name: 'Safety Green', color: 'bg-lime-300' },
+                ],
+                details: [
+                    'Thick, heavyweight material for maximum warmth.',
+                    'Unique minimalist embroidered Sakura logo.',
+                    'Comfortable and durable.'
+                ]
+            },
+
+            // --- NEW PRODUCT: ACD Kancho Hancho Button Up ---
+            { 
+                id: 'acd-kancho-hancho-shirt',
+                title: 'ACD Kancho Hancho Button Up Shirt',
+                price: '$50.00  ',
+                badge: 'ACD Sketch',
+                category: 'Tops',
+                keywords: 'button-up shirt kancho hancho acd sketch casual lightweight artwork ali can\'t draw',
+                images: [
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176586211717117-1.png', 
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176586211717117-0.png',
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176586211717117-13.png',
+                ],
+                
+                details: [
+                    'Lightweight and breathable fabric for comfort.',
+                    'Features the "Kancho Hancho" ACD Sketch graphic.',
+                    'Classic button-up design with a relaxed fit.'
+                ]
+            },
+
+            // --- NEW PRODUCT: Genki Skyline Hoodie ---
+            {
+                id: 'genki-skyline-hoodie',
+                title: 'Genki Skyline Hoodie',
+                price: '$45.00  ',
+                badge: '',
+                category: 'Tops',
+                keywords: 'hoodie skyline genki cityscape comfortable warm casual',
+                images: [
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176681261263234-0.png', 
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176681261263234-1.png',
+                ],
+                colors: [
+                    { name: 'Black', color: 'bg-black' },
+                    { name: 'Grey', color: 'bg-gray-500' },
+                    { name: 'Navy', color: 'bg-blue-900' }
+                ],
+                details: [
+                    'Soft and comfortable fabric for everyday wear.',
+                    'Features a detailed cityscape skyline graphic.',
+                    'Adjustable drawstring hood and front kangaroo pocket.'
+                ]
+            },
+
+
+
+            // --- EXISTING PRODUCTS ---
+            {
+                id: 'genki-rainman-tee',
+                title: 'Genki Rainman Reverse Graphic Tee',
+                price: '$30.00  ',
+                badge: '',
+                category: 'Tops',
+                keywords: 't-shirt rainman graphic genki reverse',
+                images: [
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-174708690117202-5.png',
+                ],
+                colors: [
+                    { name: 'Blue', color: 'bg-blue-700' },
+                    { name: 'Black', color: 'bg-black' },
+                    { name: 'Army Green', color: 'bg-green-800' },
+                    { name: 'Navy', color: 'bg-blue-900' },
+                    { name: 'Salmon', color: 'bg-orange-400' }
+                ],
+                details: [
+                    'Bold graphic print design.',
+                    'Reverse-style construction for a deconstructed look.'
+                ]
+            },
+
+            {
+                id: 'genki-sakura-duffel-bag',
+                title: 'Genki Sakura Duffel Bag',
+                price: '$40.00  ',
+                badge: '',
+                category: 'Accessories',
+                keywords: 'duffel bag sakura genki floral',
+                images: [
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-170094616612021-1.png',
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-170094616612021-3.png',
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-170094616612021-2.png',
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-170094616612021-5.png',
+                ],
+                colors: [],
+                details: [
+                    'Spacious duffel bag with a floral sakura design.',
+                    'Durable material for everyday use.',
+                    'Front zip pocket and adjustable shoulder strap.'
+                ]
+            },
+
+            {
+                id: 'genki-two-faced-hoodie',
+                title: 'Genki Two Faced Hoodie',
+                price: '$54.00  ',
+                badge: '',
+                category: 'Tops',
+                keywords: 'hoodie two-faced genki unique design',
+                images: [
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602693618730-12.png',
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602693618730-13.png',
+                ],
+                colors: [ // Assuming black as a default based on streetwear
+                    { name: 'Black', color: 'bg-black' }
+                ],
+                details: [
+                    'Unique two-faced design for high contrast styling.',
+                    'Mid-weight cotton blend.',
+                    'Oversized fit.'
+                ]
+            },
+            {
+                id: 'genki-shinobi-beanie',
+                title: 'Genki Shinobi Beanie',
+                price: '$25.00  ',
+            badge: '',
+                category: 'Accessories',
+                keywords: 'beanie shinobi ninja naruto genki warm comfortable knit hat',
+                images: [
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-170122662217496-0.png',
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17012266228938-0.png',
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17012266228939-0.png',
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17012266228936-0.png',
+                ],
+                colors: [
+                    { name: 'Black', color: 'bg-black' },
+                    { name: 'Red', color: 'bg-red-700' },
+                    { name: 'Blue', color: 'bg-blue-800' },
+                    { name: 'White', color: 'bg-white' },
+                    { name: 'Navy', color: 'bg-blue-950' }
+                    
+                ],
+                details: [
+                    'Soft knit material for warmth.',
+                    'Features the embroidered Shinobi logo.'
+                ]
+            },
+            {
+                id: 'genki-tour-hoodie',
+                title: 'GENKI Tour Hoodie',
+                price: '$45.00  ',
+                badge: 'Tour',
+                category: 'Tops',
+                keywords: 'hoodie tour genki warm comfortable winter knit',
+                images: [
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173411370411486-0.png',
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173411370411486-2.png',
+                ],
+                colors: [
+                    { name: 'Red', color: 'bg-maroon-100' },
+                    { name: 'Grey', color: 'bg-gray-500' },
+                    { name: 'Navy', color: 'bg-blue-900' }
+                ],                details: [
+                    'Warm and comfortable knit material.',
+                    'Features embroidered GENKI Tour logo.'
+                ]
+            }
+            
+            
+
+            
+        ];
+        
+        // 2. Hero Text Animation (GENKI <-> 元気)
+        // 2. Hero Text Animation (GENKI <-> 元気) — FADE VERSION (keep name morphText)
+const heroTitle = document.getElementById('hero-title');
+const titles = ["GENKI", "元気"];
+let titleIndex = 0;
+
+const animationDuration = 600; // match CSS transition
+const pauseDuration = 4000;
+let isAnimating = false;
+
+// initial
+heroTitle.textContent = titles[titleIndex];
+heroTitle.classList.add('is-in');
+
+function morphText() {
+  if (isAnimating) return;
+  isAnimating = true;
+
+  heroTitle.classList.remove('is-in');
+  heroTitle.classList.add('is-out');
+
+  setTimeout(() => {
+    titleIndex = (titleIndex + 1) % titles.length;
+    heroTitle.textContent = titles[titleIndex];
+
+    heroTitle.classList.remove('is-out');
+    heroTitle.classList.add('is-in');
+
+    isAnimating = false;
+    setTimeout(morphText, pauseDuration);
+  }, animationDuration);
+}
+
+// start
+setTimeout(morphText, pauseDuration);
+
+
+        
+        // 3. Dynamic Navbar Visibility and Style on Scroll (Smooth compacting)
+        const header = document.getElementById('main-header');
+        const innerNavDiv = document.getElementById('nav-inner');
+        const logoContainer = document.getElementById('logo-container');
+        const homeLink = document.getElementById('home-link'); // Added reference
+        const scrollThreshold = 120; // px where navbar is fully compacted
+
+        let ticking = false;
+        function updateNavbar(scrollY) {
+            // Check if we are on the home page. If not, this function should be disabled.
+            if (window.location.hash !== '' && window.location.hash !== '#home') return; 
+            
+            const progress = Math.min(1, scrollY / scrollThreshold);
+
+            // background fades in from transparent to near-opaque
+            header.style.backgroundColor = `rgba(0,0,0,${(progress * 0.9).toFixed(2)})`;
+            header.style.backdropFilter = `blur(${(progress * 6).toFixed(1)}px)`;
+
+            // compact: reduce vertical padding from 24px -> ~12px
+            const startPad = 24; // px (py-6 approx)
+            const endPad = 10; // px when compact
+            const pad = startPad - (startPad - endPad) * progress;
+            innerNavDiv.style.padding = `${pad.toFixed(1)}px .3rem`;
+
+            // logo becomes visible as we scroll (0 at top -> 1 when compacted)
+            logoContainer.style.opacity = progress.toFixed(2);
+            
+            // CRITICAL FIX: Logo clickability. Only unclickable when hidden (i.e., progress is near zero)
+            if (progress < 0.1) {
+                homeLink.style.pointerEvents = 'none'; // Unclickable when hidden
+            } else {
+                homeLink.style.pointerEvents = 'auto'; // Clickable once visible/faded in
+            }
+        }
+
+        function onScroll() {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(() => {
+                updateNavbar(window.scrollY);
+                ticking = false;
+            });
+        }
+        
+        // 4. Client-Side Search Functionality (Refactored)
+        const searchInput = document.getElementById('header-search-input');
+        const searchInputContainer = document.getElementById('search-input-container');
+        const searchToggleButton = document.getElementById('search-toggle-button');
+
+        /**
+         * Toggles the visibility of the search input field.
+         */
+        function toggleSearchInput(event) {
+            // Stop propagation to prevent document click from immediately closing it
+            if (event) event.stopPropagation();
+            
+            searchInputContainer.classList.toggle('active');
+
+            if (searchInputContainer.classList.contains('active')) {
+                // If opening, focus the input field immediately
+                searchInput.focus();
+                // Add event listener to close if user clicks outside of the search area
+                document.addEventListener('click', closeSearchOnDocumentClick);
+            } else {
+                // If closing, remove the listener
+                document.removeEventListener('click', closeSearchOnDocumentClick);
+            }
+        }
+        
+        /**
+         * Closes the search input if the click occurs outside the toggle and input area.
+         */
+        function closeSearchOnDocumentClick(event) {
+            // Check if the click target is outside the container and the toggle button
+            const isOutside = !searchInputContainer.contains(event.target) && !searchToggleButton.contains(event.target);
+
+            if (searchInputContainer.classList.contains('active') && isOutside) {
+                searchInputContainer.classList.remove('active');
+                document.removeEventListener('click', closeSearchOnDocumentClick);
+            }
+        }
+
+        /**
+         * Routes to the shop page and filters products based on the current search query.
+         */
+        function performSearchAndRoute() {
+            const query = searchInput.value.trim();
+            // Close the search bar after the user commits the search
+            searchInputContainer.classList.remove('active');
+
+            if (query) {
+                // Route to shop page and pass the query as a parameter
+                window.location.hash = `#shop?q=${encodeURIComponent(query)}`;
+            } else {
+                // If query is empty, just route to the clean shop page
+                window.location.hash = `#shop`;
+            }
+        }
+        
+        // Add listener for Enter key on the input field
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault(); // Prevent default form submission if any
+                performSearchAndRoute();
+            }
+        });
+
+
+        /**
+         * Renders the product grid on the shop page based on the provided list of products.
+         * @param {Array<Object>} productsToRender - The array of products to display.
+         * @param {string} title - The title for the shop page.
+         */
+        function renderShopGrid(productsToRender, title = "ALL PRODUCTS") {
+            const gridContainer = document.getElementById('shop-product-grid');
+            const shopTitle = document.getElementById('shop-title');
+
+            if (!gridContainer || !shopTitle) return;
+
+            shopTitle.textContent = title;
+            gridContainer.innerHTML = '';
+            
+            if (productsToRender.length === 0) {
+                gridContainer.innerHTML = '<p class="col-span-full text-gray-400 text-center py-10 text-xl">No products found matching your criteria.</p>';
+                return;
+            }
+
+            productsToRender.forEach(product => {
+                const colors = Array.isArray(product.colors) ? product.colors : [];
+                // Create product card HTML structure
+                const card = document.createElement('div');
+                card.className = "bg-transparent overflow-hidden shadow-lg border border-white/10 cursor-pointer hover:border-white transition";
+                card.onclick = () => { window.location.hash=`#${product.id}`; };
+                
+                // Determine the main color for the card preview
+                const firstColor = colors.length > 0 ? colors[0] : { name: 'Black', color: 'bg-black' };
+
+                const cardHtml = `
+                    <div class="relative overflow-hidden">
+                        <img src="${product.images[0]}" alt="${product.title}" class="w-full h-80 object-cover">
+                        ${product.badge ? `<span class="absolute top-3 right-3 bg-white text-black text-xs px-2 py-1 font-medium">${product.badge}</span>` : ''}
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-white mb-1">${product.title}</h3>
+                        <p class="text-sm text-gray-400">${product.price}</p>
+                        <!-- Render first available color as a dot -->
+                        <div class="flex justify-start space-x-2 mt-2">
+                           <div class="w-3 h-3 ${firstColor.color} border border-white/50" title="${firstColor.name}"></div>
+                           ${colors.length > 1 ? '<span class="text-xs text-gray-500"> + ' + (colors.length - 1) + ' colors</span>' : ''}
+                        </div>
+                    </div>
+                `;
+                card.innerHTML = cardHtml;
+                gridContainer.appendChild(card);
+            });
+        }
+        
+        // 5. Product Detail Logic
+        function getProductDetails(id) {
+            return PRODUCTS.find(p => p.id === id);
+        }
+
+        function renderProduct(key) {
+            const data = getProductDetails(key);
+            if (!data) return; // no-op if unknown
+
+            const fallbackImages = data.images || [];
+            const getImagesForColor = (colorObj) => {
+                return (colorObj && Array.isArray(colorObj.images) && colorObj.images.length)
+                    ? colorObj.images
+                    : fallbackImages;
+            };
+
+            const titleEl = document.getElementById('product-title');
+            const priceEl = document.getElementById('product-price');
+            const mainImg = document.getElementById('product-main-image');
+            const thumbs = document.getElementById('product-thumbs');
+            const badge = document.getElementById('product-badge');
+            const colorsContainer = document.getElementById('product-colors');
+            const colorName = document.getElementById('product-color-name');
+            const detailsList = document.getElementById('product-details-list');
+
+            titleEl.textContent = data.title;
+            priceEl.textContent = data.price;
+            badge.textContent = data.badge || '';
+            badge.style.display = data.badge ? 'inline-block' : 'none'; // Hide badge if empty
+
+            // Gallery renderer that honors color-specific image sets
+            const renderGallery = (images) => {
+                const galleryImages = (images && images.length) ? images : fallbackImages;
+                if (galleryImages.length) {
+                    mainImg.src = galleryImages[0];
+                }
+
+                thumbs.innerHTML = '';
+                galleryImages.slice(0, 3).forEach((src, i) => {
+                    const img = document.createElement('img');
+                    img.src = src;
+                    img.alt = `${data.title} ${i + 1}`;
+                    img.className = 'product-thumb w-full h-24 object-cover rounded border border-white/10 cursor-pointer hover:opacity-80 transition';
+                    img.dataset.index = i;
+                    if (i === 0) img.classList.add('border-white', 'border-2');
+                    img.addEventListener('click', () => {
+                        mainImg.src = src;
+                        thumbs.querySelectorAll('.product-thumb').forEach(t => t.classList.remove('border-white', 'border-2'));
+                        img.classList.add('border-white', 'border-2');
+                    });
+                    thumbs.appendChild(img);
+                });
+            };
+
+            // Colors
+            colorsContainer.innerHTML = '';
+            if (data.colors && data.colors.length) {
+                const firstColor = data.colors[0];
+                colorName.textContent = firstColor.name;
+                renderGallery(getImagesForColor(firstColor));
+
+                data.colors.forEach((c, i) => {
+                    const btn = document.createElement('button');
+                    btn.title = c.name;
+                    btn.className = `w-8 h-8 ${c.color} border-2 border-transparent hover:border-white transition`;
+                    if (i === 0) btn.classList.add('border-white');
+                    btn.addEventListener('click', () => { 
+                        colorName.textContent = c.name; 
+                        colorsContainer.querySelectorAll('button').forEach(b => b.classList.remove('border-white'));
+                        btn.classList.add('border-white');
+                        renderGallery(getImagesForColor(c));
+                    });
+                    colorsContainer.appendChild(btn);
+                });
+            } else {
+                colorName.textContent = 'N/A';
+                renderGallery(fallbackImages);
+            }
+
+            // Details
+            detailsList.innerHTML = '';
+            (data.details || []).forEach(d => {
+                const li = document.createElement('li');
+                li.textContent = d;
+                detailsList.appendChild(li);
+            });
+
+            // Wire Add to Cart for product detail page
+            const addBtn = document.getElementById('product-add-to-cart');
+            if (addBtn && window.Cart && typeof Cart.add === 'function') {
+                addBtn.onclick = () => {
+                    const priceCents = Math.round(parseFloat(String(data.price).replace(/[^0-9.]/g,'')) * 100) || 0;
+                    const selectedColorEl = colorsContainer.querySelector('button.border-white');
+                    const colorLabel = selectedColorEl ? (selectedColorEl.title || selectedColorEl.getAttribute('title')) : undefined;
+                    Cart.add({
+                        id: data.id,
+                        title: data.title,
+                        priceCents,
+                        qty: 1,
+                        color: colorLabel,
+                        size: undefined,
+                        image: (data.images && data.images[0]) || undefined
+                    });
+                    Cart.open();
+                };
+            }
+        }
+
+        // 6. Lookbook Logic
+        const lookbookData = {
+            // Updated lookbook links to point to new products
+            'lookbook-1': {
+                title: 'GENKI AMSTERDAM - Small Corner of the Big City',
+                image: 'https://res.cloudinary.com/dzhvdoifb/image/upload/v1762748929/2hW9VA8_nnfzy0.webp',
+                caption: 'Genki Tour Hoodie',
+                linkedProduct: 'genki-tour-hoodie'
+            },
+            'lookbook-2': {
+                title: 'Genki Skull - Street Essentials',
+                image: 'https://res.cloudinary.com/dzhvdoifb/image/upload/v1762748940/I0P8IHJ_oxbf46.webp',
+                caption: 'In the thick of it all with the Genki Skull Hoodie.',
+                linkedProduct: 'genki-skull-hoodie'
+            },
+            'lookbook-3': {
+                title: 'Genki Sakura - Cargo Focus',
+                image: 'https://res.cloudinary.com/dzhvdoifb/image/upload/v1762748935/0AA3u2l_iwzzvt.webp',
+                caption: 'Sporty and utility look centered around the Genki Sport Fleece Joggers.',
+                linkedProduct: 'genki-sakura-hoodie'
+            },
+            'lookbook-4': {
+                title: 'GENKI NEW YORK - Donwtown Taxicab Yellow Beanie.',
+                image: 'https://res.cloudinary.com/dzhvdoifb/image/upload/v1762752906/6EiT5o1_nhvhwf.webp',
+                caption: 'Cozy city vibes with the GENKI Tour Beanie.',
+                linkedProduct: 'genki-tour-beanie'
+            }
+        };
+
+        function renderLookbookMain() {
+            const grid = document.getElementById('lookbook-main-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            Object.entries(lookbookData).forEach(([key, item]) => {
+                const card = document.createElement('a');
+                card.href = `#${key}`;
+                card.className = 'group block overflow-hidden border border-white/10 hover:border-white transition';
+                card.innerHTML = `
+                    <div class="relative overflow-hidden">
+                        <img src="${item.image}" alt="${item.caption || item.title}" class="w-full h-72 object-cover transition duration-300 group-hover:scale-[1.03] group-hover:brightness-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition"></div>
+                    </div>
+                    <div class="p-4 space-y-1">
+                        <p class="text-xs uppercase tracking-[0.3em] text-white/50">Lookbook</p>
+                        <h3 class="text-lg font-semibold">${item.title}</h3>
+                        <p class="text-sm text-gray-400 overflow-hidden">${item.caption || 'View look'}</p>
+                        ${item.linkedProduct ? `<span class="inline-flex items-center text-xs uppercase tracking-[0.25em] text-white/70 mt-2">Shop the fit</span>` : ''}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function renderLook(key) {
+            const data = lookbookData[key];
+            if (!data) return;
+
+            const img = document.getElementById('look-main-image');
+            const titleEl = document.getElementById('look-title');
+            const captionEl = document.getElementById('look-caption');
+            const linkedBtn = document.getElementById('look-linked-product');
+
+            if (img) img.src = data.image;
+            if (titleEl) titleEl.textContent = data.title;
+            if (captionEl) captionEl.textContent = data.caption;
+
+            if (linkedBtn) {
+                if (data.linkedProduct) {
+                    linkedBtn.href = `#${data.linkedProduct}`;
+                    linkedBtn.style.display = 'inline-block';
+                } else {
+                    linkedBtn.style.display = 'none';
+                }
+            }
+        }
+        
+        // 7. Client-Side Hash Router Logic (Updated to handle header state and logo clickability)
+        const pageMap = {
+            '#home': 'home-page',
+            '': 'home-page', 
+            '#new': 'new-page',
+            '#shop': 'shop-page',
+            '#about': 'about-page',
+            '#collabs': 'collabs-page',
+            '#contact': 'contact-page',
+            '#lookbook-main': 'lookbook-main-page',
+            '#size-guide': 'product-page',
+        };
+
+        function updateCategoryCounts() {
+            const counts = PRODUCTS.reduce((acc, p) => {
+                const key = (p.category || '').trim().toLowerCase();
+                acc[key] = (acc[key] || 0) + 1;
+                acc.all = (acc.all || 0) + 1;
+                return acc;
+            }, {});
+            document.querySelectorAll('[data-category]').forEach(link => {
+                const key = (link.dataset.category || '').toLowerCase();
+                const label = link.dataset.label || link.textContent.trim();
+                const count = counts[key] || 0;
+                link.textContent = `${label} (${count})`;
+            });
+        }
+
+        function route() {
+            const fullHash = window.location.hash || '#home';
+            const hashWithoutQuery = fullHash.split('?')[0];
+            const hashParts = hashWithoutQuery.split('/');
+            const baseHash = hashParts[0];
+            const categorySlug = hashParts[1];
+            const urlParams = new URLSearchParams(fullHash.split('?')[1] || '');
+            let pageId = pageMap[baseHash] || 'home-page';
+            
+            // Handle Product Detail Pages (any hash matching a product ID)
+            if (PRODUCTS.some(p => `#${p.id}` === baseHash)) {
+                 pageId = 'product-page';
+            }
+            // Handle Lookbook Item Pages
+            else if (baseHash.startsWith('#lookbook-') && baseHash !== '#lookbook-main') {
+                pageId = 'lookbook-item-page';
+            }
+            // Handle Shop Category Filters
+            else if (baseHash === '#shop' && categorySlug && categorySlug.startsWith('category-')) {
+                pageId = 'shop-page';
+            }
+            
+            // Hide all pages
+            document.querySelectorAll('.page-content').forEach(page => {
+                page.style.display = 'none';
+            });
+
+            // Show the target page
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.style.display = 'block';
+            }
+            
+            // Scroll to the top when navigating
+            window.scrollTo(0, 0);
+
+            // --- Header State Logic (Updated per user request) ---
+            
+            if (pageId === 'home-page') {
+                // On Home Page: Enable scroll effects, set initial transparency, clickability handled by updateNavbar.
+                updateNavbar(window.scrollY);
+                window.addEventListener('scroll', onScroll); // Ensure scroll listener is active
+            } else {
+                // On Other Pages: Fixed header (opaque/compacted), logo always visible, logo link always clickable.
+                header.style.backgroundColor = 'rgba(0,0,0,0.9)';
+                header.style.backdropFilter = 'blur(4px)';
+                innerNavDiv.style.padding = '12px 1rem';
+                logoContainer.style.opacity = '1';
+                
+                // Logo must always be clickable on fixed pages
+                if (homeLink) homeLink.style.pointerEvents = 'auto'; 
+
+                // Temporarily disable the scroll listener when not on home page
+                window.removeEventListener('scroll', onScroll); 
+            }
+
+            // --- Page Specific Rendering ---
+
+            // If this is the Shop page, apply filters and render the grid
+            if (pageId === 'shop-page') {
+                updateCategoryCounts();
+                let filteredProducts = PRODUCTS;
+                let title = "ALL PRODUCTS";
+                let searchQuery = urlParams.get('q');
+
+                // 1. Handle Search Query
+                if (searchQuery) {
+                    const query = searchQuery.toLowerCase();
+                    const terms = query.split(/\s+/).filter(Boolean);
+                    filteredProducts = filteredProducts.filter(p => {
+                        const searchable = [
+                            p.title || '',
+                            p.category || '',
+                            p.keywords || '',
+                            Array.isArray(p.colors) ? p.colors.map(c => c.name || '').join(' ') : '',
+                            p.id || ''
+                        ].join(' ').toLowerCase();
+                        return terms.every(t => searchable.includes(t));
+                    });
+                    title = `SEARCH RESULTS for: "${searchQuery}"`;
+                    // Update the input field
+                    searchInput.value = searchQuery;
+
+                } else {
+                    searchInput.value = ''; // Clear search bar if navigating away from search
+                }
+                
+                // 2. Handle Category Filter (if no search query dominates)
+                if (!searchQuery && categorySlug && categorySlug.startsWith('category-')) {
+                    const category = categorySlug.replace('category-', '');
+                    if (category.toLowerCase() !== 'all') {
+                        filteredProducts = PRODUCTS.filter(p => p.category.toLowerCase() === category.toLowerCase());
+                        title = `${category.toUpperCase()} COLLECTION`;
+                    } else {
+                        filteredProducts = PRODUCTS;
+                        title = "ALL PRODUCTS";
+                    }
+                }
+
+                renderShopGrid(filteredProducts, title);
+            }
+
+
+            // If this is a product page, render the specific product
+            if (pageId === 'product-page') {
+                // Need to strip the hash symbol for the ID lookup
+                const productKey = baseHash.replace('#', '');
+                renderProduct(productKey);
+            }
+
+            if (pageId === 'lookbook-main-page') {
+                renderLookbookMain();
+            }
+
+            // If this is a lookbook item page, render the specific look
+            if (pageId === 'lookbook-item-page') {
+                const lookKey = baseHash.replace('#', '');
+                renderLook(lookKey);
+            }
+        }
+
+        // Attach listeners and start initial load
+        window.addEventListener('hashchange', route);
+        // Note: The scroll listener is dynamically added/removed in the route function now.
+
+       window.onload = function () {
+  route();
+};
+
+
+    </script>
+</body>
+</html>
