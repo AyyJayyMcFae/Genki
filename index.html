@@ -7,6 +7,27 @@
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Use Inter font family -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://res.cloudinary.com/dzhvdoifb/image/upload/v1767129720/blueGlitch_sddxpb.png?v=2">
+<link rel="shortcut icon" href="https://res.cloudinary.com/dzhvdoifb/image/upload/v1767129720/blueGlitch_sddxpb.png?v=2">
+<link rel="apple-touch-icon" sizes="180x180" href="https://res.cloudinary.com/dzhvdoifb/image/upload/v1767129720/blueGlitch_sddxpb.png?v=2">
+
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#0d0d0d">
+
+    <meta property="og:title" content="GENKI – Streetwear Label">
+    <meta property="og:description" content="Limited-run streetwear built for real life.">
+    <meta property="og:image" content="https://yourdomain.com/og-image.jpg">
+    <meta property="og:url" content="https://yourdomain.com">
+    <meta property="og:type" content="website">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="GENKI – Streetwear Label">
+    <meta name="twitter:description" content="Limited-run streetwear built for real life.">
+    <meta name="twitter:image" content="https://yourdomain.com/og-image.jpg">
+
+    <!---
+    <link rel="canonical" href="https://yourdomain.com">
+    --->
     <script>
   tailwind.config = {
     theme: {
@@ -19,6 +40,8 @@
             dusty: '#e49182',
             navy: '#1a2a4a',
             maroon: '#4a1010',
+            charcoal: '#38302a',
+            Moss:'#70745b',
           },
         },
       },
@@ -143,7 +166,7 @@
             </h1>
             <p class="text-[10px] md:text-xs tracking-[0.3em] uppercase opacity-60"><!-- Season 00: Urban Dystopia -->Live lively</p>
             
-            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce cursor-pointer" onclick="document.getElementById('featured-section').scrollIntoView()">
+            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce cursor-pointer" onclick="document.getElementById('new-arrivals-section').scrollIntoView({behavior:'smooth'})">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
             </div>
         </section>
@@ -225,7 +248,7 @@
                         <!-- Full-bleed photo wall: zero gap so images touch the edges; smaller gaps on md -->
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-0 md:gap-1">
                             <div class="col-span-2 row-span-2 overflow-hidden">
-                                <a href="#lookbook-1"><img src="https://res.cloudinary.com/dzhvdoifb/image/upload/v1762748929/2hW9VA8_nnfzy0.webp" alt="Lookbook Image 1" class="w-full h-full object-cover transition-transform duration-300 cursor-pointer" style="max-height:70vh;"></a>
+                                <a href="#lookbook-1"><img src="https://res.cloudinary.com/dzhvdoifb/image/upload/v1762066135/WtBAmJy_nidtmq.webp" alt="Lookbook Image 1" class="w-full h-full object-cover transition-transform duration-300 cursor-pointer" style="max-height:70vh;"></a>
                             </div>
                             <div class="col-span-2 overflow-hidden">
                                 <a href="#lookbook-2"><img src="https://res.cloudinary.com/dzhvdoifb/image/upload/v1762748940/I0P8IHJ_oxbf46.webp" alt="Lookbook Image 2" class="w-full h-full object-cover transition-transform duration-300 cursor-pointer" style="max-height:40vh;"></a>
@@ -262,6 +285,7 @@
                         <div class="relative overflow-hidden">
                             <img src="https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176681305211008-2.png" alt="ACD Unisex Organic Sweatshirt" class="w-full h-80 object-cover">
                           <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">NEW</span>
+                          
                         </div>
                         <div class="p-4">
                             <h3 class="font-semibold text-white mb-1">Genki Esquire Paclable Jacket</h3>
@@ -329,12 +353,12 @@
                     <aside class="w-full md:w-64 flex-shrink-0 bg-neutral-800/50 p-6 border border-white/10">
                         <h3 class="text-xl font-bold mb-4 border-b border-white/10 pb-2">CATEGORIES</h3>
                         <ul class="space-y-2">
-                            <!-- Category links are functional with filtering (Counts updated for new 10 products) -->
-                            <li><a href="#shop/category-all" class="text-white hover:text-white/70 transition block" data-category="all" data-label="All Products">All Products</a></li>
-                            <li><a href="#shop/category-tops" class="text-white hover:text-white/70 transition block" data-category="Tops" data-label="Tops">Tops</a></li>
-                            <li><a href="#shop/category-bottoms" class="text-white hover:text-white/70 transition block" data-category="Bottoms" data-label="Bottoms">Bottoms</a></li>
-                            <li><a href="#shop/category-outerwear" class="text-white hover:text-white/70 transition block" data-category="Outerwear" data-label="Outerwear">Outerwear</a></li>
-                            <li><a href="#shop/category-accessories" class="text-white hover:text-white/70 transition block" data-category="Accessories" data-label="Accessories">Accessories</a></li>
+                            <!-- categories links are functional with filtering (Counts updated for new 10 products) -->
+                            <li><a href="#shop/categories-all" class="text-white hover:text-white/70 transition block" data-categories="all" data-label="All Products">All Products</a></li>
+                            <li><a href="#shop/categories-tops" class="text-white hover:text-white/70 transition block" data-categories="Tops" data-label="Tops">Tops</a></li>
+                            <li><a href="#shop/categories-bottoms" class="text-white hover:text-white/70 transition block" data-categories="Bottoms" data-label="Bottoms">Bottoms</a></li>
+                            <li><a href="#shop/categories-outerwear" class="text-white hover:text-white/70 transition block" data-categories="Outerwear" data-label="Outerwear">Outerwear</a></li>
+                            <li><a href="#shop/categories-accessories" class="text-white hover:text-white/70 transition block" data-categories="Accessories" data-label="Accessories">Accessories</a></li>
                         </ul>
                         
                         <h3 class="text-xl font-bold mt-8 mb-4 border-b border-white/10 pb-2">FILTER</h3>
@@ -446,7 +470,7 @@
                         <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">Let’s build something together.</h1>
                         <p class="text-gray-300 leading-relaxed">We collaborate with artists, bands, crews, and brands that share our love for bold graphics and functional gear. Limited drops, small runs, big impact.</p>
                         <div class="flex flex-wrap gap-3">
-                            <a href="mailto:collabs@genki.studio" class="px-6 py-3 bg-white text-black font-semibold uppercase tracking-widest text-sm hover:bg-gray-200 transition">Email collabs@genki.studio</a>
+                            <a href="mailto:collabs@genki.studio" class="px-6 py-3 bg-white text-black font-semibold uppercase tracking-widest text-sm hover:bg-gray-200 transition">Email ayyjayy.genki@gmail.com</a>
                             <a href="#new" class="px-6 py-3 border border-white/30 text-white font-semibold uppercase tracking-widest text-sm hover:border-white transition">View recent drops</a>
                         </div>
                     </div>
@@ -490,12 +514,12 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="bg-neutral-900/60 border border-white/10 p-6 space-y-3">
                         <h3 class="text-xl font-semibold">General</h3>
-                        <p class="text-gray-400 text-sm">Email: <a href="mailto:hello@genki.studio" class="underline underline-offset-4 hover:text-white">hello@genki.studio</a></p>
-                        <p class="text-gray-400 text-sm">DM: @genki.street on IG/TikTok</p>
+                        <p class="text-gray-400 text-sm">Email: <a href="mailto:ayyjayy.genki@gmail.com" class="underline underline-offset-4 hover:text-white">ayyjayy.genki@gmail.com</a></p>
+                        <p class="text-gray-400 text-sm">DM: @WearGenki on IG</p>
                     </div>
                     <div class="bg-neutral-900/60 border border-white/10 p-6 space-y-3">
                         <h3 class="text-xl font-semibold">Collabs & Press</h3>
-                        <p class="text-gray-400 text-sm">Email: <a href="mailto:collabs@genki.studio" class="underline underline-offset-4 hover:text-white">collabs@genki.studio</a></p>
+                        <p class="text-gray-400 text-sm"><a href="mailto:ayyjayy.genki@gmail.com?subject=Collab" class="underline underline-offset-4 hover:text-white">Reach out to Collab</a></p>
                         <p class="text-gray-400 text-sm">Press kit on request.</p>
                     </div>
                 </div>
@@ -568,7 +592,7 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-4">
                     <!-- Image Gallery (All images and containers are sharp) -->
                     <div class="space-y-4">
-                        <img id="product-main-image" src="https://placehold.co/1200x1600/333333/ffffff?text=Oversized+Hoodie+%28Front%29" alt="Product Main Image" class="w-full object-cover shadow-xl border border-white/10">
+                        <img id="product-main-image" src="https://placehold.co/1200x1600/333333/ffffff?text=Oversized+Hoodie+%28Front%29" alt="Product Main Image" class="w-full shadow-xl border border-white/10" style="max-height:65vh; aspect-ratio: 4 / 5; object-fit: contain; width:100%; height:auto;">
                         <div id="product-thumbs" class="grid grid-cols-3 gap-4">
                             <img data-index="0" class="product-thumb w-full h-32 object-cover border border-white/10 cursor-pointer hover:opacity-80 transition" src="https://placehold.co/600x600/444444/ffffff?text=Detail+1" alt="Thumb 1">
                             <img data-index="1" class="product-thumb w-full h-32 object-cover border border-white/10 cursor-pointer hover:opacity-80 transition" src="https://placehold.co/600x600/555555/ffffff?text=Detail+2" alt="Thumb 2">
@@ -583,22 +607,25 @@
                             <p id="product-price" class="text-3xl font-light text-white">$120.00  </p>
                         </div>
 
-                        <!-- Color Selector (Accent border is white) -->
-                        <div>
-                            <p class="text-lg font-semibold mb-3">Color: <span id="product-color-name" class="text-white">Black</span></p>
-                            <div id="product-colors" class="flex space-x-3">
+                        <!-- Variant Selectors (Skull first, then Hoodie) -->
+                        <div id="product-skull-block">
+                            <p class="text-lg font-semibold mb-3">Skull: <span id="product-skull-name" class="text-white">-</span></p>
+                            <div id="product-skull-colors" class="flex space-x-3">
+                                <!-- Skull options injected when available -->
+                            </div>
+                        </div>
+                        <div id="product-hoodie-block" class="mt-4">
+                            <p class="text-lg font-semibold mb-3">Color: <span id="product-hoodie-name" class="text-white">-</span></p>
+                            <div id="product-hoodie-colors" class="flex space-x-3">
                                 <!-- Colors dynamically injected by JS -->
                             </div>
                         </div>
 
-                        <!-- Size Selector (Selected fill is white) -->
-                        <div>
-                            <p class="text-lg font-semibold mb-3">Size: <span class="text-white">M</span></p>
-                            <div class="grid grid-cols-4 gap-2 max-w-sm">
-                                <button class="border border-white/20 p-2 hover:bg-white/10 transition">S</button>
-                                <button class="border border-white/20 p-2 bg-white text-black font-bold hover:bg-gray-200 transition">M</button>
-                                <button class="border border-white/20 p-2 hover:bg-white/10 transition">L</button>
-                                <button class="border border-white/20 p-2 opacity-50 cursor-not-allowed" disabled>XL (Out)</button>
+                        <!-- Size Selector (dynamic per product) -->
+                        <div id="product-size-block">
+                            <p class="text-lg font-semibold mb-3">Size: <span id="product-size-name" class="text-white">-</span></p>
+                            <div id="product-sizes" class="grid grid-cols-4 gap-2 max-w-sm">
+                                <!-- Sizes injected by JS -->
                             </div>
                             <a href="#size-guide" class="text-sm text-gray-500 mt-2 block hover:text-white transition">View Size Guide</a>
                         </div>
@@ -779,19 +806,51 @@
                 title: "ACD Unisex Organic Sweatshirt",
                 price: "$40.00  ",
                 badge: 'ACD Sketch',
-                category: 'Tops',
+                categories: 'Tops',
                 keywords: 'sweatshirt unisex organic casual sketch artwork ali can\'t draw',
+                sizes: ['S', 'M', 'L', 'XL', '2XL'],
                 images: [
                     'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712698-5.png', 
                     'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712698-2.png',
                     'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712698-1.png',
                 ],
                 colors: [
-                    { name: 'Black', color: 'bg-black' },
-                    { name: 'Grey', color: 'bg-gray-500' },
-                    { name: 'Blue', color: 'bg-blue-600' },
-                    { name: 'Green', color: 'bg-green-700' },
-                    { name: 'Brown', color: 'bg-amber-800' }
+                    { name: 'Black', color: 'bg-black',
+                        images: [
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712698-5.png', 
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712698-2.png',
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712698-1.png',
+                ],
+                     },
+                    { name: 'Grey', color: 'bg-gray-500',
+                        images: [
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712713-5.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712713-2.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712713-1.png'
+                        ]
+                     },
+                    { name: 'Blue', color: 'bg-blue-600',
+                        images: [
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712728-5.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712728-2.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712728-1.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712728-0.png'
+                        ]
+                     },
+                    { name: 'Green', color: 'bg-green-700',
+                        images: [
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712703-5.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712703-2.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712703-1.png'
+                        ]
+                     },
+                    { name: 'Brown', color: 'bg-brand-charcoal',
+                        images: [
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712708-5.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712708-2.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712708-1.png'
+                        ]
+                     }
                 ],
                 details: [
                     'Organic cotton material for sustainability.',
@@ -802,29 +861,6 @@
                 
             },
 
-            // --- NEW PRODUCT: Two Faced Hoodie ---
-            {
-                id: 'acd-two-faced-hoodie',
-                title: "ACD Two Faced Hoodie",
-                price: "$50.00  ",
-                badge: '',
-                category: 'Tops',
-                keywords: 'sweatshirt unisex organic casual sketch artwork ali can\'t draw',
-                images: [
-                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602693618730-12.png', 
-                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602693618730-13.png',
-                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602693618730-3.png',
-                ],
-                colors: [
-                    
-                ],
-                details: [
-                    'Organic cotton material for sustainability.',
-                    'Unisex fit, suitable for all.',
-                    'Ribbed cuffs and hem.'
-                ]
-                
-            },
 
             // --- NEW PRODUCT: Genki Rainman Heavy T-shirt ---
             {
@@ -832,7 +868,7 @@
                 title: "ACD Genki Rainman Heavy T-shirt",
                 price: "$30.00  ",
                 badge: '',
-                category: 'Tops',
+                categories: 'Tops',
                 keywords: 'tshirt unisex heavy kanji loud artwork ali can\'t draw',
                 images: [
                     'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602337217700-1.png', 
@@ -840,10 +876,41 @@
                     'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602337217700-0.png',
                 ],
                 colors: [
-                    { name: 'Moss', color: 'bg-lime-900' },
-                    { name: 'Navy', color: 'bg-slate-800' },
-                    { name: 'Graphite', color: 'bg-neutral-700' },
-                    { name: 'Watermelon', color: 'bg-rose-400' },
+                    { name: 'Black', color: 'bg-black',
+                        images: [
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602337215114-1.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602337215114-2.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602337215114-0.png'
+                        ]
+                     },
+                    { name: 'Moss', color: 'bg-brand-Moss',
+                        images: [
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602337217700-1.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602337217700-2.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602337217700-0.png'
+                        ]
+                     },
+                    { name: 'Navy', color: 'bg-slate-800',
+                        images: [
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602337215181-1.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602337215181-2.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602337215181-0.png'
+                        ]
+                     },
+                    { name: 'Graphite', color: 'bg-neutral-700' ,
+                        images: [
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602337221264-3.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602337221264-2.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602337221264-0.png'
+                        ]
+                    },
+                    { name: 'Watermelon', color: 'bg-rose-400',
+                        images: [
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602337215191-1.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602337215191-2.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602337215191-0.png'
+                        ]
+                     },
                 ],
                 details: [
                     'Organic cotton material for sustainability.',
@@ -859,48 +926,88 @@
                 id: 'genki-sport-fitted-tee',
                 title: 'Genki Sport Fitted T-shirt',
                 price: '$30.00  ',
-                badge: '',
-                category: 'Tops',
+                badge: 'SPORT',
+                categories: 'Tops',
                 keywords: 'fitted t-shirt sport breathable lightweight comfortable genki',
+                sizes: ['S', 'M', 'L', 'XL', '2XL†', '3XL†'],
                 images: [
                     'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17349048674886-0.png', 
                     'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17349048674886-2.png',
                     'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17349048674886-1.png',
                 ],
                 colors: [
-                    { name: 'White', color: 'bg-white' },
-                    { name: 'Black', color: 'bg-black' },
-                    { name: 'Grey', color: 'bg-gray-500' },
-                    { name: 'Blue', color: 'bg-blue-600' }
+                    { name: 'Navy', color: 'bg-brand-navy',
+                        images: [
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17349048674886-0.png', 
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17349048674886-2.png',
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17349048674886-1.png',
+                ],
+                     },
+                    { name: 'Black', color: 'bg-black',
+                        images: [
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17349048674865-0.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17349048674865-2.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17349048674865-1.png'
+                        ]
+                     },
+                    { name: 'Pink', color: 'bg-red-300',
+                        images: [
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173490486713571-0.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173490486713571-2.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173490486713571-1.png'
+                        ]
+                     }
                 ],
                 details: [
                     'Lightweight and breathable fabric for active wear.',
                     'Fitted cut for a sleek look.',
-                    'Features the GENKI logo on the chest.'
+                    'Features the GENKI Sport logo on the chest.'
                 ]
             },
-
-            // ---- NEW PRODUCT: 
 
             // --- NEW PRODUCT: Genki Sport Fleece Joggers ---
             {
                 id: 'genki-sport-fleece-joggers',
                 title: 'Genki Sport Fleece Joggers',
                 price: '$45.00  ',
-                badge: '',
-                category: 'Bottoms',
+                badge: 'SPORT',
+                categories: 'Bottoms',
                 keywords: 'fleece joggers sport comfortable warm genki activewear',
+                sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL†'],
                 images: [
                     'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602526613839-0.png', 
                     'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602526613839-1.png',
                     'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602526613839-3.png',
                 ],
                 colors: [
-                     { name: 'Maroon', color: 'bg-brand-maroon' },
-                     { name: 'Black', color: 'bg-black' },
-                    { name: 'Rose', color: 'bg-brand-dusty' },
-                    { name: 'Fatigue Green', color: 'bg-brand-fatigue' },
-                    { name: 'Navy', color: 'bg-brand-navy' }
+                    { name: 'Black', color: 'bg-black',
+                        images: [
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602526611265-0.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602526611265-1.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602526611265-3.png'
+                        ]
+                     },
+                    { name: 'Maroon', color: 'bg-brand-maroon' },
+                    { name: 'Rose', color: 'bg-brand-dusty',
+                        images:  [
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602526613833-0.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602526613833-1.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602526613833-3.png'
+                        ]
+                     },
+                    { name: 'Fatigue Green', color: 'bg-brand-fatigue',
+                        images: [
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602526613845-0.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602526613845-1.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602526613845-3.png'
+                        ]
+                     },
+                    { name: 'Navy', color: 'bg-brand-navy',
+                        images: [
+                        'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602526613851-0.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602526613851-1.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602526613851-3.png'
+                    ] }
                    
                 ],
                 details: [
@@ -914,20 +1021,17 @@
             {
                 id: 'acd-4am-vibes-tee',
                 title: 'ACD 4 AM Vibes Heavy Tee',
-                price: '$30.00  ',
+                price: '$45.00  ',
                 badge: 'ACD Sketch',
-                category: 'Tops',
+                categories: 'Tops',
                 keywords: 'heavy tee 4 am vibes acd sketch comfortable durable artwork ali can\'t draw',
+                size: ['XS','S', 'M', 'L', 'XL', '2XL†'],
                 images: [
                     'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17653149238850-4.png', 
                     'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17653149238850-1.png',
                     'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17653149238850-3.png',
                 ],
                 colors: [
-                    { name: 'Black', color: 'bg-black' },
-                    { name: 'White', color: 'bg-white' },
-                    { name: 'Navy', color: 'bg-blue-900' },
-                    { name: 'Maroon', color: 'bg-red-900' }
                 ],
                 details: [
                     'Heavyweight fabric for durability.',
@@ -942,7 +1046,7 @@
                 title: 'ACD Neko Pastel Baseball Cap',
                 price: '$30.00  ',
                 badge: 'ACD Sketch',
-                category: 'Accessories',
+                categories: 'Accessories',
                 keywords: 'cap pastel neko baseball adjustable lightweight japanese cat hat artwork ali can\'t draw',
                 images: [
                     'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509539212418-2.png', 
@@ -951,9 +1055,27 @@
                 ],
                 colors: [
                     { name: 'Pastel Pink', color: 'bg-pink-50' },
-                    { name: 'Pastel Lemon', color: 'bg-yellow-50' },
-                    { name: 'White', color: 'bg-white' },
-                    { name: 'Pastel Blue', color: 'bg-blue-50' }
+                    { name: 'Pastel Lemon', color: 'bg-yellow-50',
+                        images: [
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509539212416-2.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509539212416-0.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509539212416-3.png'
+                        ]
+                     },
+                    { name: 'Pastel Mint', color: 'bg-green-50',
+                        images: [
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509539212417-2.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509539212417-0.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509539212417-3.png'
+                        ]
+                     },
+                    { name: 'Pastel Blue', color: 'bg-blue-50',
+                        images: [
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509539212415-2.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509539212415-0.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509539212415-3.png'
+                        ]
+                     }
                 ],
                 details: [
                     'Adjustable fit ensures comfort.',
@@ -962,13 +1084,14 @@
                 ]
             },
            
-            // --- NEW PRODUCT: GENKI Tour Beanie ---
+            // --- NEW PRODUCT: GENKI Tour Beanie [ON HOLD FOR NEXT DROP]
+           /*
             {
                 id: 'genki-tour-beanie',
                 title: 'GENKI Tour Beanie',
                 price: '$25.00  ',
                 badge: 'Tour',
-                category: 'Accessories',
+                categories: 'Accessories',
                 keywords: 'beanie tour genki warm comfortable winter knit hat',
                 images: [
                     'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173545228912882-0.png', // New Image
@@ -990,6 +1113,28 @@
                     'One size fits most.'
                 ]
             },
+{
+                id: 'genki-tour-hoodie',
+                title: 'GENKI Tour Hoodie',
+                price: '$45.00  ',
+                badge: 'Tour',
+                categories: 'Tops',
+                keywords: 'hoodie tour genki warm comfortable winter knit',
+                images: [
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173411370411486-0.png',
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173411370411486-2.png',
+                ],
+                colors: [
+                    { name: 'Red', color: 'bg-maroon-100' },
+                    { name: 'Grey', color: 'bg-gray-500' },
+                    { name: 'Navy', color: 'bg-blue-900' }
+                ],                details: [
+                    'Warm and comfortable knit material.',
+                    'Features embroidered GENKI Tour logo.'
+                ]
+            }
+
+             */
 
             // --- NEW PRODUCT: GENKI Make America Genki Again Electric Blue Snapback ---
             {
@@ -997,7 +1142,7 @@
                 title: '[GENKI] Make America Genki Again Electric Blue Snapback',
                 price: '$30.00  ',
                 badge: '',
-                category: 'Accessories',
+                categories: 'Accessories',
                 keywords: 'snapback electric blue genki cap maga political parody hat',
                 images: [
                     'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17617999204796-0.png', // New Image
@@ -1006,7 +1151,6 @@
                 ],
                 colors: [
                     { name: 'Electric Blue', color: 'bg-blue-400' },
-                    { name: 'Black', color: 'bg-black' }
                 ],
                 details: [
                     'Vibrant electric blue brim and accents.',
@@ -1020,8 +1164,9 @@
                 title: 'Genki Sakura Heavy Hoodie',
                 price: '$40.00  ',
                 badge: '',
-                category: 'Tops',
+                categories: 'Tops',
                 keywords: 'hoodie heavy sakura genki thick warm comfortable japanese flower',
+                sizes: ['S', 'M', 'L', 'XL', '2XL†', '3XL†', '4XL†', '5XL†'],
                 images: [
                     'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17658626415530-0.png',
                     'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17658626415530-1.png',
@@ -1031,10 +1176,22 @@
                     'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17658626415530-0.png',
                     'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17658626415530-1.png',
                 ] },
-                { name: 'Pink', color: 'bg-pink-200' },     // Changed from 600 to 200
-                { name: 'Maroon', color: 'bg-red-950' },    // Darker, deep maroon
-                { name: 'Forest Green', color: 'bg-emerald-950' }, // Very dark green
-                { name: 'Blue', color: 'bg-blue-300' }      // Changed from 800 to 300
+                { name: 'Pink', color: 'bg-pink-200', images: [
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176586264110849-0.png',
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176586264110849-1.png'
+                ]},     // Changed from 600 to 200
+                { name: 'Maroon', color: 'bg-red-950', images: [
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17658626415586-0.png',
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17658626415586-1.png'
+                ] },    // Darker, deep maroon
+                { name: 'Forest Green', color: 'bg-emerald-950', images: [
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176586264120570-0.png',
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176586264120570-1.png'
+                ] }, // Very dark green
+                { name: 'Blue', color: 'bg-blue-300', images: [
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176586264121635-0.png',
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176586264121635-1.png'
+                ] }      // Changed from 800 to 300
                 ],
                 details: [
                     'Thick, heavyweight material for maximum warmth.',
@@ -1044,24 +1201,54 @@
             },
          
             
-             // --- NEW PRODUCT: Genki Sakura Heavy Hoodie ---
+            // --- NEW PRODUCT: Genki Sakura Heavy Hoodie ---
             {
                 id: 'genki-skull-hoodie',
                 title: 'Genki Skull Hoodie',
                 price: '$40.00  ',
                 badge: '',
-                category: 'Tops',
+                categories: 'Tops',
                 keywords: 'hoodie heavy skull genki thick warm comfortable japanese flower',
+                sizes: ['S', 'M', 'L', 'XL', '2XL†', '3XL†', '4XL†', '5XL†'],
                 images: [
                     'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173449331512997-0.png', // New Image
                     'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173449331512997-2.png',
                 ],
-                colors: [
-                    { name: 'Sand', color: 'bg-gold' },
-                    { name: 'Pink', color: 'bg-pink-600' },
-                    { name: 'Maroon', color: 'bg-red-800' },
-                    { name: 'Forest Green', color: 'bg-green-900' },
-                    { name: 'Blue', color: 'bg-blue-800' }
+                skullOptions: [
+                    {
+                        name: 'Black Skull',
+                        color: 'bg-black',
+                        hoodies: [
+                            { name: 'Sand', color: 'bg-yellow-100', images: ['https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173449331512997-0.png'] },
+                            { name: 'Ash', color: 'bg-neutral-100', images: ['https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173449331520544-0.png'] },
+                            { name: 'White', color: 'bg-white', images: ['https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17344933155522-0.png'] },
+                            { name: 'Pink', color: 'bg-pink-200', images: ['https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173449331510849-0.png'] },
+                            { name: 'Light Blue', color: 'bg-blue-200', images: ['https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173449331510841-0.png'] }
+                        ]
+                    },
+                    {
+                        name: 'Red Skull',
+                        color: 'bg-red-800',
+                        hoodies: [
+                            {name: 'Black', color: 'bg-black', images: ['https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17349980575530-0.png'] },
+                            {name: 'Maroon', color: 'bg-red-950', images: ['https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17349980575586-0.png'] },
+                            { name: 'Sand', color: 'bg-yellow-100', images: ['https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173499805712997-0.png'] },
+                            { name: 'Grey', color: 'bg-gray-200', images: ['https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17349980575610-0.png'] },
+                            { name: 'Ash', color: 'bg-neutral-100', images: ['https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173499805720544-0.png'] }
+                        ]
+                    },
+                    {
+                        name: 'White Skull',
+                        color: 'bg-white',
+                        hoodies: [
+                            {name: 'Black', color: 'bg-black', images: ['https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17349986875530-0.png'] },
+                            {name: 'Maroon', color: 'bg-red-950', images: ['https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17349986875586-0.png'] },
+                            {name: 'Chocolate', color: 'bg-yellow-950', images: ['https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17349986875554-0.png'] },
+                            {name: 'Navy', color: 'bg-brand-navy', images: ['https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17349986875594-0.png'] },
+                        ]
+                    },
+                    
+                    
                 ],
                 details: [
                     'Thick, heavyweight material for maximum warmth.',
@@ -1075,17 +1262,41 @@
                 title: 'Genki Esquire Packable Jacket',
                 price: '$45.00  ',
                 badge: '',
-                category: 'Tops',
+                categories: [ 'Tops', 'Outerwear' ],
                 keywords: 'jacket packable esquire genki lightweight warm comfortable',
+                sizes: ['S', 'M', 'L', 'XL', '2XL†'],
                 images: [
                     'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176681305211008-2.png', // New Image
-                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176681305211008-0.png',
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176681305211008-0.png'
                 ],
                 colors: [
-                    { name: 'Black', color: 'bg-gold' },
-                    { name: 'Gold', color: 'bg-yellow-600' },
-                    { name: 'Royal blue', color: 'bg-blue-800' },
-                    { name: 'Safety Green', color: 'bg-lime-300' },
+                    { 
+                    name: 'Black', 
+                    color: 'bg-black',
+                        images: [
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176681305211008-2.png', // New Image
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176681305211008-0.png'
+                        ]
+                    },
+                    { 
+                    name: 'Gold', color: 'bg-yellow-600',
+                        images: [
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176681305211026-2.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176681305211026-0.png'
+                        ] 
+                    },
+                    { name: 'Royal blue', color: 'bg-blue-800', 
+                        images: [
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176681305211744-2.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176681305211744-0.png'
+                        ]
+                    },
+                    { name: 'Safety Green', color: 'bg-lime-300', 
+                        images: [
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176681305213435-2.png',
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176681305213435-0.png'
+                        ]
+                    },
                 ],
                 details: [
                     'Thick, heavyweight material for maximum warmth.',
@@ -1100,8 +1311,9 @@
                 title: 'ACD Kancho Hancho Button Up Shirt',
                 price: '$50.00  ',
                 badge: 'ACD Sketch',
-                category: 'Tops',
+                categories: 'Tops',
                 keywords: 'button-up shirt kancho hancho acd sketch casual lightweight artwork ali can\'t draw',
+                sizes: ['S', 'M', 'L', 'XL', '2XL†', '3XL†', '4XL†', '5XL†', '6XL†'],
                 images: [
                     'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176586211717117-1.png', 
                     'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176586211717117-0.png',
@@ -1115,31 +1327,6 @@
                 ]
             },
 
-            // --- NEW PRODUCT: Genki Skyline Hoodie ---
-            {
-                id: 'genki-skyline-hoodie',
-                title: 'Genki Skyline Hoodie',
-                price: '$45.00  ',
-                badge: '',
-                category: 'Tops',
-                keywords: 'hoodie skyline genki cityscape comfortable warm casual',
-                images: [
-                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176681261263234-0.png', 
-                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176681261263234-1.png',
-                ],
-                colors: [
-                    { name: 'Black', color: 'bg-black' },
-                    { name: 'Grey', color: 'bg-gray-500' },
-                    { name: 'Navy', color: 'bg-blue-900' }
-                ],
-                details: [
-                    'Soft and comfortable fabric for everyday wear.',
-                    'Features a detailed cityscape skyline graphic.',
-                    'Adjustable drawstring hood and front kangaroo pocket.'
-                ]
-            },
-
-
 
             // --- EXISTING PRODUCTS ---
             {
@@ -1147,7 +1334,7 @@
                 title: 'Genki Rainman Reverse Graphic Tee',
                 price: '$30.00  ',
                 badge: '',
-                category: 'Tops',
+                categories: 'Tops',
                 keywords: 't-shirt rainman graphic genki reverse',
                 images: [
                     'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-174708690117202-5.png',
@@ -1170,7 +1357,7 @@
                 title: 'Genki Sakura Duffel Bag',
                 price: '$40.00  ',
                 badge: '',
-                category: 'Accessories',
+                categories: 'Accessories',
                 keywords: 'duffel bag sakura genki floral',
                 images: [
                     'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-170094616612021-1.png',
@@ -1191,7 +1378,7 @@
                 title: 'Genki Two Faced Hoodie',
                 price: '$54.00  ',
                 badge: '',
-                category: 'Tops',
+                categories: 'Tops',
                 keywords: 'hoodie two-faced genki unique design',
                 images: [
                     'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602693618730-12.png',
@@ -1211,20 +1398,33 @@
                 title: 'Genki Shinobi Beanie',
                 price: '$25.00  ',
             badge: '',
-                category: 'Accessories',
+                categories: 'Accessories',
                 keywords: 'beanie shinobi ninja naruto genki warm comfortable knit hat',
                 images: [
-                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-170122662217496-0.png',
-                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17012266228938-0.png',
-                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17012266228939-0.png',
-                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17012266228936-0.png',
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-170122662217496-0.png'
                 ],
                 colors: [
-                    { name: 'Black', color: 'bg-black' },
-                    { name: 'Red', color: 'bg-red-700' },
-                    { name: 'Blue', color: 'bg-blue-800' },
-                    { name: 'White', color: 'bg-white' },
-                    { name: 'Navy', color: 'bg-blue-950' }
+                    { name: 'Black', color: 'bg-black',
+                        images: [
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17012266228936-0.png'
+                        ]
+                     },
+                    { name: 'Red', color: 'bg-red-700',
+                        images: [
+                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17012266228939-0.png'
+            ]
+                     },
+                    { name: 'Blue', color: 'bg-blue-800', },
+                    { name: 'White', color: 'bg-white',
+                        images: [
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17012266228938-0.png'
+                        ]
+                     },
+                    { name: 'Navy', color: 'bg-blue-950',
+                        images: [
+                            'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17012266228940-0.png'
+                        ]
+                     }
                     
                 ],
                 details: [
@@ -1232,26 +1432,8 @@
                     'Features the embroidered Shinobi logo.'
                 ]
             },
-            {
-                id: 'genki-tour-hoodie',
-                title: 'GENKI Tour Hoodie',
-                price: '$45.00  ',
-                badge: 'Tour',
-                category: 'Tops',
-                keywords: 'hoodie tour genki warm comfortable winter knit',
-                images: [
-                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173411370411486-0.png',
-                    'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173411370411486-2.png',
-                ],
-                colors: [
-                    { name: 'Red', color: 'bg-maroon-100' },
-                    { name: 'Grey', color: 'bg-gray-500' },
-                    { name: 'Navy', color: 'bg-blue-900' }
-                ],                details: [
-                    'Warm and comfortable knit material.',
-                    'Features embroidered GENKI Tour logo.'
-                ]
-            }
+
+            
             
             
 
@@ -1422,7 +1604,6 @@ setTimeout(morphText, pauseDuration);
                 gridContainer.innerHTML = '<p class="col-span-full text-gray-400 text-center py-10 text-xl">No products found matching your criteria.</p>';
                 return;
             }
-
             productsToRender.forEach(product => {
                 const colors = Array.isArray(product.colors) ? product.colors : [];
                 // Create product card HTML structure
@@ -1435,8 +1616,8 @@ setTimeout(morphText, pauseDuration);
 
                 const cardHtml = `
                     <div class="relative overflow-hidden">
-                        <img src="${product.images[0]}" alt="${product.title}" class="w-full h-80 object-cover">
-                        ${product.badge ? `<span class="absolute top-3 right-3 bg-white text-black text-xs px-2 py-1 font-medium">${product.badge}</span>` : ''}
+                        <img src="${product.images[0]}" alt="${product.title}" class="w-full max-h-80 aspect-[4/5] object-cover" style="width:100%; height:auto;">
+                        ${product.badge ? `<span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">${product.badge}</span>` : ''}
                     </div>
                     <div class="p-4">
                         <h3 class="font-semibold text-white mb-1">${product.title}</h3>
@@ -1450,6 +1631,7 @@ setTimeout(morphText, pauseDuration);
                 `;
                 card.innerHTML = cardHtml;
                 gridContainer.appendChild(card);
+                
             });
         }
         
@@ -1464,9 +1646,10 @@ setTimeout(morphText, pauseDuration);
 
             const fallbackImages = data.images || [];
             const getImagesForColor = (colorObj) => {
-                return (colorObj && Array.isArray(colorObj.images) && colorObj.images.length)
-                    ? colorObj.images
-                    : fallbackImages;
+                if (!colorObj) return fallbackImages;
+                if (Array.isArray(colorObj.images) && colorObj.images.length) return colorObj.images;
+                if (colorObj.image) return [colorObj.image];
+                return fallbackImages;
             };
 
             const titleEl = document.getElementById('product-title');
@@ -1474,9 +1657,33 @@ setTimeout(morphText, pauseDuration);
             const mainImg = document.getElementById('product-main-image');
             const thumbs = document.getElementById('product-thumbs');
             const badge = document.getElementById('product-badge');
-            const colorsContainer = document.getElementById('product-colors');
-            const colorName = document.getElementById('product-color-name');
+            const hoodieColorsContainer = document.getElementById('product-hoodie-colors');
+            const skullColorsContainer = document.getElementById('product-skull-colors');
+            const hoodieName = document.getElementById('product-hoodie-name');
+            const skullName = document.getElementById('product-skull-name');
+            const hoodieBlock = document.getElementById('product-hoodie-block');
+            const skullBlock = document.getElementById('product-skull-block');
+            const sizeBlock = document.getElementById('product-size-block');
+            const sizeName = document.getElementById('product-size-name');
+            const sizesContainer = document.getElementById('product-sizes');
             const detailsList = document.getElementById('product-details-list');
+            const mainImgWrapper = mainImg.parentElement;
+
+            const ensureBackprintBadge = () => {
+                const existing = mainImgWrapper.querySelector('.backprint-badge');
+                if (data.id === 'acd-organic-sweatshirt') {
+                    mainImgWrapper.classList.add('relative');
+                    if (!existing) {
+                        const badgeEl = document.createElement('span');
+                        badgeEl.className = 'backprint-badge absolute bottom-2 left-2 px-2 py-1 bg-black/70 text-[11px] uppercase tracking-[0.25em] text-white border border-white/10';
+                        badgeEl.textContent = 'Back print shown';
+                        mainImgWrapper.appendChild(badgeEl);
+                    }
+                } else {
+                    if (existing) existing.remove();
+                    mainImgWrapper.classList.remove('relative');
+                }
+            };
 
             titleEl.textContent = data.title;
             priceEl.textContent = data.price;
@@ -1488,6 +1695,7 @@ setTimeout(morphText, pauseDuration);
                 const galleryImages = (images && images.length) ? images : fallbackImages;
                 if (galleryImages.length) {
                     mainImg.src = galleryImages[0];
+                    ensureBackprintBadge();
                 }
 
                 thumbs.innerHTML = '';
@@ -1502,17 +1710,121 @@ setTimeout(morphText, pauseDuration);
                         mainImg.src = src;
                         thumbs.querySelectorAll('.product-thumb').forEach(t => t.classList.remove('border-white', 'border-2'));
                         img.classList.add('border-white', 'border-2');
+                        ensureBackprintBadge();
                     });
                     thumbs.appendChild(img);
                 });
             };
 
-            // Colors
-            colorsContainer.innerHTML = '';
-            if (data.colors && data.colors.length) {
-                const firstColor = data.colors[0];
-                colorName.textContent = firstColor.name;
-                renderGallery(getImagesForColor(firstColor));
+            // Colors (supports single-color products and skull dual selector)
+            hoodieColorsContainer.innerHTML = '';
+            skullColorsContainer.innerHTML = '';
+            hoodieBlock.style.display = 'block';
+            skullBlock.style.display = 'none';
+
+            if (data.skullOptions && data.skullOptions.length) {
+                let activeSkull = 0;
+                let activeHoodie = 0;
+
+                const getImagesForCombo = () => {
+                    const skull = data.skullOptions[activeSkull] || {};
+                    const hoodies = skull.hoodies || [];
+                    const hoodie = hoodies[activeHoodie];
+                    if (hoodie && Array.isArray(hoodie.images) && hoodie.images.length) return hoodie.images;
+                    if (hoodie && hoodie.image) return [hoodie.image];
+                    if (Array.isArray(skull.images) && skull.images.length) return skull.images;
+                    if (skull.image) return [skull.image];
+                    return fallbackImages;
+                };
+
+                const renderHoodies = () => {
+                    const skull = data.skullOptions[activeSkull] || { hoodies: [] };
+                    const hoodies = skull.hoodies || [];
+                    hoodieColorsContainer.innerHTML = '';
+                    hoodieBlock.style.display = hoodies.length ? 'block' : 'none';
+                    hoodieName.textContent = hoodies[activeHoodie] ? hoodies[activeHoodie].name : 'N/A';
+                    hoodies.forEach((h, i) => {
+                        const btn = document.createElement('button');
+                        btn.title = h.name;
+                        btn.className = `w-8 h-8 ${h.color || 'bg-white'} border-2 border-transparent hover:border-white transition`;
+                        if (i === activeHoodie) btn.classList.add('border-white');
+                        btn.addEventListener('click', () => {
+                            activeHoodie = i;
+                            hoodieColorsContainer.querySelectorAll('button').forEach(b => b.classList.remove('border-white'));
+                            btn.classList.add('border-white');
+                            hoodieName.textContent = h.name;
+                            renderGallery(getImagesForCombo());
+                        });
+                        hoodieColorsContainer.appendChild(btn);
+                    });
+                };
+
+                const renderSkulls = () => {
+                    skullColorsContainer.innerHTML = '';
+                    skullBlock.style.display = 'block';
+                    skullName.textContent = data.skullOptions[activeSkull] ? data.skullOptions[activeSkull].name : 'N/A';
+                    data.skullOptions.forEach((s, i) => {
+                        const btn = document.createElement('button');
+                        btn.title = s.name;
+                        btn.className = `w-8 h-8 ${s.color || 'bg-white'} border-2 border-transparent hover:border-white transition`;
+                        if (i === activeSkull) btn.classList.add('border-white');
+                        btn.addEventListener('click', () => {
+                            activeSkull = i;
+                            activeHoodie = 0;
+                            skullColorsContainer.querySelectorAll('button').forEach(b => b.classList.remove('border-white'));
+                            btn.classList.add('border-white');
+                            skullName.textContent = s.name;
+                            renderHoodies();
+                            renderGallery(getImagesForCombo());
+                        });
+                        skullColorsContainer.appendChild(btn);
+                    });
+                };
+
+                renderSkulls();
+                renderHoodies();
+                renderGallery(getImagesForCombo());
+            } else if (data.hoodieColors && data.hoodieColors.length) {
+                let activeHoodie = 0;
+                hoodieBlock.style.display = 'block';
+                skullBlock.style.display = 'none';
+
+                const getImagesForCombo = () => {
+                    const hoodie = data.hoodieColors[activeHoodie] || {};
+                    const skulls = hoodie.skulls || [];
+                    const skull = skulls[0];
+                    if (skull && Array.isArray(skull.images) && skull.images.length) return skull.images;
+                    if (skull && skull.image) return [skull.image];
+                    if (Array.isArray(hoodie.images) && hoodie.images.length) return hoodie.images;
+                    if (hoodie.image) return [hoodie.image];
+                    return fallbackImages;
+                };
+
+                const renderHoodies = () => {
+                    hoodieColorsContainer.innerHTML = '';
+                    data.hoodieColors.forEach((h, i) => {
+                        const btn = document.createElement('button');
+                        btn.title = h.name;
+                        btn.className = `w-8 h-8 ${h.color || 'bg-white'} border-2 border-transparent hover:border-white transition`;
+                        if (i === activeHoodie) btn.classList.add('border-white');
+                        btn.addEventListener('click', () => {
+                            activeHoodie = i;
+                            hoodieColorsContainer.querySelectorAll('button').forEach(b => b.classList.remove('border-white'));
+                            btn.classList.add('border-white');
+                            hoodieName.textContent = h.name;
+                            renderGallery(getImagesForCombo());
+                        });
+                        hoodieColorsContainer.appendChild(btn);
+                    });
+                };
+
+                hoodieName.textContent = data.hoodieColors[0].name;
+                renderHoodies();
+                renderGallery(getImagesForCombo());
+            } else if (data.colors && data.colors.length) {
+                hoodieName.textContent = data.colors[0].name;
+                skullBlock.style.display = 'none';
+                renderGallery(getImagesForColor(data.colors[0]));
 
                 data.colors.forEach((c, i) => {
                     const btn = document.createElement('button');
@@ -1520,16 +1832,51 @@ setTimeout(morphText, pauseDuration);
                     btn.className = `w-8 h-8 ${c.color} border-2 border-transparent hover:border-white transition`;
                     if (i === 0) btn.classList.add('border-white');
                     btn.addEventListener('click', () => { 
-                        colorName.textContent = c.name; 
-                        colorsContainer.querySelectorAll('button').forEach(b => b.classList.remove('border-white'));
+                        hoodieName.textContent = c.name; 
+                        hoodieColorsContainer.querySelectorAll('button').forEach(b => b.classList.remove('border-white'));
                         btn.classList.add('border-white');
                         renderGallery(getImagesForColor(c));
                     });
-                    colorsContainer.appendChild(btn);
+                    hoodieColorsContainer.appendChild(btn);
                 });
             } else {
-                colorName.textContent = 'N/A';
+                hoodieName.textContent = 'N/A';
+                skullBlock.style.display = 'none';
                 renderGallery(fallbackImages);
+            }
+
+            // Sizes
+            if (sizeBlock && sizeName && sizesContainer) {
+                sizesContainer.innerHTML = '';
+                const sizes = Array.isArray(data.sizes) ? data.sizes : [];
+                if (sizes.length) {
+                    sizeBlock.style.display = 'block';
+                    let activeSize = 0;
+                    sizeName.textContent = sizes[activeSize];
+
+                    const renderSizes = () => {
+                        sizesContainer.innerHTML = '';
+                        sizes.forEach((s, i) => {
+                            const btn = document.createElement('button');
+                            btn.textContent = s;
+                            btn.className = 'border border-white/20 p-2 hover:bg-white/10 transition';
+                            if (i === activeSize) {
+                                btn.classList.add('bg-white', 'text-black', 'font-bold');
+                            }
+                            btn.addEventListener('click', () => {
+                                activeSize = i;
+                                sizeName.textContent = s;
+                                sizesContainer.querySelectorAll('button').forEach(b => b.classList.remove('bg-white','text-black','font-bold'));
+                                btn.classList.add('bg-white','text-black','font-bold');
+                            });
+                            sizesContainer.appendChild(btn);
+                        });
+                    };
+                    renderSizes();
+                } else {
+                    sizeBlock.style.display = 'none';
+                    sizeName.textContent = 'OS';
+                }
             }
 
             // Details
@@ -1545,16 +1892,21 @@ setTimeout(morphText, pauseDuration);
             if (addBtn && window.Cart && typeof Cart.add === 'function') {
                 addBtn.onclick = () => {
                     const priceCents = Math.round(parseFloat(String(data.price).replace(/[^0-9.]/g,'')) * 100) || 0;
-                    const selectedColorEl = colorsContainer.querySelector('button.border-white');
-                    const colorLabel = selectedColorEl ? (selectedColorEl.title || selectedColorEl.getAttribute('title')) : undefined;
+                    const selectedHoodieEl = hoodieColorsContainer ? hoodieColorsContainer.querySelector('button.border-white') : null;
+                    const selectedSkullEl = skullColorsContainer ? skullColorsContainer.querySelector('button.border-white') : null;
+                    const selectedSizeEl = sizesContainer ? sizesContainer.querySelector('button.bg-white') : null;
+                    const colorLabel = selectedHoodieEl ? (selectedHoodieEl.title || selectedHoodieEl.getAttribute('title')) : undefined;
+                    const skullLabel = selectedSkullEl ? (selectedSkullEl.title || selectedSkullEl.getAttribute('title')) : undefined;
+                    const sizeLabel = selectedSizeEl ? selectedSizeEl.textContent : undefined;
                     Cart.add({
                         id: data.id,
                         title: data.title,
                         priceCents,
                         qty: 1,
                         color: colorLabel,
-                        size: undefined,
-                        image: (data.images && data.images[0]) || undefined
+                        skull: skullLabel,
+                        size: sizeLabel,
+                        image: (mainImg && mainImg.src) || (data.images && data.images[0]) || undefined
                     });
                     Cart.open();
                 };
@@ -1565,8 +1917,8 @@ setTimeout(morphText, pauseDuration);
         const lookbookData = {
             // Updated lookbook links to point to new products
             'lookbook-1': {
-                title: 'GENKI AMSTERDAM - Small Corner of the Big City',
-                image: 'https://res.cloudinary.com/dzhvdoifb/image/upload/v1762748929/2hW9VA8_nnfzy0.webp',
+                title: 'GENKI TWO\-FACED - Split ',
+                image: 'https://res.cloudinary.com/dzhvdoifb/image/upload/v1762066135/WtBAmJy_nidtmq.webp',
                 caption: 'Genki Tour Hoodie',
                 linkedProduct: 'genki-tour-hoodie'
             },
@@ -1583,7 +1935,7 @@ setTimeout(morphText, pauseDuration);
                 linkedProduct: 'genki-sakura-hoodie'
             },
             'lookbook-4': {
-                title: 'GENKI NEW YORK - Donwtown Taxicab Yellow Beanie.',
+                title: 'GENKI NEW YORK - Downtown Taxicab Yellow Beanie.',
                 image: 'https://res.cloudinary.com/dzhvdoifb/image/upload/v1762752906/6EiT5o1_nhvhwf.webp',
                 caption: 'Cozy city vibes with the GENKI Tour Beanie.',
                 linkedProduct: 'genki-tour-beanie'
@@ -1653,13 +2005,17 @@ setTimeout(morphText, pauseDuration);
 
         function updateCategoryCounts() {
             const counts = PRODUCTS.reduce((acc, p) => {
-                const key = (p.category || '').trim().toLowerCase();
-                acc[key] = (acc[key] || 0) + 1;
+                const cats = Array.isArray(p.categories) ? p.categories : (p.categories ? [p.categories] : (p.category ? [p.category] : []));
+                if (cats.length === 0) cats.push('uncategorized');
+                cats.forEach(cat => {
+                    const key = String(cat).trim().toLowerCase();
+                    acc[key] = (acc[key] || 0) + 1;
+                });
                 acc.all = (acc.all || 0) + 1;
                 return acc;
             }, {});
-            document.querySelectorAll('[data-category]').forEach(link => {
-                const key = (link.dataset.category || '').toLowerCase();
+            document.querySelectorAll('[data-categories]').forEach(link => {
+                const key = (link.dataset.categories || '').toLowerCase();
                 const label = link.dataset.label || link.textContent.trim();
                 const count = counts[key] || 0;
                 link.textContent = `${label} (${count})`;
@@ -1671,7 +2027,7 @@ setTimeout(morphText, pauseDuration);
             const hashWithoutQuery = fullHash.split('?')[0];
             const hashParts = hashWithoutQuery.split('/');
             const baseHash = hashParts[0];
-            const categorySlug = hashParts[1];
+            const categoriesSlug = hashParts[1];
             const urlParams = new URLSearchParams(fullHash.split('?')[1] || '');
             let pageId = pageMap[baseHash] || 'home-page';
             
@@ -1683,8 +2039,8 @@ setTimeout(morphText, pauseDuration);
             else if (baseHash.startsWith('#lookbook-') && baseHash !== '#lookbook-main') {
                 pageId = 'lookbook-item-page';
             }
-            // Handle Shop Category Filters
-            else if (baseHash === '#shop' && categorySlug && categorySlug.startsWith('category-')) {
+            // Handle Shop categories Filters
+            else if (baseHash === '#shop' && categoriesSlug && categoriesSlug.startsWith('categories-')) {
                 pageId = 'shop-page';
             }
             
@@ -1730,6 +2086,19 @@ setTimeout(morphText, pauseDuration);
                 let filteredProducts = PRODUCTS;
                 let title = "ALL PRODUCTS";
                 let searchQuery = urlParams.get('q');
+                const inCategory = (p, cat) => {
+                    const catLower = cat.toLowerCase();
+                    if (Array.isArray(p.categories)) {
+                        return p.categories.some(c => String(c).toLowerCase() === catLower);
+                    }
+                    if (p.categories) {
+                        return String(p.categories).toLowerCase() === catLower;
+                    }
+                    if (p.category) {
+                        return String(p.category).toLowerCase() === catLower;
+                    }
+                    return false;
+                };
 
                 // 1. Handle Search Query
                 if (searchQuery) {
@@ -1738,6 +2107,7 @@ setTimeout(morphText, pauseDuration);
                     filteredProducts = filteredProducts.filter(p => {
                         const searchable = [
                             p.title || '',
+                            Array.isArray(p.categories) ? p.categories.join(' ') : (p.categories || ''),
                             p.category || '',
                             p.keywords || '',
                             Array.isArray(p.colors) ? p.colors.map(c => c.name || '').join(' ') : '',
@@ -1753,12 +2123,12 @@ setTimeout(morphText, pauseDuration);
                     searchInput.value = ''; // Clear search bar if navigating away from search
                 }
                 
-                // 2. Handle Category Filter (if no search query dominates)
-                if (!searchQuery && categorySlug && categorySlug.startsWith('category-')) {
-                    const category = categorySlug.replace('category-', '');
-                    if (category.toLowerCase() !== 'all') {
-                        filteredProducts = PRODUCTS.filter(p => p.category.toLowerCase() === category.toLowerCase());
-                        title = `${category.toUpperCase()} COLLECTION`;
+                // 2. Handle categories Filter (if no search query dominates)
+                if (!searchQuery && categoriesSlug && (categoriesSlug.startsWith('categories-') || categoriesSlug.startsWith('category-'))) {
+                    const categories = categoriesSlug.replace('categories-', '').replace('category-', '');
+                    if (categories.toLowerCase() !== 'all') {
+                        filteredProducts = PRODUCTS.filter(p => inCategory(p, categories));
+                        title = `${categories.toUpperCase()} COLLECTION`;
                     } else {
                         filteredProducts = PRODUCTS;
                         title = "ALL PRODUCTS";
