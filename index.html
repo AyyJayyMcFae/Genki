@@ -8,9 +8,10 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Use Inter font family -->
   <link rel="icon" type="image/png" sizes="32x32" href="https://res.cloudinary.com/dzhvdoifb/image/upload/v1767129720/blueGlitch_sddxpb.png?v=2">
-<link rel="shortcut icon" href="https://res.cloudinary.com/dzhvdoifb/image/upload/v1767129720/blueGlitch_sddxpb.png?v=2">
-<link rel="apple-touch-icon" sizes="180x180" href="https://res.cloudinary.com/dzhvdoifb/image/upload/v1767129720/blueGlitch_sddxpb.png?v=2">
+  <link rel="shortcut icon" href="https://res.cloudinary.com/dzhvdoifb/image/upload/v1767129720/blueGlitch_sddxpb.png?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://res.cloudinary.com/dzhvdoifb/image/upload/v1767129720/blueGlitch_sddxpb.png?v=2">
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHq6O3b+6b0Z9VV8+5v4y5j1l5/1p5Q5K5j5V5Q5K5j5V5Q5K5j5V5Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#0d0d0d">
 
@@ -48,19 +49,7 @@
   },
  };
 </script>
-<script>
- async function startStripeCheckout(cartItems) {
-  // cartItems: [{id,title,priceCents,qty,color,size,skull,image}]
-  const resp = await fetch('https://YOUR_NETLIFY_SITE.netlify.app/.netlify/functions/create-checkout-session', {
-   method: 'POST',
-   headers: { 'Content-Type': 'application/json' },
-   body: JSON.stringify({ items: cartItems })
-  });
-  if (!resp.ok) throw new Error('Checkout session failed');
-  const { url } = await resp.json();
-  window.location = url; // Redirect to Stripe Checkout
- }
-</script>
+
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Noto+Sans+JP:wght@400;700;900&display=swap');
@@ -223,6 +212,13 @@
               <div class="p-4 text-center">
                 <h3 class="text-lg font-semibold text-white mb-1">Genki Sakura Heavy Hoodie</h3>
                 <p class="text-sm text-gray-400 mb-3">$40.00</p>
+                <div class="flex justify-center space-x-2">
+                  <div class="w-4 h-4 bg-black border border-white/50" title="Black"></div>
+                  <div class="w-4 h-4 bg-pink-200 border border-white/50" title="Pink"></div>
+                  <div class="w-4 h-4 bg-red-950 border border-white/50" title="Maroon"></div>
+                  <div class="w-4 h-4 bg-emerald-950 border border-white/50" title="Forest Green"></div>
+                  <div class="w-4 h-4 bg-blue-300 border border-white/50" title="Blue"></div>
+              </div>
               </div>
             </div>
             <div class="bg-transparent overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-[1.02] transition duration-300 hidden md:block border border-white/10 cursor-pointer" onclick="window.location.hash='#acd-neko-pastel-cap'">
@@ -232,10 +228,16 @@
               </div>
               <div class="p-4 text-center">
                 <h3 class="text-lg font-semibold text-white mb-1">ACD Neko Pastel Baseball Cap</h3>
-                <p class="text-sm text-gray-400 mb-3">$28.10</p>
+                <p class="text-sm text-gray-400 mb-3">$30.00</p>
+                <div class="flex justify-center space-x-2">
+                  <div class="w-4 h-4 bg-pink-50 border border-white/50" title="Pastel Pink"></div>
+                  <div class="w-4 h-4 bg-yellow-50 border border-white/50" title="Pastel Lemon"></div>
+                  <div class="w-4 h-4 bg-green-50 border border-white/50" title="Pastel Mint"></div>
+                  <div class="w-4 h-4 bg-blue-50 border border-white/50" title="Pastel Blue"></div>
               </div>
+                </div>
             </div>
-            <div class="bg-transparent overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-[1.02] transition duration-300 hidden xl:block border border-white/10 cursor-pointer" onclick="window.location.hash='#genki-maga-snapback'">
+            <div class="bg-transparent overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-[1.02] transition duration-300 hidden xl:block border border-white/10 cursor-pointer" onclick="window.location.hash='#genki-america-snapback'">
               <div class="relative overflow-hidden">
                 <img src="https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17617999204796-0.png" alt="[GENKI] Make America Genki Again Electric Blue Snapback" class="w-full h-64 object-cover transition duration-300 hover:opacity-80" onerror="this.onerror=null;this.src='https://placehold.co/600x600/0000ff/ffffff?text=Electric+Blue+Snapback'">
                <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">NEW</span>
@@ -296,7 +298,7 @@
           <!-- Product Card 1: Esquire Jacket -->
           <div class="bg-transparent overflow-hidden shadow-lg border border-white/10 cursor-pointer hover:border-white" onclick="window.location.hash='#genki-esquire-jacket'">
             <div class="relative overflow-hidden">
-              <img src="https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176681305211008-2.png" alt="ACD Unisex Organic Sweatshirt" class="w-full h-80 object-cover">
+              <img src="https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176681305211008-2.png" alt="ACD Unfinished Organic Sweatshirt" class="w-full h-80 object-cover">
              <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">NEW</span>
              
             </div>
@@ -335,11 +337,11 @@
             </div>
             <div class="p-4">
               <h3 class="font-semibold text-white mb-1">ACD Neko Pastel Baseball Cap</h3>
-              <p class="text-sm text-gray-400">$28.10</p>
+              <p class="text-sm text-gray-400">$30.00</p>
             </div>
           </div>
           <!-- Product Card 5: GENKI Make America Genki Again Snapback -->
-          <div class="bg-transparent overflow-hidden shadow-lg border border-white/10 cursor-pointer hover:border-white" onclick="window.location.hash='#genki-maga-snapback'">
+          <div class="bg-transparent overflow-hidden shadow-lg border border-white/10 cursor-pointer hover:border-white" onclick="window.location.hash='#genki-america-snapback'">
             <div class="relative overflow-hidden">
               <img src="https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17617999204796-0.png" alt="[GENKI] Make America Genki Again Electric Blue Snapback" class="w-full h-80 object-cover">
              <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">NEW</span>
@@ -528,7 +530,9 @@
           <div class="bg-neutral-900/60 border border-white/10 p-6 space-y-3">
             <h3 class="text-xl font-semibold">General</h3>
             <p class="text-gray-400 text-sm">Email: <a href="mailto:ayyjayy.genki@gmail.com" class="underline underline-offset-4 hover:text-white">ayyjayy.genki@gmail.com</a></p>
-            <p class="text-gray-400 text-sm">DM: @WearGenki on IG</p>
+            <br>
+            <a href="https://www.instagram.com/weargenki/" class="text-gray-400 text-sm">DM: @WearGenki on IG</a>
+          <i class="fa fa-instagram" style="font-size:48px;color:red"></i>
           </div>
           <div class="bg-neutral-900/60 border border-white/10 p-6 space-y-3">
             <h3 class="text-xl font-semibold">Collabs & Press</h3>
@@ -554,8 +558,8 @@
     <div id="checkout-success-page" class="page-content py-24">
       <div class="px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto text-center space-y-4">
         <p class="text-xs uppercase tracking-[0.35em] text-white/60">Success</p>
-        <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">Order received </h1>
-        <p class="text-gray-300 leading-relaxed">We’ll process your order shortly. Check your email for the receipt.</p>
+        <h1 id="checkout-success-title" class="text-4xl md:text-5xl font-extrabold tracking-tight">Order received</h1>
+        <p id="checkout-success-copy" class="text-gray-300 leading-relaxed">We'll process your order shortly. Check your email for the receipt.</p>
         <div class="flex items-center justify-center gap-3">
           <a href="#shop" class="px-6 py-3 bg-white text-black font-semibold uppercase tracking-widest text-sm hover:bg-gray-200 transition">Back to shop</a>
           <a href="#contact" class="px-6 py-3 border border-white/30 text-white font-semibold uppercase tracking-widest text-sm hover:border-white transition">Need help?</a>
@@ -691,37 +695,61 @@
     </div>
   </aside>
 
-  <!-- Order info modal for email checkout -->
-  <div id="order-info-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden z-50 flex items-center justify-center px-4">
+  <!-- Square checkout modal -->
+  <div id="square-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden z-50 flex items-center justify-center px-4">
    <div class="bg-neutral-900 border border-white/10 w-full max-w-xl p-6 space-y-4">
     <div class="flex items-center justify-between">
-     <h3 class="text-xl font-bold tracking-widest text-white">Order details</h3>
-     <button id="order-modal-close" class="text-gray-400 hover:text-white">✕</button>
+     <h3 class="text-xl font-bold tracking-widest text-white">Checkout</h3>
+     <button id="square-modal-close" class="text-gray-400 hover:text-white">✕</button>
     </div>
-    <p class="text-sm text-gray-400">Enter your contact and shipping info. We’ll prep an email with your cart items; your details won’t be stored here.</p>
+    <p class="text-sm text-gray-400">Pay securely without leaving the site.</p>
+    <p id="square-test-note" class="text-xs text-yellow-400 hidden">Test mode: no payment will be collected.</p>
     <div class="space-y-3">
-     <input id="order-name" type="text" placeholder="Full name" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
-     <input id="order-email" type="email" placeholder="Email" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
-     <textarea id="order-address" rows="3" placeholder="Shipping address" class="w-full bg-neutral-800 border border-white/10 p-2 text-white"></textarea>
-     <textarea id="order-notes" rows="2" placeholder="Notes (size/fit tweaks, delivery prefs)" class="w-full bg-neutral-800 border border-white/10 p-2 text-white"></textarea>
+     <input id="sq-name" type="text" placeholder="Full name" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
+     <input id="sq-email" type="email" placeholder="Email" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
+     <input id="sq-address" type="text" placeholder="Shipping address" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
+     <textarea id="sq-notes" type="text" placeholder="Extra Notes (optional)" class="w-full bg-neutral-800 border border-white/10 p-2 text-white"></textarea>
+     <div id="square-card-container" class="bg-neutral-800 border border-white/10 p-3 rounded"></div>
     </div>
     <div class="flex items-center justify-between gap-3">
-     <button id="order-cancel" class="px-4 py-2 border border-white/20 text-white hover:bg-white/10">Cancel</button>
-     <div class="flex-1 text-right">
-      <div id="paypal-button-container" class="inline-block"></div>
-      <p class="text-xs text-gray-500 mt-2">Pay securely with PayPal / cards.</p>
-     </div>
+     <button id="square-cancel" class="px-4 py-2 border border-white/20 text-white hover:bg-white/10">Cancel</button>
+     <button id="square-pay" class="px-4 py-2 bg-white text-black font-bold tracking-widest hover:bg-gray-200">Pay Now</button>
     </div>
+    <p id="square-error" class="text-sm text-red-400 hidden"></p>
    </div>
   </div>
-  
-   <script>
+
+  <!-- FormSubmit order slip (test mode, no payment) -->
+  <form id="order-slip-form" action="https://formsubmit.co/ayyjayy.genki@gmail.com" method="POST" class="hidden">
+    <input type="text" name="_honey" tabindex="-1" autocomplete="off" />
+    <input type="hidden" name="_subject" value="New order request (test)" />
+    <input type="hidden" name="_template" value="table" />
+    <input type="hidden" name="_captcha" value="false" />
+    <input type="hidden" name="_next" />
+    <input type="hidden" name="total" />
+    <input type="hidden" name="name" />
+    <input type="hidden" name="email" />
+    <input type="hidden" name="address" />
+    <input type="hidden" name="items" />
+  </form>
+ 
+  <script>
   // ------- Minimal Cart Module (localStorage) -------
   (function(){
    const STORAGE_KEY = 'genki_cart_v1';
+   const SQUARE_APP_ID = 'REPLACE_WITH_SQUARE_APP_ID';
+   const SQUARE_LOCATION_ID = 'REPLACE_WITH_SQUARE_LOCATION_ID';
    const state = { items: [] }; // {id, title, priceCents, qty, color, size, image}
+   let squarePayments = null;
+   let squareCard = null;
    const $ = sel => document.querySelector(sel);
    const $$ = sel => Array.from(document.querySelectorAll(sel));
+
+   const isTestMode = () =>
+    !SQUARE_APP_ID ||
+    SQUARE_APP_ID.startsWith('REPLACE') ||
+    !SQUARE_LOCATION_ID ||
+    SQUARE_LOCATION_ID.startsWith('REPLACE');
 
    function money(cents){ return `$${(cents/100).toFixed(2)}`; }
    function parsePriceToCents(text){
@@ -740,6 +768,41 @@
    function remove(index){ state.items.splice(index,1); save(); render(); }
    function updateQty(index, delta){ const it = state.items[index]; if(!it) return; it.qty = Math.max(1, it.qty+delta); save(); render(); }
    function subtotal(){ return state.items.reduce((s,it)=> s + it.priceCents * it.qty, 0); }
+   function buildOrderSlipText({ amount, buyer, items }){
+    const lines = [];
+    lines.push(`New order request`);
+    lines.push(`Total: ${money(amount)}`);
+    lines.push('');
+    lines.push('Customer:');
+    lines.push(`Name: ${buyer?.name || ''}`);
+    lines.push(`Email: ${buyer?.email || ''}`);
+    lines.push(`Address: ${buyer?.address || ''}`);
+    lines.push('');
+    lines.push('Items:');
+    (items || []).forEach((it) => {
+     const title = it.title || it.id || 'Item';
+     const color = it.color ? ` / ${it.color}` : '';
+     const size = it.size ? ` / ${it.size}` : '';
+     lines.push(`- ${title}${color}${size} x${it.qty || 1} (${money(it.priceCents)})`);
+    });
+    return lines.join('\n');
+   }
+   function submitOrderSlipForm(payload){
+    const form = document.getElementById('order-slip-form');
+    if(!form) return;
+    const setValue = (name, value) => {
+     const input = form.querySelector(`input[name="${name}"]`);
+     if(input) input.value = value || '';
+    };
+    const nextUrl = `${window.location.origin}${window.location.pathname}#checkout-success`;
+    setValue('_next', nextUrl);
+    setValue('total', money(payload.amount));
+    setValue('name', payload.buyer?.name || '');
+    setValue('email', payload.buyer?.email || '');
+    setValue('address', payload.buyer?.address || '');
+    setValue('items', buildOrderSlipText(payload));
+    form.submit();
+   }
 
    function render(){
     const list = $('#cart-items'); const sub = $('#cart-subtotal'); const badge = $('#cart-count');
@@ -781,112 +844,119 @@
      if(btn.dataset.idx && btn.dataset.delta){ updateQty(parseInt(btn.dataset.idx,10), parseInt(btn.dataset.delta,10)); }
      if(btn.dataset.remove){ remove(parseInt(btn.dataset.remove,10)); }
     });
-        const checkoutBtn = $("#checkout-btn");
-    const orderModal = document.getElementById("order-info-modal");
-    const orderClose = document.getElementById("order-modal-close");
-    const orderCancel = document.getElementById("order-cancel");
-    const nameInput = document.getElementById("order-name");
-    const emailInput = document.getElementById("order-email");
-    const addressInput = document.getElementById("order-address");
-    const notesInput = document.getElementById("order-notes");
-    const paypalContainer = document.getElementById("paypal-button-container");
-    let paypalButtons = null;
+    const checkoutBtn = $("#checkout-btn");
+    const squareModal = document.getElementById("square-modal");
+    const squareClose = document.getElementById("square-modal-close");
+    const squareCancel = document.getElementById("square-cancel");
+    const squarePay = document.getElementById("square-pay");
+    const sqNameInput = document.getElementById("sq-name");
+    const sqEmailInput = document.getElementById("sq-email");
+    const sqAddressInput = document.getElementById("sq-address");
+    const squareError = document.getElementById("square-error");
+    const squareCardContainer = document.getElementById("square-card-container");
+    const squareTestNote = document.getElementById("square-test-note");
 
-    const hideOrderModal = () => orderModal?.classList.add("hidden");
-    const showOrderModal = () => { orderModal?.classList.remove("hidden"); renderPaypalButtons(); };
-    const clearOrderForm = () => {
-     if(nameInput) nameInput.value = '';
-     if(emailInput) emailInput.value = '';
-     if(addressInput) addressInput.value = '';
-     if(notesInput) notesInput.value = '';
+    const setSquareError = (msg='') => {
+     if(!squareError) return;
+     squareError.textContent = msg;
+     squareError.classList.toggle('hidden', !msg);
     };
 
-    orderClose?.addEventListener("click", hideOrderModal);
-    orderCancel?.addEventListener("click", () => { clearOrderForm(); hideOrderModal(); });
+    const hideSquareModal = () => squareModal?.classList.add("hidden");
 
-    const sendOrderEmail = (lines, moneyFormat, orderId) => {
-     const name = nameInput?.value.trim() || '';
-     const email = emailInput?.value.trim() || '';
-     const address = addressInput?.value.trim() || '';
-     const notes = notesInput?.value.trim() || '';
-     const form = document.createElement("form");
-     form.method = "POST";
-     form.action = "https://formsubmit.co/ayyjayy.genki@gmail.com";
-     form.style.display = "none";
-     const addField = (fieldName, value) => {
-      const input = document.createElement("input");
-      input.type = "hidden";
-      input.name = fieldName;
-      input.value = value;
-      form.appendChild(input);
-     };
-     const nextUrl = `${window.location.origin}${window.location.pathname}#checkout-success`;
-     addField('Name', name);
-     addField('Email', email);
-     addField('Address', address);
-     addField('Notes', notes || 'N/A');
-     addField('Items', lines.map((l,i)=>`${i+1}. ${l}`).join('\n'));
-     addField('Subtotal', moneyFormat(subtotal()));
-     addField('PaymentRef', orderId || 'PayPal');
-     addField('_subject', 'GENKI order request (paid)');
-     addField('_captcha', 'false');
-     addField('_next', nextUrl);
-     document.body.appendChild(form);
-     form.submit();
-     form.remove();
+    const ensureSquareCard = async () => {
+     if(squareCard) return;
+     if(!window.Square){
+      throw new Error('Square.js not loaded. Ensure the Square script is included.');
+     }
+     if(isTestMode()){
+      throw new Error('Square app/location IDs are not configured.');
+     }
+     squarePayments = Square.payments(SQUARE_APP_ID, SQUARE_LOCATION_ID);
+     squareCard = await squarePayments.card();
+     await squareCard.attach('#square-card-container');
     };
 
-    function renderPaypalButtons(){
-     if (paypalButtons || !paypalContainer || typeof paypal === 'undefined' || !paypal.Buttons) return;
-     paypalButtons = paypal.Buttons({
-      style: { layout: 'vertical', color: 'white', shape: 'rect', label: 'pay' },
-      createOrder: (data, actions) => {
-       if (!state.items.length){
-        alert('Your cart is empty.');
-        return actions.reject();
-       }
-       const name = nameInput?.value.trim() || '';
-       const email = emailInput?.value.trim() || '';
-       const address = addressInput?.value.trim() || '';
-       if (!name || !email || !address){
-        alert('Please add your name, email, and shipping address.');
-        return actions.reject();
-       }
-       const total = (subtotal()/100).toFixed(2);
-       return actions.order.create({ purchase_units: [{ amount: { value: total } }] });
-      },
-      onApprove: async (data, actions) => {
-       try{
-        const order = await actions.order.capture();
-        const moneyFormat = cents => `${(cents/100).toFixed(2)}`;
-        const lines = state.items.map(it => {
-         const parts = [
-          it.title,
-          it.color ? `Color: ${it.color}` : '',
-          it.skull ? `Skull: ${it.skull}` : '',
-          it.size ? `Size: ${it.size}` : '',
-          `Qty: ${it.qty}`,
-          `Price: ${moneyFormat(it.priceCents)}`
-         ].filter(Boolean);
-         return parts.join(' | ');
-        });
-        sendOrderEmail(lines, moneyFormat, order?.id);
-        clearOrderForm();
-        hideOrderModal();
-       }catch(err){
-        console.error(err);
-        alert('Payment capture failed. Please try again.');
-       }
-      },
-      onError: (err) => {
-       console.error(err);
-       alert('PayPal error. Please try again.');
+    const openSquareModal = async () => {
+     setSquareError('');
+     try{
+      if(isTestMode()){
+       squareCardContainer?.classList.add('hidden');
+       squareTestNote?.classList.remove('hidden');
+      }else{
+       squareCardContainer?.classList.remove('hidden');
+       squareTestNote?.classList.add('hidden');
+       await ensureSquareCard();
       }
-     });
-     paypalButtons.render('#paypal-button-container');
-    }
+      squareModal?.classList.remove("hidden");
+     }catch(err){
+      alert(err.message || 'Unable to start checkout.');
+     }
+    };
 
-    
+    const handleSquarePay = async () => {
+     setSquareError('');
+     const name = sqNameInput?.value.trim() || '';
+     const email = sqEmailInput?.value.trim() || '';
+     const address = sqAddressInput?.value.trim() || '';
+     if (!state.items.length){
+      setSquareError('Your cart is empty.');
+      return;
+     }
+     if(!name || !email || !address){
+      setSquareError('Please add your name, email, and shipping address.');
+      return;
+     }
+     if(squarePay){ squarePay.disabled = true; squarePay.textContent = 'Processing...'; }
+     try{
+      const payload = {
+       amount: subtotal(),
+       buyer: { name, email, address },
+       items: state.items
+      };
+     let resp;
+      if(isTestMode()){
+       submitOrderSlipForm(payload);
+       state.items = [];
+       save(); render(); hideSquareModal(); close();
+       return;
+      }else{
+       await ensureSquareCard();
+       const tokenResult = await squareCard.tokenize();
+       if(tokenResult.status !== 'OK'){
+        throw new Error(tokenResult.errors?.[0]?.message || 'Card could not be processed.');
+       }
+       resp = await fetch('/.netlify/functions/square-payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...payload, sourceId: tokenResult.token })
+       });
+      }
+      const data = await resp.json().catch(() => ({}));
+      if(!resp.ok || !data.success){
+       const fallback = isTestMode()
+        ? 'Unable to submit your request. Please try again.'
+        : 'Payment failed. Please try again.';
+       throw new Error(data.error || fallback);
+      }
+      const successTitle = document.getElementById('checkout-success-title');
+      const successCopy = document.getElementById('checkout-success-copy');
+      if(isTestMode()){
+       if(successTitle) successTitle.textContent = 'Thanks for your interest';
+       if(successCopy) successCopy.textContent = "We got your request. We'll reach out if anything is needed.";
+      }else{
+       if(successTitle) successTitle.textContent = 'Order received';
+       if(successCopy) successCopy.textContent = "We'll process your order shortly. Check your email for the receipt.";
+      }
+      state.items = [];
+      save(); render(); hideSquareModal(); close();
+      window.location.hash = '#checkout-success';
+     }catch(err){
+      setSquareError(err.message || 'Payment failed.');
+     }finally{
+      if(squarePay){ squarePay.disabled = false; squarePay.textContent = 'Pay Now'; }
+     }
+    };
 
     if(checkoutBtn){
      checkoutBtn.addEventListener('click', () => {
@@ -894,49 +964,30 @@
        alert('Your cart is empty.');
        return;
       }
-      showOrderModal();
+      openSquareModal();
      });
     }
+    squareClose?.addEventListener('click', hideSquareModal);
+    squareCancel?.addEventListener('click', hideSquareModal);
+    squarePay?.addEventListener('click', handleSquarePay);
    }
 
-   // Enhance New Arrivals cards with quick "Add" buttons
-   function enhanceNewArrivals(){
-    const cards = $$('#new-items-carousel .cursor-pointer');
-    cards.forEach(card => {
-     if(card.querySelector('.quick-add')) return; // avoid dupes
-     const titleEl = card.querySelector('h3');
-     const priceEl = card.querySelector('p');
-     const imgEl = card.querySelector('img');
-     const idMatch = (card.getAttribute('onclick')||'').match(/#([a-z0-9-]+)/i);
-     const id = idMatch ? idMatch[1] : (titleEl? titleEl.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g,'-') : 'genki-item');
-     const addBtn = document.createElement('button');
-     addBtn.className = 'quick-add absolute bottom-3 left-3 px-3 py-1 bg-white text-black text-xs font-bold tracking-widest hover:bg-gray-200';
-     addBtn.textContent = 'ADD';
-     addBtn.addEventListener('click', (e)=>{
-      e.stopPropagation();
-      add({
-       id,
-       title: titleEl? titleEl.textContent.trim():'GENKI Item',
-       priceCents: parsePriceToCents(priceEl? priceEl.textContent:''),
-       qty: 1,
-       color: undefined,
-       size: undefined,
-       image: imgEl? imgEl.src: undefined
-      });
-      open();
-     });
-     card.style.position='relative';
-     card.appendChild(addBtn);
-    });
-   }
+   // No quick-add buttons for New Arrivals; cards already link to product pages.
+   function enhanceNewArrivals(){}
 
    // Public API if needed elsewhere
    window.Cart = { add, remove, updateQty, open };
 
    load();
    wireBasics();
-   enhanceNewArrivals();
    render();
+
+   if(isTestMode() && window.location.hash === '#checkout-success'){
+    const successTitle = document.getElementById('checkout-success-title');
+    const successCopy = document.getElementById('checkout-success-copy');
+    if(successTitle) successTitle.textContent = 'Thanks for your interest';
+    if(successCopy) successCopy.textContent = "We got your request. We'll reach out if anything is needed.";
+   }
   })();
   </script>
 
@@ -963,14 +1014,14 @@
 
     // 1. Centralized Product Data (Updated to be a single source of truth)
     const PRODUCTS = [
-      // --- NEW PRODUCT: ACD Unisex Organic Sweatshirt ---
+      // --- NEW PRODUCT: ACD Unfinished Organic Sweatshirt ---
       {
         id: 'acd-organic-sweatshirt',
-        title: "ACD Unisex Organic Sweatshirt",
+        title: "ACD Unfinished Organic Sweatshirt",
         price: "$40.00 ",
         badge: 'ACD Sketch',
         categories: 'Tops',
-        keywords: 'sweatshirt unisex organic casual sketch artwork ali can\'t draw',
+        keywords: 'sweatshirt Unfinished organic casual sketch artwork ali can\'t draw',
         sizes: ['S', 'M', 'L', 'XL', '2XL'],
         images: [
           'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712698-5.png', 
@@ -1017,7 +1068,7 @@
         ],
         details: [
           'Organic cotton material for sustainability.',
-          'Unisex fit, suitable for all.',
+          'Unfinished fit, suitable for all.',
           'Features the "Ali Can\'t Draw" Sketch #014 graphic.',
           'Ribbed cuffs and hem.'
         ]
@@ -1027,12 +1078,12 @@
 
       // --- NEW PRODUCT: Genki Rainman Heavy T-shirt ---
       {
-        id: 'acd-genki-rainman-heavy-shirt',
-        title: "ACD Genki Rainman Heavy T-shirt",
+        id: 'genki-rainman-heavy-shirt',
+        title: "Genki Rainman Heavy T-shirt",
         price: "$30.00 ",
         badge: '',
         categories: 'Tops',
-        keywords: 'tshirt unisex heavy kanji loud artwork ali can\'t draw',
+        keywords: 'tshirt Unfinished heavy kanji loud artwork ali can\'t draw',
         images: [
           'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602337217700-1.png', 
           'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602337217700-2.png',
@@ -1077,7 +1128,7 @@
         ],
         details: [
           'Organic cotton material for sustainability.',
-          'Unisex fit, suitable for all.',
+          'Unfinished fit, suitable for all.',
           'Features the "Ali Can\'t Draw" Sketch #014 graphic.',
           'Ribbed cuffs and hem.'
         ]
@@ -1301,8 +1352,8 @@
 
       // --- NEW PRODUCT: GENKI Make America Genki Again Electric Blue Snapback ---
       {
-        id: 'genki-maga-snapback',
-        title: '[GENKI] Make America Genki Again Electric Blue Snapback',
+        id: 'genki-america-snapback',
+        title: 'Make America Genki Again Electric Blue Snapback',
         price: '$30.00 ',
         badge: '',
         categories: 'Accessories',
@@ -2325,14 +2376,14 @@ setTimeout(morphText, pauseDuration);
     window.addEventListener('hashchange', route);
     // Note: The scroll listener is dynamically added/removed in the route function now.
 
-    window.onload = function () {
+   window.onload = function () {
  route();
 };
 
 
    </script>
-    <!-- PayPal SDK (replace YOUR_PAYPAL_CLIENT_ID with your real client ID) -->
-    <script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=USD"></script>
+   <!-- Square Web Payments SDK -->
+   <script src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
 </body>
 </html>
 
