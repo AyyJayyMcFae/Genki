@@ -7,7 +7,7 @@
   <!-- Load Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Use Inter font family -->
-  <link rel="icon" type="image/png" sizes="32x32" href="https://res.cloudinary.com/dzhvdoifb/image/upload/v1767129720/blueGlitch_sddxpb.png?v=2">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://res.cloudinary.com/dzhvdoifb/image/upload/v1770029525/favicon_gfcbmi.png">
   <link rel="shortcut icon" href="https://res.cloudinary.com/dzhvdoifb/image/upload/v1767129720/blueGlitch_sddxpb.png?v=2">
   <link rel="apple-touch-icon" sizes="180x180" href="https://res.cloudinary.com/dzhvdoifb/image/upload/v1767129720/blueGlitch_sddxpb.png?v=2">
 
@@ -17,14 +17,15 @@
 
   <meta property="og:title" content="GENKI – Streetwear Label">
   <meta property="og:description" content="Limited-run streetwear built for real life.">
-  <meta property="og:image" content="https://yourdomain.com/og-image.jpg">
-  <meta property="og:url" content="https://yourdomain.com">
+  <meta property="og:image" content="https://res.cloudinary.com/dzhvdoifb/image/upload/v1770029525/favicon_gfcbmi.png">
+  <meta property="og:url" content="https://ayyjayymcfae.github.io/Genki/">
   <meta property="og:type" content="website">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GENKI – Streetwear Label">
   <meta name="twitter:description" content="Limited-run streetwear built for real life.">
-  <meta name="twitter:image" content="https://yourdomain.com/og-image.jpg">
+  <meta name="twitter:image" content="  <meta property="og:image" content="https://res.cloudinary.com/dzhvdoifb/image/upload/v1770029525/favicon_gfcbmi.png">
+">
 
   <!---
   <link rel="canonical" href="https://yourdomain.com">
@@ -96,14 +97,16 @@
    }
     #search-input-container.active { width: 280px; opacity: 1; pointer-events: auto; }
     #search-input-container input { padding-right: 40px; }
-  /* Cart drawer */
-    #cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.5); opacity: 0; pointer-events: none; transition: opacity .25s ease; z-index: 49; }
-    #cart-drawer { position: fixed; top: 0; right: -420px; height: 100vh; width: 360px; max-width: 90vw; background: #0b0b0b; border-left: 1px solid rgba(255,255,255,.1); box-shadow: -12px 0 40px rgba(0,0,0,.5); transition: right .3s ease; z-index: 50; display: flex; flex-direction: column; }
-    #cart-drawer.open { right: 0; }
-    #cart-overlay.open { opacity: 1; pointer-events: auto; }
+  /* Cart summary list */
     .cart-line { display: grid; grid-template-columns: 64px 1fr auto; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,.06); }
     .qty-btn { width: 28px; height: 28px; border: 1px solid rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center; }
     .price-sm { color: #cfcfcf; }
+    @keyframes cart-pulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,255,255,.35); }
+      70% { transform: scale(1.08); box-shadow: 0 0 0 12px rgba(255,255,255,0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+    }
+    .cart-attention { animation: cart-pulse .7s ease-out; }
   </style>
 </head>
 <body>
@@ -553,6 +556,65 @@
     </div>
 
     <!-- ============================================== -->
+    <!-- 3d. CHECKOUT PAGE -->
+    <!-- ============================================== -->
+    <div id="checkout-page" class="page-content py-24">
+      <div class="px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto space-y-8">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div class="space-y-2">
+            <p class="text-xs uppercase tracking-[0.35em] text-white/60">Checkout</p>
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">Review & pay</h1>
+            <p class="text-gray-400 leading-relaxed">Confirm your order and shipping details before payment.</p>
+          </div>
+          <a href="#shop" class="text-sm text-gray-400 hover:text-white transition underline underline-offset-4">Continue shopping</a>
+        </div>
+
+        <div class="grid gap-8 lg:grid-cols-12">
+          <section class="lg:col-span-7 space-y-4">
+            <div class="flex items-center justify-between">
+              <h2 class="text-xl font-semibold tracking-wide">Your cart</h2>
+              <span class="text-xs text-gray-400 uppercase tracking-[0.3em]">Items</span>
+            </div>
+            <div id="cart-items" class="space-y-4"></div>
+            <div class="border-t border-white/10 pt-4 flex items-center justify-between">
+              <span class="text-sm text-gray-400">Subtotal</span>
+              <span id="cart-subtotal" class="text-lg font-bold">$0.00</span>
+            </div>
+          </section>
+
+          <section id="checkout-form" class="lg:col-span-5 space-y-4 bg-neutral-900/60 border border-white/10 p-6">
+            <h2 class="text-xl font-semibold tracking-wide">Payment</h2>
+            <p class="text-xs text-gray-400">Pay securely without leaving the site.</p>
+            <p id="square-test-note" class="text-xs text-yellow-400 hidden">Test mode: no payment will be collected.</p>
+            <div class="space-y-3">
+              <input id="sq-name" type="text" placeholder="Full name" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
+              <input id="sq-email" type="email" placeholder="Email" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
+              <div class="flex flex-col gap-3 sm:flex-row">
+                <input id="sq-address" type="text" placeholder="Shipping address" class="w-full flex-1 bg-neutral-800 border border-white/10 p-2 text-white" />
+                <input id="sq-address-2" type="text" placeholder="Apt, suite (optional)" class="w-full flex-1 bg-neutral-800 border border-white/10 p-2 text-white" />
+              </div>
+              <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                <input id="sq-city" type="text" placeholder="City" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
+                <input id="sq-state" type="text" placeholder="State" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
+                <input id="sq-zip" type="text" placeholder="ZIP" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
+              </div>
+              <textarea id="sq-notes" type="text" placeholder="Extra Notes (optional)" class="w-full bg-neutral-800 border border-white/10 p-2 text-white"></textarea>
+              <button id="square-pay-later" class="w-full py-3 border border-white/20 text-white font-semibold uppercase tracking-widest text-xs hover:border-white transition">Submit order without payment</button>
+              
+              <p class="text-xs uppercase tracking-[0.3em] text-white/60">Card details (required for Pay Now)</p>
+              <button id="square-pay" class="w-full py-3 bg-white text-black font-bold tracking-widest hover:bg-gray-200">Pay Now</button>
+              <div id="square-card-container" class="bg-neutral-800 border border-white/10 p-3 rounded"></div>
+              <p class="text-xs text-gray-500">Payment is optional, but appreciated. You can submit your order now and pay later.</p>
+              
+              
+              <p id="square-error" class="text-sm text-red-400 hidden"></p>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================== -->
     <!-- 3e. CHECKOUT SUCCESS PAGE -->
     <!-- ============================================== -->
     <div id="checkout-success-page" class="page-content py-24">
@@ -560,6 +622,8 @@
         <p class="text-xs uppercase tracking-[0.35em] text-white/60">Success</p>
         <h1 id="checkout-success-title" class="text-4xl md:text-5xl font-extrabold tracking-tight">Order received</h1>
         <p id="checkout-success-copy" class="text-gray-300 leading-relaxed">We'll process your order shortly. Check your email for the receipt.</p>
+        <p class="text-sm text-gray-400">Cancel code: <span id="checkout-cancel-code" class="text-white font-semibold tracking-widest">—</span></p>
+        <p class="text-xs text-gray-500">You can cancel this order within <span id="checkout-cancel-window">12</span> hours.</p>
         <div class="flex items-center justify-center gap-3">
           <a href="#shop" class="px-6 py-3 bg-white text-black font-semibold uppercase tracking-widest text-sm hover:bg-gray-200 transition">Back to shop</a>
           <a href="#contact" class="px-6 py-3 border border-white/30 text-white font-semibold uppercase tracking-widest text-sm hover:border-white transition">Need help?</a>
@@ -680,46 +744,7 @@
 
   </main>
 
-   <!-- Cart overlay & drawer -->
-  <div id="cart-overlay"></div>
-  <aside id="cart-drawer" class="text-white">
-    <div class="p-4 border-b border-white/10 flex items-center justify-between">
-      <h3 class="text-xl font-bold tracking-widest">CART</h3>
-      <button id="cart-close" class="p-2 hover:bg-white/10" aria-label="Close cart">X</button>
-    </div>
-    <div id="cart-items" class="flex-1 overflow-auto p-4"></div>
-    <div class="p-4 border-t border-white/10 space-y-3">
-      <div class="flex items-center justify-between text-lg"><span>Subtotal</span><span id="cart-subtotal" class="font-bold">$0.00</span></div>
-      <button id="checkout-btn" class="w-full py-3 bg-white text-black font-extrabold uppercase tracking-widest hover:bg-gray-200">Checkout</button>
-      <p class="text-xs text-gray-400">Taxes and shipping calculated at checkout.</p>
-    </div>
-  </aside>
-
-  <!-- Square checkout modal -->
-  <div id="square-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden z-50 flex items-center justify-center px-4">
-   <div class="bg-neutral-900 border border-white/10 w-full max-w-xl p-6 space-y-4">
-    <div class="flex items-center justify-between">
-     <h3 class="text-xl font-bold tracking-widest text-white">Checkout</h3>
-     <button id="square-modal-close" class="text-gray-400 hover:text-white">✕</button>
-    </div>
-    <p class="text-sm text-gray-400">Pay securely without leaving the site.</p>
-    <p id="square-test-note" class="text-xs text-yellow-400 hidden">Test mode: no payment will be collected.</p>
-    <div class="space-y-3">
-     <input id="sq-name" type="text" placeholder="Full name" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
-     <input id="sq-email" type="email" placeholder="Email" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
-     <input id="sq-address" type="text" placeholder="Shipping address" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
-     <textarea id="sq-notes" type="text" placeholder="Extra Notes (optional)" class="w-full bg-neutral-800 border border-white/10 p-2 text-white"></textarea>
-     <div id="square-card-container" class="bg-neutral-800 border border-white/10 p-3 rounded"></div>
-    </div>
-    <div class="flex items-center justify-between gap-3">
-     <button id="square-cancel" class="px-4 py-2 border border-white/20 text-white hover:bg-white/10">Cancel</button>
-     <button id="square-pay" class="px-4 py-2 bg-white text-black font-bold tracking-widest hover:bg-gray-200">Pay Now</button>
-    </div>
-    <p id="square-error" class="text-sm text-red-400 hidden"></p>
-   </div>
-  </div>
-
-  <!-- FormSubmit order slip (test mode, no payment) -->
+   <!-- FormSubmit order slip (test mode, no payment) -->
   <form id="order-slip-form" action="https://formsubmit.co/ayyjayy.genki@gmail.com" method="POST" class="hidden">
     <input type="text" name="_honey" tabindex="-1" autocomplete="off" />
     <input type="hidden" name="_subject" value="New order request (test)" />
@@ -730,15 +755,23 @@
     <input type="hidden" name="name" />
     <input type="hidden" name="email" />
     <input type="hidden" name="address" />
+    <input type="hidden" name="address_line1" />
+    <input type="hidden" name="address_line2" />
+    <input type="hidden" name="city" />
+    <input type="hidden" name="state" />
+    <input type="hidden" name="zip" />
     <input type="hidden" name="items" />
+    <input type="hidden" name="cancel_code" />
+    <input type="hidden" name="cancel_window_hours" />
   </form>
  
   <script>
   // ------- Minimal Cart Module (localStorage) -------
   (function(){
+   const SQUARE_APP_ID = 'REPLACE_WITH_YOUR_SQUARE_APP_ID';
+   const SQUARE_LOCATION_ID = 'REPLACE_WITH_YOUR_SQUARE_LOCATION_ID';
+
    const STORAGE_KEY = 'genki_cart_v1';
-   const SQUARE_APP_ID = 'REPLACE_WITH_SQUARE_APP_ID';
-   const SQUARE_LOCATION_ID = 'REPLACE_WITH_SQUARE_LOCATION_ID';
    const state = { items: [] }; // {id, title, priceCents, qty, color, size, image}
    let squarePayments = null;
    let squareCard = null;
@@ -751,7 +784,18 @@
     !SQUARE_LOCATION_ID ||
     SQUARE_LOCATION_ID.startsWith('REPLACE');
 
+   const CANCEL_WINDOW_HOURS = 12;
+
    function money(cents){ return `$${(cents/100).toFixed(2)}`; }
+   function generateCancelCode(){
+    return String(Math.floor(10000000 + Math.random() * 90000000));
+   }
+   function setCancelDetails(code){
+    const codeEl = document.getElementById('checkout-cancel-code');
+    const windowEl = document.getElementById('checkout-cancel-window');
+    if(codeEl) codeEl.textContent = code || '—';
+    if(windowEl) windowEl.textContent = String(CANCEL_WINDOW_HOURS);
+   }
    function parsePriceToCents(text){
     if(!text) return 0; const n = parseFloat(text.replace(/[^0-9.]/g,'')); return Math.round(n*100);
    }
@@ -768,15 +812,27 @@
    function remove(index){ state.items.splice(index,1); save(); render(); }
    function updateQty(index, delta){ const it = state.items[index]; if(!it) return; it.qty = Math.max(1, it.qty+delta); save(); render(); }
    function subtotal(){ return state.items.reduce((s,it)=> s + it.priceCents * it.qty, 0); }
-   function buildOrderSlipText({ amount, buyer, items }){
+   function buildOrderSlipText({ amount, buyer, items, cancelCode, cancelWindowHours }){
     const lines = [];
     lines.push(`New order request`);
     lines.push(`Total: ${money(amount)}`);
+    if(cancelCode){
+     lines.push(`Cancel Code: ${cancelCode}`);
+     if(cancelWindowHours){ lines.push(`Cancel Window: ${cancelWindowHours} hours`); }
+    }
     lines.push('');
     lines.push('Customer:');
     lines.push(`Name: ${buyer?.name || ''}`);
     lines.push(`Email: ${buyer?.email || ''}`);
-    lines.push(`Address: ${buyer?.address || ''}`);
+    if(buyer?.addressParts){
+     lines.push(`Address: ${buyer.addressParts.line1 || ''}`);
+     if(buyer.addressParts.line2){ lines.push(`Address 2: ${buyer.addressParts.line2}`); }
+     lines.push(`City: ${buyer.addressParts.city || ''}`);
+     lines.push(`State: ${buyer.addressParts.state || ''}`);
+     lines.push(`ZIP: ${buyer.addressParts.zip || ''}`);
+    }else{
+     lines.push(`Address: ${buyer?.address || ''}`);
+    }
     lines.push('');
     lines.push('Items:');
     (items || []).forEach((it) => {
@@ -800,58 +856,92 @@
     setValue('name', payload.buyer?.name || '');
     setValue('email', payload.buyer?.email || '');
     setValue('address', payload.buyer?.address || '');
+    setValue('address_line1', payload.buyer?.addressParts?.line1 || '');
+    setValue('address_line2', payload.buyer?.addressParts?.line2 || '');
+    setValue('city', payload.buyer?.addressParts?.city || '');
+    setValue('state', payload.buyer?.addressParts?.state || '');
+    setValue('zip', payload.buyer?.addressParts?.zip || '');
     setValue('items', buildOrderSlipText(payload));
+    setValue('cancel_code', payload.cancelCode || '');
+    setValue('cancel_window_hours', payload.cancelWindowHours ? String(payload.cancelWindowHours) : '');
     form.submit();
    }
 
    function render(){
-    const list = $('#cart-items'); const sub = $('#cart-subtotal'); const badge = $('#cart-count');
-    list.innerHTML = '';
-    state.items.forEach((it, i)=>{
-     const row = document.createElement('div'); row.className='cart-line';
-     row.innerHTML = `
-      <img src="${it.image||'https://placehold.co/120x120'}" alt="${it.title}" class="w-16 h-16 object-cover border border-white/10"/>
-      <div>
-       <div class="font-semibold">${it.title}</div>
-       <div class="text-xs text-gray-400">${it.color||''} ${it.size? '· '+it.size:''} </div>
-       <div class="mt-2 inline-flex items-center space-x-2">
-        <button class="qty-btn" data-idx="${i}" data-delta="-1">-</button>
-        <span>${it.qty}</span>
-        <button class="qty-btn" data-idx="${i}" data-delta="1">+</button>
-       </div>
-      </div>
-      <div class="text-right">
-       <div class="price-sm">${money(it.priceCents)}</div>
-       <button class="mt-6 text-xs text-gray-400 hover:text-white" data-remove="${i}">Remove</button>
-      </div>`;
-     list.appendChild(row);
-    });
-    sub.textContent = money(subtotal());
+    const list = $('#cart-items');
+    const sub = $('#cart-subtotal');
+    const badge = $('#cart-count');
+    const checkoutBtn = $('#checkout-btn');
+    if(list){
+     list.innerHTML = '';
+     if(!state.items.length){
+      const empty = document.createElement('p');
+      empty.className = 'text-sm text-gray-400';
+      empty.textContent = 'Your cart is empty.';
+      list.appendChild(empty);
+     }else{
+      state.items.forEach((it, i)=>{
+       const row = document.createElement('div'); row.className='cart-line';
+       row.innerHTML = `
+        <img src="${it.image||'https://placehold.co/120x120'}" alt="${it.title}" class="w-16 h-16 object-cover border border-white/10"/>
+        <div>
+         <div class="font-semibold">${it.title}</div>
+         <div class="text-xs text-gray-400">${it.color||''} ${it.size? '/ '+it.size:''} </div>
+         <div class="mt-2 inline-flex items-center space-x-2">
+          <button class="qty-btn" data-idx="${i}" data-delta="-1">-</button>
+          <span>${it.qty}</span>
+          <button class="qty-btn" data-idx="${i}" data-delta="1">+</button>
+         </div>
+        </div>
+        <div class="text-right">
+         <div class="price-sm">${money(it.priceCents)}</div>
+         <button class="mt-6 text-xs text-gray-400 hover:text-white" data-remove="${i}">Remove</button>
+        </div>`;
+       list.appendChild(row);
+      });
+     }
+    }
+    if(sub){ sub.textContent = money(subtotal()); }
     const count = state.items.reduce((n,it)=>n+it.qty,0);
     if(badge){ badge.textContent = count; }
+    if(checkoutBtn){
+     checkoutBtn.disabled = !state.items.length;
+     checkoutBtn.classList.toggle('opacity-50', !state.items.length);
+     checkoutBtn.classList.toggle('cursor-not-allowed', !state.items.length);
+    }
    }
 
-   function open(){ $('#cart-overlay').classList.add('open'); $('#cart-drawer').classList.add('open'); }
-   function close(){ $('#cart-overlay').classList.remove('open'); $('#cart-drawer').classList.remove('open'); }
+   function nudgeCartIcon(){
+    const toggle = $('#cart-toggle');
+    if(!toggle) return;
+    toggle.classList.remove('cart-attention');
+    void toggle.offsetWidth;
+    toggle.classList.add('cart-attention');
+   }
+
+   function goToCheckout(){ window.location.hash = '#checkout'; }
 
    function wireBasics(){
-    const toggle = $('#cart-toggle'); if(toggle) toggle.addEventListener('click', open);
-    const closeBtn = $('#cart-close'); if(closeBtn) closeBtn.addEventListener('click', close);
-    const overlay = $('#cart-overlay'); if(overlay) overlay.addEventListener('click', close);
+    const toggle = $('#cart-toggle');
+    if(toggle) toggle.addEventListener('click', () => { nudgeCartIcon(); goToCheckout(); });
     const list = $('#cart-items');
-    list.addEventListener('click', (e)=>{
-     const btn = e.target.closest('button'); if(!btn) return;
-     if(btn.dataset.idx && btn.dataset.delta){ updateQty(parseInt(btn.dataset.idx,10), parseInt(btn.dataset.delta,10)); }
-     if(btn.dataset.remove){ remove(parseInt(btn.dataset.remove,10)); }
-    });
+    if(list){
+     list.addEventListener('click', (e)=>{
+      const btn = e.target.closest('button'); if(!btn) return;
+      if(btn.dataset.idx && btn.dataset.delta){ updateQty(parseInt(btn.dataset.idx,10), parseInt(btn.dataset.delta,10)); }
+      if(btn.dataset.remove){ remove(parseInt(btn.dataset.remove,10)); }
+     });
+    }
     const checkoutBtn = $("#checkout-btn");
-    const squareModal = document.getElementById("square-modal");
-    const squareClose = document.getElementById("square-modal-close");
-    const squareCancel = document.getElementById("square-cancel");
     const squarePay = document.getElementById("square-pay");
+    const squarePayLater = document.getElementById("square-pay-later");
     const sqNameInput = document.getElementById("sq-name");
     const sqEmailInput = document.getElementById("sq-email");
     const sqAddressInput = document.getElementById("sq-address");
+    const sqAddress2Input = document.getElementById("sq-address-2");
+    const sqCityInput = document.getElementById("sq-city");
+    const sqStateInput = document.getElementById("sq-state");
+    const sqZipInput = document.getElementById("sq-zip");
     const squareError = document.getElementById("square-error");
     const squareCardContainer = document.getElementById("square-card-container");
     const squareTestNote = document.getElementById("square-test-note");
@@ -862,7 +952,29 @@
      squareError.classList.toggle('hidden', !msg);
     };
 
-    const hideSquareModal = () => squareModal?.classList.add("hidden");
+    const waitForSquare = (timeoutMs = 4000) =>
+     new Promise((resolve, reject) => {
+      const start = Date.now();
+      const tick = () => {
+       if(window.Square) return resolve();
+       if(Date.now() - start >= timeoutMs) return reject(new Error('Square.js not loaded.'));
+       setTimeout(tick, 100);
+      };
+      tick();
+     });
+
+    const prepareSquareUi = async () => {
+     squareCardContainer?.classList.remove('hidden');
+     squareTestNote?.classList.toggle('hidden', !isTestMode());
+     if(!isTestMode()){
+      try{
+       await waitForSquare();
+       await ensureSquareCard();
+      }catch(err){
+       setSquareError(err.message || 'Unable to load card fields.');
+      }
+     }
+    };
 
     const ensureSquareCard = async () => {
      if(squareCard) return;
@@ -877,48 +989,58 @@
      await squareCard.attach('#square-card-container');
     };
 
-    const openSquareModal = async () => {
-     setSquareError('');
-     try{
-      if(isTestMode()){
-       squareCardContainer?.classList.add('hidden');
-       squareTestNote?.classList.remove('hidden');
-      }else{
-       squareCardContainer?.classList.remove('hidden');
-       squareTestNote?.classList.add('hidden');
-       await ensureSquareCard();
-      }
-      squareModal?.classList.remove("hidden");
-     }catch(err){
-      alert(err.message || 'Unable to start checkout.');
-     }
+    const buildPayload = () => {
+     const name = sqNameInput?.value.trim() || '';
+     const email = sqEmailInput?.value.trim() || '';
+     const address1 = sqAddressInput?.value.trim() || '';
+     const address2 = sqAddress2Input?.value.trim() || '';
+     const city = sqCityInput?.value.trim() || '';
+     const state = sqStateInput?.value.trim() || '';
+     const zip = sqZipInput?.value.trim() || '';
+     const addressBits = [address1, address2, city, state, zip].filter(Boolean);
+     const address = addressBits.join(', ');
+     const cancelCode = generateCancelCode();
+     return {
+      name,
+      email,
+      address1,
+      address,
+      cancelCode,
+      addressParts: { line1: address1, line2: address2, city, state, zip }
+     };
     };
 
     const handleSquarePay = async () => {
      setSquareError('');
-     const name = sqNameInput?.value.trim() || '';
-     const email = sqEmailInput?.value.trim() || '';
-     const address = sqAddressInput?.value.trim() || '';
+     if(isTestMode()){
+      setSquareError('Pay Now is disabled until Square is configured.');
+      return;
+     }
+     const { name, email, address1, address, cancelCode, addressParts } = buildPayload();
      if (!state.items.length){
       setSquareError('Your cart is empty.');
       return;
      }
-     if(!name || !email || !address){
-      setSquareError('Please add your name, email, and shipping address.');
+     if(!name || !email || !address1 || !addressParts.city || !addressParts.state || !addressParts.zip){
+      setSquareError('Please add your name, email, and full shipping address.');
       return;
      }
      if(squarePay){ squarePay.disabled = true; squarePay.textContent = 'Processing...'; }
      try{
       const payload = {
        amount: subtotal(),
-       buyer: { name, email, address },
-       items: state.items
+       buyer: { name, email, address, addressParts },
+       items: state.items,
+       cancelCode,
+       cancelWindowHours: CANCEL_WINDOW_HOURS
       };
-     let resp;
+      let resp;
       if(isTestMode()){
        submitOrderSlipForm(payload);
        state.items = [];
-       save(); render(); hideSquareModal(); close();
+       save(); render();
+       setCancelDetails(cancelCode);
+       window.location.hash = '#checkout-success';
        return;
       }else{
        await ensureSquareCard();
@@ -948,8 +1070,9 @@
        if(successTitle) successTitle.textContent = 'Order received';
        if(successCopy) successCopy.textContent = "We'll process your order shortly. Check your email for the receipt.";
       }
+      setCancelDetails(cancelCode);
       state.items = [];
-      save(); render(); hideSquareModal(); close();
+      save(); render();
       window.location.hash = '#checkout-success';
      }catch(err){
       setSquareError(err.message || 'Payment failed.');
@@ -958,25 +1081,55 @@
      }
     };
 
+    const handlePayLater = () => {
+     setSquareError('');
+     const { name, email, address1, address, cancelCode, addressParts } = buildPayload();
+     if (!state.items.length){
+      setSquareError('Your cart is empty.');
+      return;
+     }
+     if(!name || !email || !address1 || !addressParts.city || !addressParts.state || !addressParts.zip){
+      setSquareError('Please add your name, email, and full shipping address.');
+      return;
+     }
+     const payload = {
+      amount: subtotal(),
+      buyer: { name, email, address, addressParts },
+      items: state.items,
+      cancelCode,
+      cancelWindowHours: CANCEL_WINDOW_HOURS
+     };
+     submitOrderSlipForm(payload);
+     const successTitle = document.getElementById('checkout-success-title');
+     const successCopy = document.getElementById('checkout-success-copy');
+     if(successTitle) successTitle.textContent = 'Order received';
+     if(successCopy) successCopy.textContent = 'We got your order request. Payment is pending.';
+     setCancelDetails(cancelCode);
+     state.items = [];
+     save(); render();
+     window.location.hash = '#checkout-success';
+    };
+
     if(checkoutBtn){
      checkoutBtn.addEventListener('click', () => {
       if (!state.items.length){
        alert('Your cart is empty.');
        return;
       }
-      openSquareModal();
+      const form = document.getElementById('checkout-form');
+      form?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      sqNameInput?.focus();
      });
     }
-    squareClose?.addEventListener('click', hideSquareModal);
-    squareCancel?.addEventListener('click', hideSquareModal);
+    prepareSquareUi();
     squarePay?.addEventListener('click', handleSquarePay);
+    squarePayLater?.addEventListener('click', handlePayLater);
    }
-
    // No quick-add buttons for New Arrivals; cards already link to product pages.
    function enhanceNewArrivals(){}
 
    // Public API if needed elsewhere
-   window.Cart = { add, remove, updateQty, open };
+   window.Cart = { add, remove, updateQty, open: nudgeCartIcon, goToCheckout };
 
    load();
    wireBasics();
@@ -2214,6 +2367,7 @@ setTimeout(morphText, pauseDuration);
       '#collabs': 'collabs-page',
       '#contact': 'contact-page',
       '#lookbook-main': 'lookbook-main-page',
+      '#checkout': 'checkout-page',
       '#checkout-success': 'checkout-success-page',
       '#size-guide': 'product-page',
     };
