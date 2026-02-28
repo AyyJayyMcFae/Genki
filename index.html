@@ -24,7 +24,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GENKI – Streetwear Label">
   <meta name="twitter:description" content="Limited-run streetwear built for real life.">
-  <meta name="twitter:image" content="  <meta property="og:image" content="https://res.cloudinary.com/dzhvdoifb/image/upload/v1770029525/favicon_gfcbmi.png">
+  <meta name="twitter:image" content="https://res.cloudinary.com/dzhvdoifb/image/upload/v1770029525/favicon_gfcbmi.png">
 
 <script>
  tailwind.config = {
@@ -40,6 +40,7 @@
       maroon: '#4a1010',
       charcoal: '#38302a',
       Moss: '#70745b',
+      
      },
     },
    },
@@ -129,11 +130,13 @@
             </button>
           </div>
         </div>
-        <button aria-label="Login" class="p-2 text-white/90 hover:text-white transition duration-150 hover:bg-white/10">
+        <button id="auth-button" aria-label="Login" class="p-2 text-white/90 hover:text-white transition duration-150 hover:bg-white/10 flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <span id="auth-chip" class="hidden md:inline text-[10px] uppercase tracking-[0.2em]">Guest</span>
         </button>
-        <button aria-label="Wishlist" class="p-2 text-white/90 hover:text-white transition duration-150 hover:bg-white/10">
+        <button id="wishlist-nav-button" aria-label="Wishlist" class="relative p-2 text-white/90 hover:text-white transition duration-150 hover:bg-white/10">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
+          <span id="wishlist-count" class="absolute -top-1 -right-1 min-w-5 h-5 px-1 bg-white text-[11px] text-black rounded-full flex items-center justify-center font-bold">0</span>
         </button>
         <button id="cart-toggle" aria-label="Shopping Bag" class="relative p-2 text-white/90 hover:text-white transition duration-150 hover:bg-white/10">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
@@ -141,7 +144,6 @@
         </button>
       </nav>
     </div>
-  </header>
   </header>
 
 
@@ -179,13 +181,13 @@
       <!-- NEW ITEMS -->
       <section id="new-arrivals-section" class="py-20 md:py-24 bg-[#0d0d0d]">
         <div class="px-4 sm:px-6 lg:px-8">
-          <h2 class="text-3xl md:text-4xl font-bold mb-10 text-white border-b border-white/10 pb-4">NEW ARRIVALS</h2>
+          <h2 class="text-3xl md:text-4xl font-bold mb-10 text-white border-b border-white/10 pb-4">FEATURED</h2>
           <div id="new-items-carousel" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6 overflow-hidden">
             <!-- Cards kept identical to your original -->
             <div class="bg-transparent overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-[1.02] transition duration-300 border border-white/10 cursor-pointer" onclick="window.location.hash='#genki-esquire-jacket'">
               <div class="relative overflow-hidden">
                 <img src="https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176681305211008-2.png" alt="Genki Esquire Packable Jacket" class="w-full h-64 object-cover transition duration-300 hover:opacity-80" onerror="this.onerror=null;this.src='https://placehold.co/600x600/222222/ffffff?text=Genki+Esquire+Packable+Jacket'">
-                <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">NEW</span>
+                <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">FEATURED</span>
               </div>
               <div class="p-4 text-center">
                 <h3 class="text-lg font-semibold text-white mb-1">Genki Esquire Packable Jacket</h3>
@@ -199,7 +201,7 @@
             <div class="bg-transparent overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-[1.02] transition duration-300 border border-white/10 cursor-pointer" onclick="window.location.hash='#acd-kancho-hancho-shirt'">
               <div class="relative overflow-hidden">
                 <img src="https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176586211717117-1.png" alt="ACD Kancho Hancho Button Up Shirt" class="w-full h-64 object-cover transition duration-300 hover:opacity-80" onerror="this.onerror=null;this.src='https://placehold.co/600x600/1a1a1a/ffffff?text=Cropped+Hoodie'">
-               <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">NEW</span>
+               <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">FEATURED</span>
               </div>
               <div class="p-4 text-center">
                 <h3 class="text-lg font-semibold text-white mb-1">ACD Kancho Hancho Button Up Shirt</h3>
@@ -209,7 +211,7 @@
             <div class="bg-transparent overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-[1.02] transition duration-300 border border-white/10 cursor-pointer" onclick="window.location.hash='#genki-sakura-hoodie'">
               <div class="relative overflow-hidden">
                 <img src="https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17658626415530-0.png" alt="Genki Sakura Heavy Hoodie" class="w-full h-64 object-cover transition duration-300 hover:opacity-80" onerror="this.onerror=null;this.src='https://placehold.co/600x600/4a4a4a/ffffff?text=Sakura+Hoodie'">
-               <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">NEW</span>
+               <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">FEATURED</span>
               </div>
               <div class="p-4 text-center">
                 <h3 class="text-lg font-semibold text-white mb-1">Genki Sakura Heavy Hoodie</h3>
@@ -226,7 +228,7 @@
             <div class="bg-transparent overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-[1.02] transition duration-300 hidden md:block border border-white/10 cursor-pointer" onclick="window.location.hash='#acd-neko-pastel-cap'">
               <div class="relative overflow-hidden">
                 <img src="https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509539212418-2.png" alt="ACD Neko Pastel Baseball Cap" class="w-full h-64 object-cover transition duration-300 hover:opacity-80" onerror="this.onerror=null;this.src='https://placehold.co/600x600/d6d6d6/000000?text=Pastel+Neko+Cap'">
-               <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">NEW</span>
+               <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">FEATURED</span>
               </div>
               <div class="p-4 text-center">
                 <h3 class="text-lg font-semibold text-white mb-1">ACD Neko Pastel Baseball Cap</h3>
@@ -242,7 +244,7 @@
             <div class="bg-transparent overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-[1.02] transition duration-300 hidden xl:block border border-white/10 cursor-pointer" onclick="window.location.hash='#genki-america-snapback'">
               <div class="relative overflow-hidden">
                 <img src="https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17617999204796-0.png" alt="[GENKI] Make America Genki Again Electric Blue Snapback" class="w-full h-64 object-cover transition duration-300 hover:opacity-80" onerror="this.onerror=null;this.src='https://placehold.co/600x600/0000ff/ffffff?text=Electric+Blue+Snapback'">
-               <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">NEW</span>
+               <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">FEATURED</span>
               </div>
               <div class="p-4 text-center">
                 <h3 class="text-lg font-semibold text-white mb-1">Make America Genki Again Snapback</h3>
@@ -296,64 +298,9 @@
         <!-- ACCENT CHANGE: border-red-600 -> border-white/20 -->
         <p class="text-gray-400 mb-8 max-w-4xl border-l-4 border-white/20 pl-4">Introducing the latest drops from GENKI. Limited runs focused on technical fabrics, oversized fits, and distressed finishes. Everything here is fresh.</p>
 
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-          <!-- Product Card 1: Esquire Jacket -->
-          <div class="bg-transparent overflow-hidden shadow-lg border border-white/10 cursor-pointer hover:border-white" onclick="window.location.hash='#genki-esquire-jacket'">
-            <div class="relative overflow-hidden">
-              <img src="https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176681305211008-2.png" alt="ACD Unfinished Organic Sweatshirt" class="w-full h-80 object-cover">
-             <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">NEW</span>
-             
-            </div>
-            <div class="p-4">
-              <h3 class="font-semibold text-white mb-1">Genki Esquire Paclable Jacket</h3>
-              <p class="text-sm text-gray-400">$34.00</p>
-            </div>
-          </div>
-          <!-- Product Card 2:kancho Hancho Button Up -->
-          <div class="bg-transparent overflow-hidden shadow-lg border border-white/10 cursor-pointer hover:border-white" onclick="window.location.hash='#acd-kancho-hancho-shirt'">
-            <div class="relative overflow-hidden">
-              <img src="https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176586211717117-1.png" alt="ACD Kancho Hancho Button Up" class="w-full h-80 object-cover">
-             <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">NEW</span>  
-            </div>
-            <div class="p-4">
-              <h3 class="font-semibold text-white mb-1">ACD Kancho Hancho Button Up</h3>
-              <p class="text-sm text-gray-400">$41.00</p>
-            </div>
-          </div>
-          <!-- Product Card 3: Genki Sakura Heavy Hoodie -->
-          <div class="bg-transparent overflow-hidden shadow-lg border border-white/10 cursor-pointer hover:border-white" onclick="window.location.hash='#genki-sakura-hoodie'">
-            <div class="relative overflow-hidden">
-              <img src="https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17658626415530-0.png" alt="Genki Sakura Heavy Hoodie" class="w-full h-80 object-cover">
-             <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">NEW</span>
-            </div>
-            <div class="p-4">
-              <h3 class="font-semibold text-white mb-1">Genki Sakura Heavy Hoodie</h3>
-              <p class="text-sm text-gray-400">$38.00</p>
-            </div>
-          </div>
-          <!-- Product Card 4: ACD Neko Pastel Baseball Cap -->
-          <div class="bg-transparent overflow-hidden shadow-lg border border-white/10 cursor-pointer hover:border-white" onclick="window.location.hash='#acd-neko-pastel-cap'">
-            <div class="relative overflow-hidden">
-              <img src="https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509539212418-2.png" alt="ACD Neko Pastel Baseball Cap" class="w-full h-80 object-cover">
-             <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">NEW</span> 
-            </div>
-            <div class="p-4">
-              <h3 class="font-semibold text-white mb-1">ACD Neko Pastel Baseball Cap</h3>
-              <p class="text-sm text-gray-400">$30.00</p>
-            </div>
-          </div>
-          <!-- Product Card 5: GENKI Make America Genki Again Snapback -->
-          <div class="bg-transparent overflow-hidden shadow-lg border border-white/10 cursor-pointer hover:border-white" onclick="window.location.hash='#genki-america-snapback'">
-            <div class="relative overflow-hidden">
-              <img src="https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17617999204796-0.png" alt="[GENKI] Make America Genki Again Electric Blue Snapback" class="w-full h-80 object-cover">
-             <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">NEW</span>
-              
-            </div>
-            <div class="p-4">
-              <h3 class="font-semibold text-white mb-1">Make America Genki Again Snapback</h3>
-              <p class="text-sm text-gray-400">$30.00</p>
-            </div>
-          </div>
+        <div id="new-page-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"></div>
+        <div class="text-center mt-10">
+          <a href="#shop" class="inline-block px-8 py-3 bg-neutral-600 text-white font-semibold uppercase tracking-widest text-sm border border-neutral-500 hover:bg-gray-200 hover:text-black transition duration-150">Shop All</a>
         </div>
       </div>
     </div>
@@ -367,28 +314,43 @@
 
         <div class="flex flex-col md:flex-row gap-8">
           <!-- Sidebar (Categories/Filters) - Now sharp -->
-          <aside class="w-full md:w-64 flex-shrink-0 bg-neutral-800/50 p-6 border border-white/10">
-            <h3 class="text-xl font-bold mb-4 border-b border-white/10 pb-2">CATEGORIES</h3>
-            <ul class="space-y-2">
-              <!-- categories links are functional with filtering (Counts updated for new 10 products) -->
-              <li><a href="#shop/categories-all" class="text-white hover:text-white/70 transition block" data-categories="all" data-label="All Products">All Products</a></li>
-              <li><a href="#shop/categories-tops" class="text-white hover:text-white/70 transition block" data-categories="Tops" data-label="Tops">Tops</a></li>
-              <li><a href="#shop/categories-bottoms" class="text-white hover:text-white/70 transition block" data-categories="Bottoms" data-label="Bottoms">Bottoms</a></li>
-              <li><a href="#shop/categories-outerwear" class="text-white hover:text-white/70 transition block" data-categories="Outerwear" data-label="Outerwear">Outerwear</a></li>
-              <li><a href="#shop/categories-accessories" class="text-white hover:text-white/70 transition block" data-categories="Accessories" data-label="Accessories">Accessories</a></li>
-            </ul>
-            
-            <h3 class="text-xl font-bold mt-8 mb-4 border-b border-white/10 pb-2">FILTER</h3>
-            <div class="space-y-3 text-sm">
-              <p class="text-gray-300">Basic Filters (Static for Demo)</p>
-              <label class="flex items-center text-gray-300">
-                <input type="checkbox" class="form-checkbox text-white bg-gray-700 border-gray-600 mr-2 focus:ring-2 focus:ring-white">
-                In Stock
-              </label>
-              <label class="flex items-center text-gray-500">
-                <input type="checkbox" checked class="form-checkbox text-white bg-gray-700 border-gray-600 mr-2 focus:ring-2 focus:ring-white">
-                On Sale
-              </label>
+          <aside id="shop-filters" class="w-full md:w-64 flex-shrink-0 bg-neutral-800/50 p-6 border border-white/10">
+            <button id="shop-filters-toggle" type="button" class="w-full md:hidden flex items-center justify-between border border-white/15 px-3 py-2 text-xs uppercase tracking-[0.2em] text-white/80 hover:text-white hover:border-white/40 transition" aria-expanded="false" aria-controls="shop-filters-panel">
+              <span>Categories & Filters</span>
+              <span id="shop-filters-toggle-copy">Show</span>
+            </button>
+            <div id="shop-filters-panel" class="hidden md:block mt-4 md:mt-0">
+              <h3 class="text-xl font-bold mb-4 border-b border-white/10 pb-2">CATEGORIES</h3>
+              <ul class="space-y-2">
+                <!-- categories links are functional with filtering (Counts updated for new 10 products) -->
+                <li><a href="#shop/categories-all" class="text-white hover:text-white/70 transition block" data-categories="all" data-label="All Products">All Products</a></li>
+                <li><a href="#shop/categories-tops" class="text-white hover:text-white/70 transition block" data-categories="Tops" data-label="Tops">Tops</a></li>
+                <li><a href="#shop/categories-bottoms" class="text-white hover:text-white/70 transition block" data-categories="Bottoms" data-label="Bottoms">Bottoms</a></li>
+                <li><a href="#shop/categories-outerwear" class="text-white hover:text-white/70 transition block" data-categories="Outerwear" data-label="Outerwear">Outerwear</a></li>
+                <li><a href="#shop/categories-accessories" class="text-white hover:text-white/70 transition block" data-categories="Accessories" data-label="Accessories">Accessories</a></li>
+              </ul>
+              
+              <h3 class="text-xl font-bold mt-8 mb-4 border-b border-white/10 pb-2">FILTER</h3>
+              <div class="space-y-3 text-sm">
+                <div class="space-y-2">
+                  <label for="shop-sort-select" class="text-gray-300 uppercase tracking-[0.2em] text-[11px]">Sort</label>
+                  <select id="shop-sort-select" class="w-full bg-neutral-900 border border-white/15 p-2 text-white text-sm focus:outline-none focus:border-white/40">
+                    <option value="newest">Newest</option>
+                    <option value="price-asc">Price: Low to High</option>
+                    <option value="price-desc">Price: High to Low</option>
+                    <option value="name-asc">Name: A to Z</option>
+                  </select>
+                </div>
+                <p class="text-gray-300">Basic Filters (Static for Demo)</p>
+                <label class="flex items-center text-gray-300">
+                  <input type="checkbox" class="form-checkbox text-white bg-gray-700 border-gray-600 mr-2 focus:ring-2 focus:ring-white">
+                  In Stock
+                </label>
+                <label class="flex items-center text-gray-500">
+                  <input type="checkbox" checked class="form-checkbox text-white bg-gray-700 border-gray-600 mr-2 focus:ring-2 focus:ring-white">
+                  On Sale
+                </label>
+              </div>
             </div>
           </aside>
 
@@ -396,6 +358,71 @@
          <!---->  <section class="flex-1">
             <div id="shop-product-grid" class="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
               <!-- Products will be injected by JavaScript here -->
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <div id="wishlist-page" class="page-content py-24">
+      <div class="px-4 sm:px-6 lg:px-8">
+        <h2 class="text-5xl font-extrabold mb-6 text-white tracking-tighter">YOUR WISHLIST</h2>
+        <p id="wishlist-page-copy" class="text-gray-400 mb-8 max-w-3xl border-l-4 border-white/20 pl-4">Sign in with Google to save products to your wishlist.</p>
+        <section class="flex-1">
+          <div id="wishlist-product-grid" class="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"></div>
+        </section>
+      </div>
+    </div>
+
+    <div id="account-page" class="page-content py-24">
+      <div class="px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+        <div class="flex items-start justify-between gap-4 mb-8">
+          <div>
+            <h2 class="text-5xl font-extrabold text-white tracking-tighter">MY ACCOUNT</h2>
+            <p id="account-page-copy" class="text-gray-400 mt-3">Sign in to manage your profile and view order history.</p>
+          </div>
+          <button id="account-signout-button" type="button" class="hidden px-5 py-2 border border-white/30 text-white text-xs uppercase tracking-[0.2em] hover:border-white transition">Sign Out</button>
+        </div>
+
+        <div id="account-auth-gate" class="hidden border border-white/10 bg-neutral-900/50 p-6 text-center mb-8">
+          <p class="text-gray-300 mb-4">You need to sign in first.</p>
+          <button type="button" id="account-signin-button" class="px-6 py-3 bg-white text-black font-semibold uppercase tracking-widest text-sm hover:bg-gray-200 transition">Sign in with Google</button>
+        </div>
+
+        <div id="account-content" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <section class="lg:col-span-1 border border-white/10 bg-neutral-900/40 p-6">
+            <h3 class="text-xl font-bold mb-4 border-b border-white/10 pb-2">Profile</h3>
+            <form id="account-profile-form" class="space-y-4">
+              <div>
+                <label for="account-email" class="block text-xs uppercase tracking-[0.2em] text-gray-400 mb-2">Email</label>
+                <input id="account-email" type="email" readonly class="w-full bg-neutral-800 border border-white/10 p-2 text-gray-400" />
+              </div>
+              <div>
+                <label for="account-full-name" class="block text-xs uppercase tracking-[0.2em] text-gray-400 mb-2">Full Name</label>
+                <input id="account-full-name" type="text" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
+              </div>
+              <div>
+                <label for="account-phone" class="block text-xs uppercase tracking-[0.2em] text-gray-400 mb-2">Phone</label>
+                <input id="account-phone" type="tel" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
+              </div>
+              <div>
+                <label class="inline-flex items-center gap-2 text-sm text-gray-300">
+                  <input id="account-marketing-opt-in" type="checkbox" class="form-checkbox text-white bg-neutral-800 border-white/20">
+                  Receive drop announcements
+                </label>
+              </div>
+              <button id="account-save-profile" type="submit" class="w-full py-3 bg-white text-black font-semibold uppercase tracking-widest text-sm hover:bg-gray-200 transition">Save Profile</button>
+              <p id="account-profile-status" class="text-xs text-gray-400 min-h-4"></p>
+            </form>
+          </section>
+
+          <section class="lg:col-span-2 border border-white/10 bg-neutral-900/40 p-6">
+            <div class="flex items-center justify-between gap-3 mb-4 border-b border-white/10 pb-2">
+              <h3 class="text-xl font-bold">Order History</h3>
+              <button id="account-refresh-orders" type="button" class="px-3 py-2 border border-white/20 text-xs uppercase tracking-[0.2em] hover:border-white transition">Refresh</button>
+            </div>
+            <div id="account-orders-list" class="space-y-3">
+              <p class="text-sm text-gray-400">No orders yet.</p>
             </div>
           </section>
         </div>
@@ -738,30 +765,41 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-4">
           <!-- Image Gallery (All images and containers are sharp) -->
           <div class="space-y-4">
-            <img id="product-main-image" src="https://placehold.co/1200x1600/333333/ffffff?text=Oversized+Hoodie+%28Front%29" alt="Product Main Image" class="w-full shadow-xl border border-white/10" style="max-height:65vh; aspect-ratio: 4 / 5; object-fit: contain; width:100%; height:auto;">
-            <div id="product-thumbs" class="grid grid-cols-3 gap-4">
-              <img data-index="0" class="product-thumb w-full h-32 object-cover border border-white/10 cursor-pointer hover:opacity-80 transition" src="https://placehold.co/600x600/444444/ffffff?text=Detail+1" alt="Thumb 1">
-              <img data-index="1" class="product-thumb w-full h-32 object-cover border border-white/10 cursor-pointer hover:opacity-80 transition" src="https://placehold.co/600x600/555555/ffffff?text=Detail+2" alt="Thumb 2">
-              <img data-index="2" class="product-thumb w-full h-32 object-cover border border-white/10 cursor-pointer hover:opacity-80 transition" src="https://placehold.co/600x600/666666/ffffff?text=Back+View" alt="Thumb 3">
+            <div class="relative">
+              <img id="product-main-image" src="https://placehold.co/1200x1600/333333/ffffff?text=Oversized+Hoodie+%28Front%29" alt="Product Main Image" class="w-full shadow-xl border border-white/10" style="max-height:65vh; aspect-ratio: 4 / 5; object-fit: contain; width:100%; height:auto;">
+              <button id="product-thumbs-prev" type="button" aria-label="Previous image" class="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center border border-white/25 bg-black/40 hover:border-white transition disabled:opacity-35 disabled:cursor-not-allowed">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+              </button>
+              <button id="product-thumbs-next" type="button" aria-label="Next image" class="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center border border-white/25 bg-black/40 hover:border-white transition disabled:opacity-35 disabled:cursor-not-allowed">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </button>
+            </div>
+            <div class="space-y-2">
+              <p class="text-xs uppercase tracking-[0.25em] text-white/50">Gallery</p>
+              <div id="product-thumbs" class="grid grid-cols-3 gap-4">
+                <img data-index="0" class="product-thumb w-full h-32 object-cover border border-white/10 cursor-pointer hover:opacity-80 transition" src="https://placehold.co/600x600/444444/ffffff?text=Detail+1" alt="Thumb 1">
+                <img data-index="1" class="product-thumb w-full h-32 object-cover border border-white/10 cursor-pointer hover:opacity-80 transition" src="https://placehold.co/600x600/555555/ffffff?text=Detail+2" alt="Thumb 2">
+                <img data-index="2" class="product-thumb w-full h-32 object-cover border border-white/10 cursor-pointer hover:opacity-80 transition" src="https://placehold.co/600x600/666666/ffffff?text=Back+View" alt="Thumb 3">
+              </div>
             </div>
           </div>
           <!-- Product Details -->
           <div class="space-y-8">
             <div class="border-b border-white/10 pb-6">
               <span id="product-badge" class="text-xs font-medium uppercase tracking-widest text-white border border-white/50 px-1 py-0.5 inline-block">New Arrival</span>
-              <h1 id="product-title" class="text-4xl md:text-5xl font-extrabold mt-1 mb-2">The 'GHOST' Oversized Hoodie</h1>
-              <p id="product-price" class="text-3xl font-light text-white">$120.00 </p>
+              <h1 id="product-title" class="text-4xl md:text-5xl font-extrabold mt-1 mb-2"></h1>
+              <p id="product-price" class="text-3xl font-light text-white"></p>
             </div>
 
             <!-- Variant Selectors (Skull first, then Hoodie) -->
             <div id="product-skull-block">
-              <p class="text-lg font-semibold mb-3">Skull: <span id="product-skull-name" class="text-white">-</span></p>
+              <p class="text-lg font-semibold mb-3"><span id="product-skull-label">Skull</span>: <span id="product-skull-name" class="text-white">-</span></p>
               <div id="product-skull-colors" class="flex space-x-3">
                 <!-- Skull options injected when available -->
               </div>
             </div>
             <div id="product-hoodie-block" class="mt-4">
-              <p class="text-lg font-semibold mb-3">Color: <span id="product-hoodie-name" class="text-white">-</span></p>
+              <p class="text-lg font-semibold mb-3"><span id="product-hoodie-label">Color</span>: <span id="product-hoodie-name" class="text-white">-</span></p>
               <div id="product-hoodie-colors" class="flex space-x-3">
                 <!-- Colors dynamically injected by JS -->
               </div>
@@ -778,6 +816,7 @@
             
             <!-- Add to Cart Button is sharp -->
             <button id="product-add-to-cart" class="w-full py-4 bg-white text-black font-extrabold uppercase tracking-widest text-lg hover:bg-gray-200 transition duration-150 shadow-2xl">ADD TO CART</button>
+            <button id="product-wishlist-toggle" class="mt-3 w-full py-3 border border-white/30 text-white font-semibold uppercase tracking-widest text-sm hover:border-white transition duration-150">ADD TO WISHLIST</button>
 
             <!-- Description -->
             <div>
@@ -787,6 +826,42 @@
               </ul>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- 5b. SIZE GUIDE PAGE -->
+    <!-- ============================================== -->
+    <div id="size-guide-page" class="page-content py-24">
+      <div class="px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-8">
+        <div class="space-y-2">
+          <p class="text-xs uppercase tracking-[0.35em] text-white/60">Size Guide</p>
+          <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">Fit & Measurements</h1>
+          <p class="text-gray-300">Use this guide to choose your best fit. If you prefer oversized styling, go one size up.</p>
+        </div>
+        <div class="overflow-x-auto border border-white/10">
+          <table class="w-full text-sm">
+            <thead class="bg-neutral-900/80">
+              <tr class="text-left">
+                <th class="p-3 border-b border-white/10">Size</th>
+                <th class="p-3 border-b border-white/10">Chest (in)</th>
+                <th class="p-3 border-b border-white/10">Length (in)</th>
+                <th class="p-3 border-b border-white/10">Sleeve (in)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-white/10"><td class="p-3">S</td><td class="p-3">34-36</td><td class="p-3">27</td><td class="p-3">24</td></tr>
+              <tr class="border-b border-white/10"><td class="p-3">M</td><td class="p-3">38-40</td><td class="p-3">28</td><td class="p-3">24.5</td></tr>
+              <tr class="border-b border-white/10"><td class="p-3">L</td><td class="p-3">42-44</td><td class="p-3">29</td><td class="p-3">25</td></tr>
+              <tr class="border-b border-white/10"><td class="p-3">XL</td><td class="p-3">46-48</td><td class="p-3">30</td><td class="p-3">25.5</td></tr>
+              <tr><td class="p-3">2XL</td><td class="p-3">50-52</td><td class="p-3">31</td><td class="p-3">26</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="flex items-center gap-3">
+          <a href="#shop" class="px-6 py-3 bg-white text-black font-semibold uppercase tracking-widest text-sm hover:bg-gray-200 transition">Back to shop</a>
+          <a href="#contact" class="px-6 py-3 border border-white/30 text-white font-semibold uppercase tracking-widest text-sm hover:border-white transition">Need sizing help?</a>
         </div>
       </div>
     </div>
@@ -833,11 +908,13 @@
     <input type="hidden" name="submitted_at" />
   </form>
  
+  <script src="./.genki-secrets.js"></script>
   <script>
   // ------- Minimal Cart Module (localStorage) -------
   (function(){
-   const SQUARE_APP_ID = 'REPLACE_WITH_YOUR_SQUARE_APP_ID';
-   const SQUARE_LOCATION_ID = 'REPLACE_WITH_YOUR_SQUARE_LOCATION_ID';
+   const localConfig = window.__GENKI_CONFIG__ || {};
+   const SQUARE_APP_ID = localConfig.SQUARE_APP_ID || 'REPLACE_WITH_YOUR_SQUARE_APP_ID';
+   const SQUARE_LOCATION_ID = localConfig.SQUARE_LOCATION_ID || 'REPLACE_WITH_YOUR_SQUARE_LOCATION_ID';
 
    const STORAGE_KEY = 'genki_cart_v1';
    const LAST_ORDER_KEY = 'genki_last_order_v1';
@@ -955,13 +1032,28 @@
     setValue('items', buildOrderSlipText(payload));
     setValue('cancel_code', payload.cancelCode || '');
     setValue('cancel_window_hours', payload.cancelWindowHours ? String(payload.cancelWindowHours) : '');
+    const toPlainObject = (fd) => {
+     const out = {};
+     fd.forEach((value, key) => { out[key] = String(value); });
+     return out;
+    };
+    const buildAjaxUrl = (actionUrl) => {
+     const marker = 'https://formsubmit.co/';
+     if(!actionUrl || !actionUrl.startsWith(marker)) return '';
+     return `https://formsubmit.co/ajax/${actionUrl.slice(marker.length)}`;
+    };
     try{
-     await fetch(form.action, {
+     const resp = await fetch(buildAjaxUrl(form.action), {
       method: 'POST',
-      body: new FormData(form),
-      mode: 'no-cors'
+      headers: {
+       'Content-Type': 'application/json',
+       'Accept': 'application/json'
+      },
+      body: JSON.stringify(toPlainObject(new FormData(form)))
      });
-     return true;
+     if(!resp.ok) return false;
+     const data = await resp.json().catch(() => ({}));
+     return !!(data.success || data.message || data.status);
     }catch(_err){
      return false;
     }
@@ -979,13 +1071,28 @@
     setValue('within_window', payload.withinWindow ? 'yes' : 'no');
     setValue('local_match', payload.localMatch ? 'yes' : 'no');
     setValue('submitted_at', new Date().toISOString());
+    const toPlainObject = (fd) => {
+     const out = {};
+     fd.forEach((value, key) => { out[key] = String(value); });
+     return out;
+    };
+    const buildAjaxUrl = (actionUrl) => {
+     const marker = 'https://formsubmit.co/';
+     if(!actionUrl || !actionUrl.startsWith(marker)) return '';
+     return `https://formsubmit.co/ajax/${actionUrl.slice(marker.length)}`;
+    };
     try{
-     await fetch(form.action, {
+     const resp = await fetch(buildAjaxUrl(form.action), {
       method: 'POST',
-      body: new FormData(form),
-      mode: 'no-cors'
+      headers: {
+       'Content-Type': 'application/json',
+       'Accept': 'application/json'
+      },
+      body: JSON.stringify(toPlainObject(new FormData(form)))
      });
-     return true;
+     if(!resp.ok) return false;
+     const data = await resp.json().catch(() => ({}));
+     return !!(data.success || data.message || data.status);
     }catch(_err){
      return false;
     }
@@ -1392,6 +1499,7 @@
       <div class="flex justify-center space-x-6 text-sm mb-6">
         <!-- Footer links are now functional -->
         <a href="#shop" class="hover:text-white transition">Shop</a>
+        <a href="#account" class="hover:text-white transition">Account</a>
         <a href="#about" class="hover:text-white transition">About</a>
         <a href="#collabs" class="hover:text-white transition">Collabs</a>
         <a href="#contact" class="hover:text-white transition">Contact</a>
@@ -1402,12 +1510,292 @@
   </footer>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     // --- JAVASCRIPT FOR DYNAMIC BEHAVIOR ---
 
     // 1. Centralized Product Data (Updated to be a single source of truth)
     const PRODUCTS = [
-      // --- NEW PRODUCT: ACD Unfinished Organic Sweatshirt ---
+
+      // --- NEW PRODUCT: Genki Sport Champion Long Sleeve Shirt ---
+      {
+        id: 'genki-sport-champion-long-sleeve-shirt',
+        title: 'Genki Sport Champion Long Sleeve Shirt',
+        price: '$35.00 ',
+        badge: 'SPORT',
+        categories: 'Tops',
+        keywords: 'genki sport champion long sleeve shirt athletic',
+        sizes: ['S', 'M', 'L', 'XL', '2XL'],
+        images: [
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173490502110580-1.png',
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173490502110580-5.png',
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173490502110580-4.png',
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173490502110580-6.png'
+        ],
+        colors: [],
+        details: [
+          'Athletic long sleeve fit for daily wear.',
+          'Clean GENKI Sport styling with lightweight comfort.',
+          'Easy layering piece for cooler weather.'
+        ]
+      },
+
+      // --- NEW PRODUCT: Genki Rosebush Drawstring Bag ---
+      {
+        id: 'genki-rosebush-drawstring-bag',
+        title: 'Genki Rosebush Drawstring Bag',
+        price: '$28.00 ',
+        badge: '',
+        categories: 'Accessories',
+        keywords: 'genki rosebush drawstring bag floral accessory',
+        images: [
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17009474928894-0.png'
+        ],
+        colors: [],
+        details: [
+          'Lightweight drawstring bag with rosebush graphic.',
+          'Great for gym, errands, and daily carry.',
+          'Compact profile with practical capacity.'
+        ]
+      },
+
+      // --- NEW PRODUCT: Genki Cards Kiss-Cut Stickers ---
+      {
+        id: 'genki-cards-kiss-cut-stickers',
+        title: 'Genki Cards Kiss-Cut Stickers',
+        price: '$10.00 ',
+        badge: '',
+        categories: 'Accessories',
+        keywords: 'genki cards kiss-cut stickers decal',
+        images: [
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173412876110165-0.png'
+        ],
+        colors: [],
+        details: [
+          'Kiss-cut sticker set with GENKI card-inspired art.',
+          'Weather-resistant finish for laptops and bottles.',
+          'Clean peel application.'
+        ]
+      },
+
+      // --- NEW PRODUCT: Genki Topographic Spiral Notebook ---
+      {
+        id: 'genki-topographic-spiral-notebook',
+        title: 'Genki Topographic Spiral Notebook',
+        price: '$20.00 ',
+        badge: '',
+        categories: 'Accessories',
+        keywords: 'genki topographic spiral notebook stationery',
+        images: [
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-172925600012141-0.png',
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-172925600012141-1.png'
+        ],
+        colors: [],
+        details: [
+          'Spiral notebook with topographic GENKI cover graphic.',
+          'Portable format for notes and sketches.',
+          'Designed as everyday desk carry.'
+        ]
+      },
+
+      // --- NEW PRODUCT: Genki Nomad Beanie ---
+      {
+        id: 'genki-nomad-beanie',
+        title: 'Genki Nomad Beanie',
+        price: '$25.00 ',
+        badge: '',
+        categories: 'Accessories',
+        keywords: 'genki nomad beanie knit cap',
+        primaryOptionLabel: 'Beanie',
+        secondaryOptionLabel: 'Kanji',
+        images: [
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-170099458117494-0.png'
+        ],
+        skullOptions: [
+          {
+            name: 'Light Kanji',
+            color: 'bg-neutral-100',
+            hoodies: [
+              { name: 'Black', color: 'bg-black', images: ['https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17009944148936-0.png'] },
+              { name: 'Brown', color: 'bg-amber-950', images: ['https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-170099441412880-0.png'] },
+              { name: 'Dark Grey', color: 'bg-neutral-800', images: ['https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-170099441412881-0.png'] },
+              { name: 'Navy', color: 'bg-brand-navy', images: ['https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17009944148940-0.png'] }
+            ]
+          },
+          {
+            name: 'Dark Kanji',
+            color: 'bg-neutral-700',
+            hoodies: [
+              { name: 'Pink', color: 'bg-pink-300', images: ['https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-170099458117494-0.png'] }, 
+              { name: 'Gold', color: 'bg-yellow-600', images: ['https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-170099458112882-0.png'] },
+              { name: 'Grey', color: 'bg-gray-400', images: ['https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17009945818937-0.png'] },
+              { name: 'White', color: 'bg-white', images: ['https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17009945818938-0.png'] }
+            ]
+          },
+        ],
+        details: [
+          'Nomad beanie with kanji embroidery options.',
+          'Choose beanie color and kanji style.',
+          'Knit construction for everyday wear.'
+        ]
+      },
+
+      // --- NEW PRODUCT: Genki Inkblot Beanie ---
+      {
+        id: 'genki-inkblot-beanie',
+        title: 'Genki Inkblot Beanie',
+        price: '$22.00 ',
+        badge: '',
+        categories: 'Accessories',
+        keywords: 'genki inkblot beanie knit cap',
+        images: [
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17007739318938-0.png'
+        ],
+        colors: [
+          { name: 'white', color: 'bg-white', 
+            images: [
+              'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17007739318938-0.png',
+            ],
+           },
+           {name: 'Pink', color: 'bg-pink-200', 
+            images: [
+              'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-170077393117494-0.png',
+            ],
+           },
+           {name: 'Gold', color: 'bg-yellow-600', 
+            images: [
+              'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-170077393112882-0.png',
+            ],
+           },
+           {name: 'Grey', color: 'bg-gray-400', 
+            images: [
+              'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17007739318937-0.png',
+            ],
+           },
+           {name: 'Red', color: 'bg-red-600', 
+            images: [
+              'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17007739318939-0.png',
+            ],
+           },
+        ],
+        details: [
+          'Inkblot series knit beanie.',
+          'Soft profile for daily wear.',
+          'Simple cuffed fit.'
+        ]
+      },
+
+      
+
+      
+
+    // --- NEW PRODUCT: Genki Woman Eco Tote ---
+     {
+        id: 'genki-woman-eco-tote',
+        title: "Genki Woman Eco Tote",
+        price: "$30.00 ",
+        badge: '',
+        categories: 'Accessories',
+        keywords: 'tote eco sustainable woman',
+        sizes: ['One Size'],
+        images: [
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-172881681510457-0.png'
+        ],
+        colors: [
+          
+        ],
+        details: [
+          "Eco-friendly tote bag made from recycled materials.",
+          "Perfect for carrying your essentials in style.",
+          "Features a unique GENKI logo design."
+        ]
+      },
+
+      // --- NEW PRODUCT: Rosebush Heavy Hoodie ---
+      {
+        id: 'rosebush-heavy-hoodie',
+        title: "Rosebush Heavy Hoodie",
+        price: "$40.00 ",
+        badge: '',
+        categories: 'Tops',
+        keywords: 'hoodie heavy rosebush oversized casual',
+        sizes: ['S', 'M', 'L', 'XL', '2XL'],
+        images: [
+    
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-16754042575530-0.png'
+        ],
+        colors: [
+          { name: 'Black', color: 'bg-black',
+            images: [
+              
+            ],
+          },
+          { name: 'Maroon', color: 'bg-brand-maroon',
+            images: [
+              'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-16754042575586-0.png'
+            ],
+            },
+        ],
+        details: [
+          "Heavyweight hoodie with a rosebush print.",
+          "Made from 85% cotton, 15% polyester blend.",
+          "Oversized fit for comfort and style."
+        ]
+      },
+
+
+      // --- NEW PRODUCT: Nomad Jacket ---
+      {
+        id: 'genki-nomad-jacket',
+        title: "GENKI Nomad Jacket",
+        price: "$55.00 ",
+        badge: '',
+        categories: 'Tops',
+        keywords: 'jacket Unfinished packable casual kanji',
+        sizes: ['S', 'M', 'L', 'XL', '2XL'],
+        images: [
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-170094910711008-2.png', 
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-170094910711008-0.png',
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712698-1.png',
+        ],
+        colors: [
+          { name: 'Black', color: 'bg-black',
+            images: [
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-170094910711008-2.png', 
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-170094910711008-0.png',
+        ],
+           },
+          { name: 'Navy', color: 'bg-gray-800',
+            images: [
+              'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-170094910711014-2.png',
+              'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-170094910711014-0.png'
+            ]
+           },
+          { name: 'Gold', color: 'bg-yellow-600',
+            images: [
+              'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-170094893011026-2.png',
+              'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-170094893011026-0.png'
+            ]
+           },
+          { name: 'Light Blue', color: 'bg-blue-300',
+            images: [
+              'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-170094893012049-2.png',
+              'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-170094893012049-0.png'
+            ]
+           },
+          { name: 'Neon Green', color: 'bg-brand-neon',
+            images: [
+              'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-170094893013434-2.png',
+              'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-170094893013434-0.png'
+            ]
+           }
+        ],
+        details: [
+          'Lightweight and packable for on-the-go lifestyles.',
+          'Water-resistant fabric to keep you dry.',
+        ]
+        
+      },
       {
         id: 'acd-organic-sweatshirt',
         title: "ACD Unfinished Organic Sweatshirt",
@@ -1420,20 +1808,20 @@
           'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712698-5.png', 
           'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712698-2.png',
           'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712698-1.png',
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712698-4.png',
         ],
         colors: [
           { name: 'Black', color: 'bg-black',
             images: [
-          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712698-5.png', 
-          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712698-2.png',
-          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712698-1.png',
+          
         ],
            },
           { name: 'Grey', color: 'bg-gray-500',
             images: [
               'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712713-5.png',
               'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712713-2.png',
-              'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712713-1.png'
+              'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712713-1.png',
+              'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712713-4.png'
             ]
            },
           { name: 'Blue', color: 'bg-blue-600',
@@ -1448,14 +1836,16 @@
             images: [
               'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712703-5.png',
               'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712703-2.png',
-              'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712703-1.png'
+              'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712703-1.png',
+              'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712703-4.png'
             ]
            },
           { name: 'Brown', color: 'bg-brand-charcoal',
             images: [
               'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712708-5.png',
               'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712708-2.png',
-              'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712708-1.png'
+              'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712708-1.png',
+              'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176509461712708-4.png',
             ]
            }
         ],
@@ -1483,13 +1873,6 @@
           'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602337217700-0.png',
         ],
         colors: [
-          { name: 'Black', color: 'bg-black',
-            images: [
-              'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602337215114-1.png',
-              'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602337215114-2.png',
-              'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602337215114-0.png'
-            ]
-           },
           { name: 'Moss', color: 'bg-brand-Moss',
             images: [
               'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602337217700-1.png',
@@ -1497,6 +1880,14 @@
               'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602337217700-0.png'
             ]
            },
+           { name: 'Black', color: 'bg-black',
+            images: [
+              'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602337215114-1.png',
+              'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602337215114-2.png',
+              'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602337215114-0.png'
+            ]
+           },
+          
           { name: 'Navy', color: 'bg-slate-800',
             images: [
               'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602337215181-1.png',
@@ -1587,6 +1978,7 @@
           'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602526613839-3.png',
         ],
         colors: [
+          { name: 'Maroon', color: 'bg-brand-maroon' },
           { name: 'Black', color: 'bg-black',
             images: [
               'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602526611265-0.png',
@@ -1594,7 +1986,7 @@
               'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602526611265-3.png'
             ]
            },
-          { name: 'Maroon', color: 'bg-brand-maroon' },
+          
           { name: 'Rose', color: 'bg-brand-dusty',
             images: [
               'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602526613833-0.png',
@@ -1648,6 +2040,7 @@
       },
 
       // --- NEW PRODUCT: ACD Neko Pastel Baseball Cap ---
+
       {
         id: 'acd-neko-pastel-cap',
         title: 'ACD Neko Pastel Baseball Cap',
@@ -1924,6 +2317,7 @@
         images: [
           'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176586211717117-1.png', 
           'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176586211717117-0.png',
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176586211717117-12.png',
           'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-176586211717117-13.png',
         ],
         
@@ -1937,7 +2331,7 @@
 
       // --- EXISTING PRODUCTS ---
       {
-        id: 'genki-rainman-tee',
+        id: 'genki-rainman-reverse-tee',
         title: 'Genki Rainman Reverse Graphic Tee',
         price: '$30.00 ',
         badge: '',
@@ -1945,13 +2339,42 @@
         keywords: 't-shirt rainman graphic genki reverse',
         images: [
           'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-174708690117202-5.png',
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-174708690117202-2.png',
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-174708690117202-1.png',
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-174708690117202-3.png',
         ],
-        colors: [
-          { name: 'Blue', color: 'bg-blue-700' },
-          { name: 'Black', color: 'bg-black' },
-          { name: 'Army Green', color: 'bg-green-800' },
-          { name: 'Navy', color: 'bg-blue-900' },
-          { name: 'Salmon', color: 'bg-orange-400' }
+       colors: [
+        { name: 'Fatigue Green', color: 'bg-brand-fatigue', images: [
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-174708690117202-5.png',
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-174708690117202-2.png',
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-174708690117202-1.png',
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-174708690117202-3.png',
+          
+        ] },
+        { name: 'Black', color: 'bg-black', images: [
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17470869019575-5.png',
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17470869019575-2.png',
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17470869019575-1.png',
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17470869019575-3.png',
+        ] },
+        { name: 'Watermelon', color: 'bg-red-400', images: [
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17470869019395-5.png',
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17470869019395-2.png',
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17470869019395-1.png',
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17470869019395-3.png',
+        ]},   
+        { name: 'Navy', color: 'bg-blue-950', images: [
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17470869019546-5.png',
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17470869019546-2.png',
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17470869019546-1.png',
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17470869019546-3.png',
+        ] },  
+        { name: 'Blue', color: 'bg-blue-300', images: [
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17470869018481-5.png',
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17470869018481-2.png',
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17470869018481-1.png',
+          'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-17470869018481-3.png',
+        ] }   
         ],
         details: [
           'Bold graphic print design.',
@@ -2133,6 +2556,419 @@ setTimeout(morphText, pauseDuration);
     const searchInput = document.getElementById('header-search-input');
     const searchInputContainer = document.getElementById('search-input-container');
     const searchToggleButton = document.getElementById('search-toggle-button');
+    const authButton = document.getElementById('auth-button');
+    const authChip = document.getElementById('auth-chip');
+    const wishlistNavButton = document.getElementById('wishlist-nav-button');
+    const wishlistCount = document.getElementById('wishlist-count');
+    const wishlistPageCopy = document.getElementById('wishlist-page-copy');
+    const accountPageCopy = document.getElementById('account-page-copy');
+    const accountAuthGate = document.getElementById('account-auth-gate');
+    const accountContent = document.getElementById('account-content');
+    const accountSignInButton = document.getElementById('account-signin-button');
+    const accountSignOutButton = document.getElementById('account-signout-button');
+    const accountProfileForm = document.getElementById('account-profile-form');
+    const accountProfileStatus = document.getElementById('account-profile-status');
+    const accountEmailInput = document.getElementById('account-email');
+    const accountFullNameInput = document.getElementById('account-full-name');
+    const accountPhoneInput = document.getElementById('account-phone');
+    const accountMarketingOptInInput = document.getElementById('account-marketing-opt-in');
+    const accountOrdersList = document.getElementById('account-orders-list');
+    const accountRefreshOrders = document.getElementById('account-refresh-orders');
+
+    // Supabase setup (replace with your project values)
+    const localConfig = window.__GENKI_CONFIG__ || {};
+    const SUPABASE_URL = localConfig.SUPABASE_URL || 'REPLACE_WITH_SUPABASE_URL';
+    const SUPABASE_ANON_KEY = localConfig.SUPABASE_ANON_KEY || 'REPLACE_WITH_SUPABASE_ANON_KEY';
+    const WISHLIST_TABLE = 'wishlists';
+    const PROFILE_TABLE = 'profiles';
+    const ORDERS_TABLE = 'orders';
+    const ORDER_ITEMS_TABLE = 'order_items';
+    const authState = {
+      user: null,
+      wishlistIds: new Set(),
+      supabaseClient: null
+    };
+    const escapeHtml = (value = '') => String(value).replace(/[&<>"']/g, (char) => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    }[char]));
+
+    function hasSupabaseConfig() {
+      return Boolean(
+        SUPABASE_URL &&
+        SUPABASE_ANON_KEY &&
+        !SUPABASE_URL.startsWith('REPLACE_') &&
+        !SUPABASE_ANON_KEY.startsWith('REPLACE_')
+      );
+    }
+
+    function notifyMissingSupabaseConfig() {
+      alert('Add SUPABASE_URL and SUPABASE_ANON_KEY in index.html first.');
+    }
+
+    function formatDate(isoText) {
+      if (!isoText) return 'Unknown date';
+      const d = new Date(isoText);
+      if (Number.isNaN(d.getTime())) return 'Unknown date';
+      return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+    }
+
+    function formatMoney(cents, currency = 'USD') {
+      const amount = Number.isFinite(Number(cents)) ? Number(cents) / 100 : 0;
+      return new Intl.NumberFormat(undefined, { style: 'currency', currency }).format(amount);
+    }
+
+    function getUserChipLabel(user) {
+      const source = (user?.user_metadata?.full_name || user?.email || 'Guest').trim();
+      if (!source) return 'Guest';
+      return source.length > 22 ? `${source.slice(0, 22)}...` : source;
+    }
+
+    function renderWishlistIconSvg(filled) {
+      return filled
+        ? '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>'
+        : '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>';
+    }
+
+    function wishlistButtonMarkup(productId) {
+      const wished = authState.wishlistIds.has(productId);
+      const label = wished ? 'Remove from wishlist' : 'Add to wishlist';
+      const tone = wished ? 'text-red-400 border-red-400/70 bg-black/60' : 'text-white border-white/30 bg-black/60';
+      return `
+        <button type="button" data-wishlist-toggle="${productId}" aria-label="${label}" class="wishlist-toggle absolute top-3 left-3 w-9 h-9 border ${tone} flex items-center justify-center hover:border-white transition z-10">
+          ${renderWishlistIconSvg(wished)}
+        </button>
+      `;
+    }
+
+    function updateAuthUi() {
+      const user = authState.user;
+      if (authChip) authChip.textContent = getUserChipLabel(user);
+      if (authButton) {
+        authButton.setAttribute('aria-label', user ? 'Account' : 'Login');
+        authButton.title = user ? 'Open account' : 'Sign in with Google';
+      }
+      if (wishlistCount) {
+        wishlistCount.textContent = String(authState.wishlistIds.size);
+      }
+      if (wishlistPageCopy) {
+        wishlistPageCopy.textContent = user
+          ? 'Saved items are attached to your account.'
+          : 'Sign in with Google to save products to your wishlist.';
+      }
+      if (accountPageCopy) {
+        accountPageCopy.textContent = user
+          ? 'Manage your profile and review your order history.'
+          : 'Sign in to manage your profile and view order history.';
+      }
+      if (accountSignOutButton) {
+        accountSignOutButton.classList.toggle('hidden', !user);
+      }
+      const isShop = (window.location.hash || '#home').split('?')[0].startsWith('#shop');
+      if (isShop) route();
+      if ((window.location.hash || '#home').split('?')[0] === '#wishlist') renderWishlistPage();
+      if ((window.location.hash || '#home').split('?')[0] === '#account') renderAccountPage();
+      updateProductWishlistButton();
+    }
+
+    async function loadWishlistFromSupabase() {
+      if (!authState.supabaseClient || !authState.user) {
+        authState.wishlistIds = new Set();
+        return;
+      }
+      const { data, error } = await authState.supabaseClient
+        .from(WISHLIST_TABLE)
+        .select('product_id')
+        .eq('user_id', authState.user.id);
+      if (error) {
+        console.error('Wishlist load failed:', error);
+        return;
+      }
+      authState.wishlistIds = new Set((data || []).map(row => row.product_id).filter(Boolean));
+    }
+
+    async function refreshAuthState() {
+      if (!authState.supabaseClient) {
+        authState.user = null;
+        authState.wishlistIds = new Set();
+        updateAuthUi();
+        return;
+      }
+      const { data } = await authState.supabaseClient.auth.getSession();
+      authState.user = data?.session?.user || null;
+      await loadWishlistFromSupabase();
+      updateAuthUi();
+    }
+
+    async function signInWithGoogle() {
+      if (!authState.supabaseClient) {
+        notifyMissingSupabaseConfig();
+        return;
+      }
+      const redirectTo = `${window.location.origin}${window.location.pathname}`;
+      const { error } = await authState.supabaseClient.auth.signInWithOAuth({
+        provider: 'google',
+        options: { redirectTo }
+      });
+      if (error) {
+        alert(error.message || 'Unable to start Google sign-in.');
+      }
+    }
+
+    async function signOutUser() {
+      if (!authState.supabaseClient) return;
+      const { error } = await authState.supabaseClient.auth.signOut();
+      if (error) {
+        alert(error.message || 'Sign-out failed.');
+      } else if ((window.location.hash || '#home').split('?')[0] === '#account') {
+        window.location.hash = '#home';
+      }
+    }
+
+    async function toggleWishlistProduct(productId) {
+      if (!authState.supabaseClient || !authState.user) {
+        await signInWithGoogle();
+        return false;
+      }
+      const alreadySaved = authState.wishlistIds.has(productId);
+      if (alreadySaved) {
+        const { error } = await authState.supabaseClient
+          .from(WISHLIST_TABLE)
+          .delete()
+          .eq('user_id', authState.user.id)
+          .eq('product_id', productId);
+        if (error) {
+          console.error('Wishlist remove failed:', error);
+          alert('Could not remove wishlist item.');
+          return false;
+        }
+        authState.wishlistIds.delete(productId);
+      } else {
+        const { error } = await authState.supabaseClient
+          .from(WISHLIST_TABLE)
+          .insert([{ user_id: authState.user.id, product_id: productId }]);
+        if (error && error.code !== '23505') {
+          console.error('Wishlist save failed:', error);
+          alert('Could not save wishlist item.');
+          return false;
+        }
+        authState.wishlistIds.add(productId);
+      }
+      updateAuthUi();
+      return true;
+    }
+
+    function bindAuthControls() {
+      if (authButton && !authButton.dataset.bound) {
+        authButton.addEventListener('click', async () => {
+          if (authState.user) window.location.hash = '#account';
+          else await signInWithGoogle();
+        });
+        authButton.dataset.bound = '1';
+      }
+      if (wishlistNavButton && !wishlistNavButton.dataset.bound) {
+        wishlistNavButton.addEventListener('click', () => {
+          window.location.hash = '#wishlist';
+        });
+        wishlistNavButton.dataset.bound = '1';
+      }
+      if (accountSignInButton && !accountSignInButton.dataset.bound) {
+        accountSignInButton.addEventListener('click', signInWithGoogle);
+        accountSignInButton.dataset.bound = '1';
+      }
+      if (accountSignOutButton && !accountSignOutButton.dataset.bound) {
+        accountSignOutButton.addEventListener('click', signOutUser);
+        accountSignOutButton.dataset.bound = '1';
+      }
+      if (accountProfileForm && !accountProfileForm.dataset.bound) {
+        accountProfileForm.addEventListener('submit', async (event) => {
+          event.preventDefault();
+          await saveProfileFromForm();
+        });
+        accountProfileForm.dataset.bound = '1';
+      }
+      if (accountRefreshOrders && !accountRefreshOrders.dataset.bound) {
+        accountRefreshOrders.addEventListener('click', () => {
+          loadOrdersForAccount();
+        });
+        accountRefreshOrders.dataset.bound = '1';
+      }
+    }
+
+    async function initSupabaseWishlist() {
+      bindAuthControls();
+      if (!hasSupabaseConfig() || !window.supabase?.createClient) {
+        updateAuthUi();
+        return;
+      }
+      authState.supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      authState.supabaseClient.auth.onAuthStateChange(async (_event, session) => {
+        authState.user = session?.user || null;
+        await loadWishlistFromSupabase();
+        updateAuthUi();
+      });
+      await refreshAuthState();
+    }
+
+    function setAccountProfileStatus(message = '', isError = false) {
+      if (!accountProfileStatus) return;
+      accountProfileStatus.textContent = message;
+      accountProfileStatus.classList.toggle('text-red-400', !!(message && isError));
+      accountProfileStatus.classList.toggle('text-green-400', !!(message && !isError));
+      accountProfileStatus.classList.toggle('text-gray-400', !message);
+    }
+
+    function setAccountViewSignedIn(signedIn) {
+      if (accountAuthGate) accountAuthGate.classList.toggle('hidden', signedIn);
+      if (accountContent) accountContent.classList.toggle('hidden', !signedIn);
+    }
+
+    async function loadProfileForAccount() {
+      if (!authState.supabaseClient || !authState.user) return;
+      if (accountEmailInput) accountEmailInput.value = authState.user.email || '';
+      if (accountFullNameInput) accountFullNameInput.value = authState.user.user_metadata?.full_name || '';
+      if (accountPhoneInput) accountPhoneInput.value = '';
+      if (accountMarketingOptInInput) accountMarketingOptInInput.checked = false;
+      const { data, error } = await authState.supabaseClient
+        .from(PROFILE_TABLE)
+        .select('full_name, phone, marketing_opt_in')
+        .eq('user_id', authState.user.id)
+        .maybeSingle();
+      if (error && error.code !== 'PGRST116') {
+        console.error('Profile load failed:', error);
+        setAccountProfileStatus('Could not load profile.', true);
+        return;
+      }
+      if (data) {
+        if (accountFullNameInput) accountFullNameInput.value = data.full_name || accountFullNameInput.value || '';
+        if (accountPhoneInput) accountPhoneInput.value = data.phone || '';
+        if (accountMarketingOptInInput) accountMarketingOptInInput.checked = !!data.marketing_opt_in;
+      }
+      setAccountProfileStatus('');
+    }
+
+    async function saveProfileFromForm() {
+      if (!authState.supabaseClient || !authState.user) {
+        setAccountProfileStatus('Sign in first.', true);
+        return;
+      }
+      const payload = {
+        user_id: authState.user.id,
+        full_name: (accountFullNameInput?.value || '').trim() || null,
+        phone: (accountPhoneInput?.value || '').trim() || null,
+        marketing_opt_in: !!accountMarketingOptInInput?.checked,
+        updated_at: new Date().toISOString()
+      };
+      const { error } = await authState.supabaseClient
+        .from(PROFILE_TABLE)
+        .upsert(payload, { onConflict: 'user_id' });
+      if (error) {
+        console.error('Profile save failed:', error);
+        setAccountProfileStatus('Could not save profile.', true);
+        return;
+      }
+      if (payload.full_name) {
+        authState.user = {
+          ...authState.user,
+          user_metadata: {
+            ...(authState.user.user_metadata || {}),
+            full_name: payload.full_name
+          }
+        };
+      }
+      updateAuthUi();
+      setAccountProfileStatus('Profile saved.', false);
+    }
+
+    function renderOrdersList(orders = [], itemMap = new Map()) {
+      if (!accountOrdersList) return;
+      if (!orders.length) {
+        accountOrdersList.innerHTML = '<p class="text-sm text-gray-400">No orders yet.</p>';
+        return;
+      }
+      accountOrdersList.innerHTML = '';
+      orders.forEach(order => {
+        const wrap = document.createElement('article');
+        wrap.className = 'border border-white/10 p-4 bg-black/20';
+        const items = itemMap.get(order.id) || [];
+        const itemLines = items.length
+          ? items.map((line) => {
+              const title = escapeHtml(line.product_title || line.product_id || 'Item');
+              const qty = Number(line.qty || 1);
+              const unit = formatMoney(line.price_cents || 0, order.currency || 'USD');
+              const optionBits = [line.color, line.size].filter(Boolean).map(escapeHtml).join(' / ');
+              return `<li class="text-sm text-gray-300">${title}${optionBits ? ` (${optionBits})` : ''} x${qty} <span class="text-gray-500">${unit}</span></li>`;
+            }).join('')
+          : '<li class="text-sm text-gray-500">No line items found.</li>';
+        wrap.innerHTML = `
+          <div class="flex items-center justify-between gap-3 mb-2">
+            <p class="text-sm uppercase tracking-[0.2em] text-gray-400">Order ${escapeHtml(order.order_number || String(order.id))}</p>
+            <p class="text-sm text-gray-400">${formatDate(order.created_at)}</p>
+          </div>
+          <div class="flex items-center justify-between gap-3 mb-3">
+            <p class="text-sm text-gray-300">Status: <span class="uppercase tracking-[0.15em]">${escapeHtml(order.status || 'pending')}</span></p>
+            <p class="text-sm text-white font-semibold">${formatMoney(order.total_cents || 0, order.currency || 'USD')}</p>
+          </div>
+          <ul class="space-y-1">${itemLines}</ul>
+        `;
+        accountOrdersList.appendChild(wrap);
+      });
+    }
+
+    async function loadOrdersForAccount() {
+      if (!accountOrdersList) return;
+      if (!authState.supabaseClient || !authState.user) {
+        accountOrdersList.innerHTML = '<p class="text-sm text-gray-400">Sign in to view order history.</p>';
+        return;
+      }
+      accountOrdersList.innerHTML = '<p class="text-sm text-gray-400">Loading orders...</p>';
+      const { data: orders, error: ordersError } = await authState.supabaseClient
+        .from(ORDERS_TABLE)
+        .select('id, order_number, status, total_cents, currency, created_at')
+        .eq('user_id', authState.user.id)
+        .order('created_at', { ascending: false });
+      if (ordersError) {
+        console.error('Orders load failed:', ordersError);
+        accountOrdersList.innerHTML = '<p class="text-sm text-red-400">Could not load orders.</p>';
+        return;
+      }
+      const orderIds = (orders || []).map(order => order.id);
+      let itemMap = new Map();
+      if (orderIds.length) {
+        const { data: items, error: itemsError } = await authState.supabaseClient
+          .from(ORDER_ITEMS_TABLE)
+          .select('order_id, product_id, product_title, qty, price_cents, size, color')
+          .in('order_id', orderIds);
+        if (itemsError) {
+          console.error('Order items load failed:', itemsError);
+        } else {
+          itemMap = (items || []).reduce((acc, item) => {
+            const key = item.order_id;
+            if (!acc.has(key)) acc.set(key, []);
+            acc.get(key).push(item);
+            return acc;
+          }, new Map());
+        }
+      }
+      renderOrdersList(orders || [], itemMap);
+    }
+
+    async function renderAccountPage() {
+      if (!authState.user) {
+        setAccountViewSignedIn(false);
+        if (accountOrdersList) {
+          accountOrdersList.innerHTML = '<p class="text-sm text-gray-400">Sign in to view order history.</p>';
+        }
+        setAccountProfileStatus('');
+        return;
+      }
+      setAccountViewSignedIn(true);
+      await loadProfileForAccount();
+      await loadOrdersForAccount();
+    }
 
     /**
      * Toggles the visibility of the search input field.
@@ -2223,6 +3059,7 @@ setTimeout(morphText, pauseDuration);
 
         const cardHtml = `
           <div class="relative overflow-hidden">
+            ${wishlistButtonMarkup(product.id)}
             <img src="${product.images[0]}" alt="${product.title}" class="w-full max-h-80 aspect-[4/5] object-cover" style="width:100%; height:auto;">
             ${product.badge ? `<span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">${product.badge}</span>` : ''}
           </div>
@@ -2237,8 +3074,209 @@ setTimeout(morphText, pauseDuration);
           </div>
         `;
         card.innerHTML = cardHtml;
+        const wishlistToggle = card.querySelector('[data-wishlist-toggle]');
+        if (wishlistToggle) {
+          wishlistToggle.addEventListener('click', async (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            const changed = await toggleWishlistProduct(product.id);
+            if (changed) renderShopGrid(productsToRender, title);
+          });
+        }
         gridContainer.appendChild(card);
         
+      });
+    }
+
+    function renderWishlistPage() {
+      const gridContainer = document.getElementById('wishlist-product-grid');
+      if (!gridContainer) return;
+      if (!authState.user) {
+        gridContainer.innerHTML = `
+          <div class="col-span-full border border-white/10 bg-neutral-900/50 p-6 text-center">
+            <p class="text-gray-300 mb-4">Sign in to use your account wishlist.</p>
+            <button type="button" id="wishlist-signin-btn" class="px-6 py-3 bg-white text-black font-semibold uppercase tracking-widest text-sm hover:bg-gray-200 transition">Sign in with Google</button>
+          </div>
+        `;
+        const signInBtn = document.getElementById('wishlist-signin-btn');
+        signInBtn?.addEventListener('click', signInWithGoogle);
+        return;
+      }
+      const products = PRODUCTS.filter(product => authState.wishlistIds.has(product.id));
+      if (!products.length) {
+        gridContainer.innerHTML = '<p class="col-span-full text-gray-400 text-center py-10 text-xl">Your wishlist is empty.</p>';
+        return;
+      }
+      gridContainer.innerHTML = '';
+      products.forEach(product => {
+        const image = (Array.isArray(product.images) && product.images[0]) ? product.images[0] : 'https://placehold.co/600x600/222222/ffffff?text=Product';
+        const card = document.createElement('div');
+        card.className = "bg-transparent overflow-hidden shadow-lg border border-white/10 cursor-pointer hover:border-white transition";
+        card.innerHTML = `
+          <div class="relative overflow-hidden">
+            ${wishlistButtonMarkup(product.id)}
+            <img src="${image}" alt="${escapeHtml(product.title)}" class="w-full h-80 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x600/222222/ffffff?text=Product'">
+          </div>
+          <div class="p-4">
+            <h3 class="font-semibold text-white mb-1">${escapeHtml(product.title)}</h3>
+            <p class="text-sm text-gray-400">${escapeHtml(product.price || '')}</p>
+          </div>
+        `;
+        card.addEventListener('click', () => {
+          window.location.hash = `#${product.id}`;
+        });
+        const wishlistToggle = card.querySelector('[data-wishlist-toggle]');
+        wishlistToggle?.addEventListener('click', async (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          const changed = await toggleWishlistProduct(product.id);
+          if (changed) renderWishlistPage();
+        });
+        gridContainer.appendChild(card);
+      });
+    }
+
+    function updateProductWishlistButton() {
+      const wishlistBtn = document.getElementById('product-wishlist-toggle');
+      if (!wishlistBtn) return;
+      const hash = (window.location.hash || '').split('?')[0].replace('#', '');
+      const activeId = PRODUCTS.some(p => p.id === hash) ? hash : '';
+      if (!activeId) {
+        wishlistBtn.style.display = 'none';
+        return;
+      }
+      const wished = authState.wishlistIds.has(activeId);
+      wishlistBtn.style.display = 'block';
+      wishlistBtn.textContent = wished ? 'REMOVE FROM WISHLIST' : 'ADD TO WISHLIST';
+      wishlistBtn.classList.toggle('bg-white', wished);
+      wishlistBtn.classList.toggle('text-black', wished);
+      wishlistBtn.classList.toggle('border-white', wished);
+      wishlistBtn.classList.toggle('text-white', !wished);
+    }
+    // Example rules: "all sketch items", "blue hats", "black hoodies", "all beanies"
+    const FEATURED_RULE = 'sketch'; 
+    const FEATURED_FALLBACK_IDS = [
+      'genki-esquire-jacket',
+      'acd-kancho-hancho-shirt',
+      'genki-sakura-hoodie',
+      'acd-neko-pastel-cap',
+      'genki-america-snapback'
+    ];
+    const NEW_ARRIVALS_LIMIT = 8;
+    function getFeaturedProducts(limit = 5) {
+      const rule = String(FEATURED_RULE || '').toLowerCase();
+      const typePatterns = {
+        beanie: /\b(beanie|beanies)\b/i,
+        hat: /\b(hat|hats|cap|caps|snapback|snapbacks)\b/i,
+        hoodie: /\b(hoodie|hoodies)\b/i,
+        tee: /\b(tee|tees|t-?shirt|t-?shirts|shirt|shirts)\b/i,
+        jacket: /\b(jacket|jackets|outerwear)\b/i,
+        bag: /\b(bag|bags|duffel|duffel bag|duffel bags)\b/i
+      };
+      const colorPatterns = {
+        blue: /\b(blue|navy|royal blue|electric blue|light blue)\b/i,
+        black: /\bblack\b/i,
+        pink: /\b(pink|rose|watermelon)\b/i,
+        green: /\b(green|mint|fatigue|moss)\b/i,
+        white: /\b(white|ash)\b/i,
+        red: /\b(red|maroon)\b/i,
+        yellow: /\b(yellow|gold|lemon|sand)\b/i,
+        gray: /\b(gray|grey|graphite|charcoal)\b/i
+      };
+      const pickToken = (patterns) =>
+        Object.entries(patterns).find(([, pattern]) => pattern.test(rule))?.[0] || null;
+      const typeKey = pickToken(typePatterns);
+      const colorKey = pickToken(colorPatterns);
+      const wantsSketch = /\b(sketch|acd)\b/i.test(rule);
+
+      const matchesType = (product, key) => {
+        if (!key) return true;
+        const text = [
+          product.title || '',
+          product.keywords || '',
+          Array.isArray(product.categories) ? product.categories.join(' ') : (product.categories || ''),
+          product.category || ''
+        ].join(' ');
+        return typePatterns[key].test(text);
+      };
+      const matchesColor = (product, key) => {
+        if (!key) return true;
+        const names = Array.isArray(product.colors) ? product.colors.map(c => c?.name || '').join(' ') : '';
+        return colorPatterns[key].test(names);
+      };
+      const matchesSketch = (product) => {
+        if (!wantsSketch) return true;
+        const badge = String(product.badge || '');
+        const keywords = String(product.keywords || '');
+        return /sketch|acd/i.test(`${badge} ${keywords}`);
+      };
+
+      let filtered = PRODUCTS.filter(p => matchesSketch(p) && matchesType(p, typeKey) && matchesColor(p, colorKey));
+      if (!filtered.length) {
+        const byId = new Map(PRODUCTS.map(p => [p.id, p]));
+        filtered = FEATURED_FALLBACK_IDS.map(id => byId.get(id)).filter(Boolean);
+      }
+      if (filtered.length < limit) {
+        filtered = filtered.concat(PRODUCTS.filter(p => !filtered.some(x => x.id === p.id)));
+      }
+      return filtered.slice(0, limit);
+    }
+    function renderNewArrivalsFromProducts() {
+      const container = document.getElementById('new-items-carousel');
+      if (!container) return;
+      const featured = getFeaturedProducts(5);
+      container.innerHTML = '';
+
+      featured.forEach((product, index) => {
+        const card = document.createElement('div');
+        const visibilityClass = index === 3 ? ' hidden md:block' : (index === 4 ? ' hidden xl:block' : '');
+        card.className = `bg-transparent overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-[1.02] transition duration-300 border border-white/10 cursor-pointer${visibilityClass}`;
+        card.onclick = () => { window.location.hash = `#${product.id}`; };
+
+        const image = (Array.isArray(product.images) && product.images[0]) ? product.images[0] : 'https://placehold.co/600x600/222222/ffffff?text=Product';
+        const colors = Array.isArray(product.colors) ? product.colors : [];
+        const colorDots = colors.slice(0, 5).map(c => {
+          const dot = c?.color || 'bg-black';
+          const name = c?.name || 'Color';
+          return `<div class="w-4 h-4 ${dot} border border-white/50" title="${name}"></div>`;
+        }).join('');
+
+        card.innerHTML = `
+          <div class="relative overflow-hidden">
+            <img src="${image}" alt="${product.title}" class="w-full h-64 object-cover transition duration-300 hover:opacity-80" onerror="this.onerror=null;this.src='https://placehold.co/600x600/222222/ffffff?text=Product'">
+            <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">NEW</span>
+          </div>
+          <div class="p-4 text-center">
+            <h3 class="text-lg font-semibold text-white mb-1">${product.title}</h3>
+            <p class="text-sm text-gray-400 mb-3">${product.price || ''}</p>
+            ${colorDots ? `<div class="flex justify-center space-x-2">${colorDots}</div>` : ''}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+    function renderShopNewFromProducts() {
+      const grid = document.getElementById('new-page-grid');
+      if (!grid) return;
+      grid.innerHTML = '';
+      const newest = PRODUCTS.slice(0, NEW_ARRIVALS_LIMIT);
+
+      newest.forEach(product => {
+        const card = document.createElement('div');
+        card.className = "bg-transparent overflow-hidden shadow-lg border border-white/10 cursor-pointer hover:border-white";
+        card.onclick = () => { window.location.hash = `#${product.id}`; };
+        const image = (Array.isArray(product.images) && product.images[0]) ? product.images[0] : 'https://placehold.co/600x600/222222/ffffff?text=Product';
+        card.innerHTML = `
+          <div class="relative overflow-hidden">
+            <img src="${image}" alt="${product.title}" class="w-full h-80 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x600/222222/ffffff?text=Product'">
+            <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">NEW</span>
+          </div>
+          <div class="p-4">
+            <h3 class="font-semibold text-white mb-1">${product.title}</h3>
+            <p class="text-sm text-gray-400">${product.price || ''}</p>
+          </div>
+        `;
+        grid.appendChild(card);
       });
     }
     
@@ -2263,9 +3301,13 @@ setTimeout(morphText, pauseDuration);
       const priceEl = document.getElementById('product-price');
       const mainImg = document.getElementById('product-main-image');
       const thumbs = document.getElementById('product-thumbs');
+      const thumbsPrev = document.getElementById('product-thumbs-prev');
+      const thumbsNext = document.getElementById('product-thumbs-next');
       const badge = document.getElementById('product-badge');
       const hoodieColorsContainer = document.getElementById('product-hoodie-colors');
       const skullColorsContainer = document.getElementById('product-skull-colors');
+      const hoodieLabel = document.getElementById('product-hoodie-label');
+      const skullLabel = document.getElementById('product-skull-label');
       const hoodieName = document.getElementById('product-hoodie-name');
       const skullName = document.getElementById('product-skull-name');
       const hoodieBlock = document.getElementById('product-hoodie-block');
@@ -2275,11 +3317,22 @@ setTimeout(morphText, pauseDuration);
       const sizesContainer = document.getElementById('product-sizes');
       const detailsList = document.getElementById('product-details-list');
       const mainImgWrapper = mainImg.parentElement;
+      const THUMBS_PER_PAGE = 3;
+      let activeImageIndex = 0;
+      let thumbWindowStart = 0;
+      let currentGalleryImages = [];
 
       const ensureBackprintBadge = () => {
         const existing = mainImgWrapper.querySelector('.backprint-badge');
-        if (data.id === 'acd-organic-sweatshirt') {
-          mainImgWrapper.classList.add('relative');
+        const backprintProductIds = new Set([
+          'acd-organic-sweatshirt',
+          'genki-rainman-reverse-tee'
+        ]);
+        const shouldShowBackprintBadge =
+          backprintProductIds.has(data.id) &&
+          activeImageIndex === 0 &&
+          currentGalleryImages.length > 0;
+        if (shouldShowBackprintBadge) {
           if (!existing) {
             const badgeEl = document.createElement('span');
             badgeEl.className = 'backprint-badge absolute bottom-2 left-2 px-2 py-1 bg-black/70 text-[11px] uppercase tracking-[0.25em] text-white border border-white/10';
@@ -2288,40 +3341,78 @@ setTimeout(morphText, pauseDuration);
           }
         } else {
           if (existing) existing.remove();
-          mainImgWrapper.classList.remove('relative');
         }
       };
 
       titleEl.textContent = data.title;
       priceEl.textContent = data.price;
+      if (hoodieLabel) hoodieLabel.textContent = data.primaryOptionLabel || 'Color';
+      if (skullLabel) skullLabel.textContent = data.secondaryOptionLabel || 'Skull';
       badge.textContent = data.badge || '';
       badge.style.display = data.badge ? 'inline-block' : 'none'; // Hide badge if empty
 
       // Gallery renderer that honors color-specific image sets
-      const renderGallery = (images) => {
-        const galleryImages = (images && images.length) ? images : fallbackImages;
-        if (galleryImages.length) {
-          mainImg.src = galleryImages[0];
-          ensureBackprintBadge();
+      const syncActiveImage = () => {
+        const total = currentGalleryImages.length;
+        if (!total) {
+          if (thumbsPrev) thumbsPrev.disabled = true;
+          if (thumbsNext) thumbsNext.disabled = true;
+          return;
         }
-
+        activeImageIndex = Math.max(0, Math.min(activeImageIndex, total - 1));
+        mainImg.src = currentGalleryImages[activeImageIndex];
+        if (activeImageIndex < thumbWindowStart || activeImageIndex >= thumbWindowStart + THUMBS_PER_PAGE) {
+          thumbWindowStart = Math.floor(activeImageIndex / THUMBS_PER_PAGE) * THUMBS_PER_PAGE;
+        }
+        renderThumbWindow();
+        ensureBackprintBadge();
+      };
+      const renderThumbWindow = () => {
+        const total = currentGalleryImages.length;
         thumbs.innerHTML = '';
-        galleryImages.slice(0, 3).forEach((src, i) => {
+        const windowImages = currentGalleryImages.slice(thumbWindowStart, thumbWindowStart + THUMBS_PER_PAGE);
+        windowImages.forEach((src, offset) => {
+          const absoluteIndex = thumbWindowStart + offset;
           const img = document.createElement('img');
           img.src = src;
-          img.alt = `${data.title} ${i + 1}`;
+          img.alt = `${data.title} ${absoluteIndex + 1}`;
           img.className = 'product-thumb w-full h-24 object-cover rounded border border-white/10 cursor-pointer hover:opacity-80 transition';
-          img.dataset.index = i;
-          if (i === 0) img.classList.add('border-white', 'border-2');
+          img.dataset.index = absoluteIndex;
+          if (absoluteIndex === activeImageIndex) img.classList.add('border-white', 'border-2');
           img.addEventListener('click', () => {
-            mainImg.src = src;
-            thumbs.querySelectorAll('.product-thumb').forEach(t => t.classList.remove('border-white', 'border-2'));
-            img.classList.add('border-white', 'border-2');
-            ensureBackprintBadge();
+            activeImageIndex = absoluteIndex;
+            syncActiveImage();
           });
           thumbs.appendChild(img);
         });
+
+        if (thumbsPrev) {
+          thumbsPrev.disabled = total <= 1 || activeImageIndex <= 0;
+        }
+        if (thumbsNext) {
+          thumbsNext.disabled = total <= 1 || activeImageIndex >= total - 1;
+        }
       };
+      const renderGallery = (images) => {
+        currentGalleryImages = (images && images.length) ? images : fallbackImages;
+        activeImageIndex = 0;
+        thumbWindowStart = 0;
+        syncActiveImage();
+      };
+      if (thumbsPrev) {
+        thumbsPrev.onclick = () => {
+          if (!currentGalleryImages.length || activeImageIndex <= 0) return;
+          activeImageIndex -= 1;
+          syncActiveImage();
+        };
+      }
+      if (thumbsNext) {
+        thumbsNext.onclick = () => {
+          if (!currentGalleryImages.length || activeImageIndex >= currentGalleryImages.length - 1) return;
+          activeImageIndex += 1;
+          syncActiveImage();
+        };
+      }
 
       // Colors (supports single-color products and skull dual selector)
       hoodieColorsContainer.innerHTML = '';
@@ -2518,6 +3609,14 @@ setTimeout(morphText, pauseDuration);
           Cart.open();
         };
       }
+      const wishlistBtn = document.getElementById('product-wishlist-toggle');
+      if (wishlistBtn) {
+        wishlistBtn.onclick = async () => {
+          const changed = await toggleWishlistProduct(data.id);
+          if (changed) updateProductWishlistButton();
+        };
+      }
+      updateProductWishlistButton();
     }
 
     // 6. Lookbook Logic
@@ -2603,6 +3702,8 @@ setTimeout(morphText, pauseDuration);
       '': 'home-page', 
       '#new': 'new-page',
       '#shop': 'shop-page',
+      '#wishlist': 'wishlist-page',
+      '#account': 'account-page',
       '#about': 'about-page',
       '#collabs': 'collabs-page',
       '#contact': 'contact-page',
@@ -2610,7 +3711,7 @@ setTimeout(morphText, pauseDuration);
       '#lookbook-main': 'lookbook-main-page',
       '#checkout': 'checkout-page',
       '#checkout-success': 'checkout-success-page',
-      '#size-guide': 'product-page',
+      '#size-guide': 'size-guide-page',
     };
 
     function updateCategoryCounts() {
@@ -2630,6 +3731,56 @@ setTimeout(morphText, pauseDuration);
         const count = counts[key] || 0;
         link.textContent = `${label} (${count})`;
       });
+    }
+    const SHOP_FILTERS_STATE_KEY = 'genki_shop_filters_open';
+    function initShopFiltersUI() {
+      const toggle = document.getElementById('shop-filters-toggle');
+      const panel = document.getElementById('shop-filters-panel');
+      const toggleCopy = document.getElementById('shop-filters-toggle-copy');
+      if (!toggle || !panel || !toggleCopy) return;
+
+      const isMobile = window.matchMedia('(max-width: 767px)').matches;
+      const setOpen = (open, persist = true) => {
+        panel.classList.toggle('hidden', !open);
+        toggle.setAttribute('aria-expanded', String(open));
+        toggleCopy.textContent = open ? 'Hide' : 'Show';
+        if (persist) sessionStorage.setItem(SHOP_FILTERS_STATE_KEY, open ? '1' : '0');
+      };
+
+      if (!toggle.dataset.bound) {
+        toggle.addEventListener('click', () => {
+          const open = toggle.getAttribute('aria-expanded') !== 'true';
+          setOpen(open, true);
+        });
+        panel.addEventListener('click', (event) => {
+          if (!window.matchMedia('(max-width: 767px)').matches) return;
+          const categoryLink = event.target.closest('[data-categories]');
+          if (categoryLink) setOpen(false, true);
+        });
+        toggle.dataset.bound = '1';
+      }
+
+      if (isMobile) {
+        const saved = sessionStorage.getItem(SHOP_FILTERS_STATE_KEY);
+        setOpen(saved === '1', false);
+      } else {
+        setOpen(true, false);
+      }
+    }
+    function sortProductsForShop(products, sortBy = 'newest') {
+      const parsePrice = (product) => {
+        const amount = parseFloat(String(product?.price || '').replace(/[^0-9.]/g, ''));
+        return Number.isFinite(amount) ? amount : 0;
+      };
+      const sorted = [...products];
+      if (sortBy === 'price-asc') {
+        sorted.sort((a, b) => parsePrice(a) - parsePrice(b));
+      } else if (sortBy === 'price-desc') {
+        sorted.sort((a, b) => parsePrice(b) - parsePrice(a));
+      } else if (sortBy === 'name-asc') {
+        sorted.sort((a, b) => String(a.title || '').localeCompare(String(b.title || '')));
+      }
+      return sorted;
     }
 
     function route() {
@@ -2692,10 +3843,32 @@ setTimeout(morphText, pauseDuration);
 
       // If this is the Shop page, apply filters and render the grid
       if (pageId === 'shop-page') {
+        initShopFiltersUI();
         updateCategoryCounts();
         let filteredProducts = PRODUCTS;
         let title = "ALL PRODUCTS";
         let searchQuery = urlParams.get('q');
+        const sortSelect = document.getElementById('shop-sort-select');
+        const sortBy = urlParams.get('sort') || 'newest';
+        if (sortSelect) {
+          if (!['newest', 'price-asc', 'price-desc', 'name-asc'].includes(sortBy)) {
+            sortSelect.value = 'newest';
+          } else {
+            sortSelect.value = sortBy;
+          }
+          if (!sortSelect.dataset.bound) {
+            sortSelect.addEventListener('change', () => {
+              const nextSort = sortSelect.value || 'newest';
+              const baseHash = (window.location.hash || '#shop').split('?')[0];
+              const params = new URLSearchParams(window.location.hash.split('?')[1] || '');
+              if (nextSort === 'newest') params.delete('sort');
+              else params.set('sort', nextSort);
+              const qs = params.toString();
+              window.location.hash = qs ? `${baseHash}?${qs}` : baseHash;
+            });
+            sortSelect.dataset.bound = '1';
+          }
+        }
         const inCategory = (p, cat) => {
           const catLower = cat.toLowerCase();
           if (Array.isArray(p.categories)) {
@@ -2745,7 +3918,20 @@ setTimeout(morphText, pauseDuration);
           }
         }
 
+        filteredProducts = sortProductsForShop(filteredProducts, sortBy);
         renderShopGrid(filteredProducts, title);
+      }
+      if (pageId === 'new-page') {
+        renderShopNewFromProducts();
+      }
+      if (pageId === 'wishlist-page') {
+        renderWishlistPage();
+      }
+      if (pageId === 'account-page') {
+        renderAccountPage();
+      }
+      if (pageId === 'home-page') {
+        renderNewArrivalsFromProducts();
       }
 
 
@@ -2765,15 +3951,18 @@ setTimeout(morphText, pauseDuration);
         const lookKey = baseHash.replace('#', '');
         renderLook(lookKey);
       }
+      updateProductWishlistButton();
     }
 
     // Attach listeners and start initial load
     window.addEventListener('hashchange', route);
+    window.addEventListener('resize', initShopFiltersUI);
     // Note: The scroll listener is dynamically added/removed in the route function now.
 
    window.onload = function () {
- route();
-};
+    route();
+    initSupabaseWishlist();
+   };
 
 
    </script>
