@@ -1,0 +1,5 @@
+# Local secrets and env files
+.genki-secrets.js
+.env
+.env.*
+!.env.example
