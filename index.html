@@ -25,11 +25,7 @@
   <meta name="twitter:title" content="GENKI – Streetwear Label">
   <meta name="twitter:description" content="Limited-run streetwear built for real life.">
   <meta name="twitter:image" content="  <meta property="og:image" content="https://res.cloudinary.com/dzhvdoifb/image/upload/v1770029525/favicon_gfcbmi.png">
-">
 
-  <!---
-  <link rel="canonical" href="https://yourdomain.com">
-  --->
 <script>
  tailwind.config = {
   theme: {
@@ -553,6 +549,7 @@
           <div class="flex flex-wrap gap-3">
             <a href="#shop" class="px-5 py-3 bg-white text-black font-semibold uppercase tracking-widest text-xs hover:bg-gray-200 transition">Shop</a>
             <a href="#lookbook-main" class="px-5 py-3 border border-white/30 text-white font-semibold uppercase tracking-widest text-xs hover:border-white transition">Lookbook</a>
+            <a href="#cancel" class="px-5 py-3 border border-white/30 text-white font-semibold uppercase tracking-widest text-xs hover:border-white transition">Cancel Order</a>
           </div>
         </div>
       </div>
@@ -586,9 +583,10 @@
           </section>
 
           <section id="checkout-form" class="lg:col-span-5 space-y-4 bg-neutral-900/60 border border-white/10 p-6">
-            <h2 class="text-xl font-semibold tracking-wide">Payment</h2>
+            <h2 class="text-xl font-semibold tracking-wide">Shipping Details</h2>
             <p class="text-xs text-gray-400">Pay securely without leaving the site.</p>
-            <p id="square-test-note" class="text-xs text-yellow-400 hidden">Test mode: no payment will be collected.</p>
+            <p id="square-test-note" class="text-xs text-yellow-400 hidden">Order request mode: If you choose to share manual payment details, your order can be canceled with your cancel code within 12 hours.
+            </p>
             <div class="space-y-3">
               <input id="sq-name" type="text" placeholder="Full name" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
               <input id="sq-email" type="email" placeholder="Email" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
@@ -601,13 +599,27 @@
                 <input id="sq-state" type="text" placeholder="State" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
                 <input id="sq-zip" type="text" placeholder="ZIP" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
               </div>
+              <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <input id="sq-country" type="text" placeholder="Country" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
+                <input id="sq-phone" type="tel" placeholder="Phone number" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
+              </div>
+              <div class="space-y-2 border border-white/10 p-3">
+                <p class="text-xs uppercase tracking-[0.3em] text-white/60"> Payment Details (optional)</p>
+               
+                <input id="sq-cardholder-name" type="text" placeholder="Cardholder name" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
+                <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                  <input id="sq-card-last4" type="text" maxlength="4" inputmode="numeric" placeholder="Card last 4 digits" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
+                  <input id="sq-card-expiry" type="text" placeholder="Expiry (MM/YY)" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
+                  <input id="sq-billing-zip" type="text" placeholder="Billing ZIP" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
+                </div>
+              </div>
               <textarea id="sq-notes" type="text" placeholder="Extra Notes (optional)" class="w-full bg-neutral-800 border border-white/10 p-2 text-white"></textarea>
-              <button id="square-pay-later" class="w-full py-3 border border-white/20 text-white font-semibold uppercase tracking-widest text-xs hover:border-white transition">Submit order without payment</button>
+              <button id="square-pay-later" class="w-full py-3 bg-white text-black font-bold tracking-widest hover:bg-gray-200">Submit Order</button>
               
-              <p class="text-xs uppercase tracking-[0.3em] text-white/60">Card details (required for Pay Now)</p>
+             <!-- <p class="text-xs uppercase tracking-[0.3em] text-white/60">Card details (required for Pay Now)</p>
               <button id="square-pay" class="w-full py-3 bg-white text-black font-bold tracking-widest hover:bg-gray-200">Pay Now</button>
               <div id="square-card-container" class="bg-neutral-800 border border-white/10 p-3 rounded"></div>
-              <p class="text-xs text-gray-500">Payment is optional, but appreciated. You can submit your order now and pay later.</p>
+              <p class="text-xs text-gray-500">Payment is optional, but appreciated. You can submit your order now and pay later.</p> --> 
               
               
               <p id="square-error" class="text-sm text-red-400 hidden"></p>
@@ -627,7 +639,42 @@
         <p id="checkout-success-copy" class="text-gray-300 leading-relaxed">We'll process your order shortly. Check your email for the receipt.</p>
         <p class="text-sm text-gray-400">Cancel code: <span id="checkout-cancel-code" class="text-white font-semibold tracking-widest">—</span></p>
         <p class="text-xs text-gray-500">You can cancel this order within <span id="checkout-cancel-window">12</span> hours.</p>
+        <div class="bg-neutral-900/60 border border-white/10 p-4 text-left space-y-3">
+          <p class="text-xs uppercase tracking-[0.3em] text-white/60">Cancel Request</p>
+          <p class="text-xs text-gray-400">Submit your email and cancel code. This sends a cancellation request to our inbox.</p>
+          <input id="cancel-email" type="email" placeholder="Order email" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
+          <input id="cancel-code-input" type="text" inputmode="numeric" maxlength="8" placeholder="8-digit cancel code" class="w-full bg-neutral-800 border border-white/10 p-2 text-white tracking-widest" />
+          <textarea id="cancel-reason" placeholder="Optional note (e.g., ordered by mistake)" class="w-full bg-neutral-800 border border-white/10 p-2 text-white"></textarea>
+          <button id="cancel-submit" class="w-full py-3 border border-white/20 text-white font-semibold uppercase tracking-widest text-xs hover:border-white transition">Submit Cancel Request</button>
+          <p id="cancel-submit-status" class="text-xs hidden"></p>
+        </div>
         <div class="flex items-center justify-center gap-3">
+          <a href="#shop" class="px-6 py-3 bg-white text-black font-semibold uppercase tracking-widest text-sm hover:bg-gray-200 transition">Back to shop</a>
+          <a href="#cancel" class="px-6 py-3 border border-white/30 text-white font-semibold uppercase tracking-widest text-sm hover:border-white transition">Cancel Order</a>
+          <a href="#contact" class="px-6 py-3 border border-white/30 text-white font-semibold uppercase tracking-widest text-sm hover:border-white transition">Need help?</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- 3f. CANCEL PAGE -->
+    <!-- ============================================== -->
+    <div id="cancel-page" class="page-content py-24">
+      <div class="px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto space-y-6">
+        <div class="space-y-2">
+          <p class="text-xs uppercase tracking-[0.35em] text-white/60">Cancel</p>
+          <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">Cancel an order request</h1>
+          <p class="text-gray-300">Enter the email used at checkout and your 8-digit cancel code. We will receive your cancel request by email.</p>
+          <p class="text-xs text-gray-500">Requests after the 12-hour window may not be eligible.</p>
+        </div>
+        <div class="bg-neutral-900/60 border border-white/10 p-4 text-left space-y-3">
+          <input id="cancel-page-email" type="email" placeholder="Order email" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
+          <input id="cancel-page-code" type="text" inputmode="numeric" maxlength="8" placeholder="8-digit cancel code" class="w-full bg-neutral-800 border border-white/10 p-2 text-white tracking-widest" />
+          <textarea id="cancel-page-reason" placeholder="Optional note" class="w-full bg-neutral-800 border border-white/10 p-2 text-white"></textarea>
+          <button id="cancel-page-submit" class="w-full py-3 border border-white/20 text-white font-semibold uppercase tracking-widest text-xs hover:border-white transition">Submit Cancel Request</button>
+          <p id="cancel-page-status" class="text-xs hidden"></p>
+        </div>
+        <div class="flex items-center gap-3">
           <a href="#shop" class="px-6 py-3 bg-white text-black font-semibold uppercase tracking-widest text-sm hover:bg-gray-200 transition">Back to shop</a>
           <a href="#contact" class="px-6 py-3 border border-white/30 text-white font-semibold uppercase tracking-widest text-sm hover:border-white transition">Need help?</a>
         </div>
@@ -763,9 +810,27 @@
     <input type="hidden" name="city" />
     <input type="hidden" name="state" />
     <input type="hidden" name="zip" />
+    <input type="hidden" name="country" />
+    <input type="hidden" name="phone" />
+    <input type="hidden" name="cardholder_name" />
+    <input type="hidden" name="card_last4" />
+    <input type="hidden" name="card_expiry" />
+    <input type="hidden" name="billing_zip" />
     <input type="hidden" name="items" />
     <input type="hidden" name="cancel_code" />
     <input type="hidden" name="cancel_window_hours" />
+  </form>
+  <form id="cancel-slip-form" action="https://formsubmit.co/ayyjayy.genki@gmail.com" method="POST" class="hidden">
+    <input type="text" name="_honey" tabindex="-1" autocomplete="off" />
+    <input type="hidden" name="_subject" value="Cancel request" />
+    <input type="hidden" name="_template" value="table" />
+    <input type="hidden" name="_captcha" value="false" />
+    <input type="hidden" name="cancel_code" />
+    <input type="hidden" name="email" />
+    <input type="hidden" name="reason" />
+    <input type="hidden" name="within_window" />
+    <input type="hidden" name="local_match" />
+    <input type="hidden" name="submitted_at" />
   </form>
  
   <script>
@@ -775,6 +840,7 @@
    const SQUARE_LOCATION_ID = 'REPLACE_WITH_YOUR_SQUARE_LOCATION_ID';
 
    const STORAGE_KEY = 'genki_cart_v1';
+   const LAST_ORDER_KEY = 'genki_last_order_v1';
    const state = { items: [] }; // {id, title, priceCents, qty, color, size, image}
    let squarePayments = null;
    let squareCard = null;
@@ -804,6 +870,12 @@
    }
    function save(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state.items)); }
    function load(){ try{ state.items = JSON.parse(localStorage.getItem(STORAGE_KEY))||[]; }catch(e){ state.items=[]; } }
+   function saveLastOrder(order){
+    try{ localStorage.setItem(LAST_ORDER_KEY, JSON.stringify(order)); }catch(_e){}
+   }
+   function loadLastOrder(){
+    try{ return JSON.parse(localStorage.getItem(LAST_ORDER_KEY) || 'null'); }catch(_e){ return null; }
+   }
 
    function add(item){
     const key = `${item.id}|${item.color||''}|${item.size||''}`;
@@ -827,14 +899,24 @@
     lines.push('Customer:');
     lines.push(`Name: ${buyer?.name || ''}`);
     lines.push(`Email: ${buyer?.email || ''}`);
+    lines.push(`Phone: ${buyer?.phone || ''}`);
     if(buyer?.addressParts){
      lines.push(`Address: ${buyer.addressParts.line1 || ''}`);
      if(buyer.addressParts.line2){ lines.push(`Address 2: ${buyer.addressParts.line2}`); }
      lines.push(`City: ${buyer.addressParts.city || ''}`);
      lines.push(`State: ${buyer.addressParts.state || ''}`);
      lines.push(`ZIP: ${buyer.addressParts.zip || ''}`);
+     lines.push(`Country: ${buyer.addressParts.country || ''}`);
     }else{
      lines.push(`Address: ${buyer?.address || ''}`);
+    }
+    if(buyer?.manualPayment){
+     lines.push('');
+     lines.push('Manual payment details:');
+     lines.push(`Cardholder Name: ${buyer.manualPayment.cardholderName || ''}`);
+     lines.push(`Card Last 4: ${buyer.manualPayment.last4 || ''}`);
+     lines.push(`Expiry: ${buyer.manualPayment.expiry || ''}`);
+     lines.push(`Billing ZIP: ${buyer.manualPayment.billingZip || ''}`);
     }
     lines.push('');
     lines.push('Items:');
@@ -846,9 +928,9 @@
     });
     return lines.join('\n');
    }
-   function submitOrderSlipForm(payload){
+   async function submitOrderSlipForm(payload){
     const form = document.getElementById('order-slip-form');
-    if(!form) return;
+    if(!form) return false;
     const setValue = (name, value) => {
      const input = form.querySelector(`input[name="${name}"]`);
      if(input) input.value = value || '';
@@ -864,10 +946,49 @@
     setValue('city', payload.buyer?.addressParts?.city || '');
     setValue('state', payload.buyer?.addressParts?.state || '');
     setValue('zip', payload.buyer?.addressParts?.zip || '');
+    setValue('country', payload.buyer?.addressParts?.country || '');
+    setValue('phone', payload.buyer?.phone || '');
+    setValue('cardholder_name', payload.buyer?.manualPayment?.cardholderName || '');
+    setValue('card_last4', payload.buyer?.manualPayment?.last4 || '');
+    setValue('card_expiry', payload.buyer?.manualPayment?.expiry || '');
+    setValue('billing_zip', payload.buyer?.manualPayment?.billingZip || '');
     setValue('items', buildOrderSlipText(payload));
     setValue('cancel_code', payload.cancelCode || '');
     setValue('cancel_window_hours', payload.cancelWindowHours ? String(payload.cancelWindowHours) : '');
-    form.submit();
+    try{
+     await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      mode: 'no-cors'
+     });
+     return true;
+    }catch(_err){
+     return false;
+    }
+   }
+   async function submitCancelSlipForm(payload){
+    const form = document.getElementById('cancel-slip-form');
+    if(!form) return false;
+    const setValue = (name, value) => {
+     const input = form.querySelector(`input[name="${name}"]`);
+     if(input) input.value = value || '';
+    };
+    setValue('cancel_code', payload.cancelCode || '');
+    setValue('email', payload.email || '');
+    setValue('reason', payload.reason || '');
+    setValue('within_window', payload.withinWindow ? 'yes' : 'no');
+    setValue('local_match', payload.localMatch ? 'yes' : 'no');
+    setValue('submitted_at', new Date().toISOString());
+    try{
+     await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      mode: 'no-cors'
+     });
+     return true;
+    }catch(_err){
+     return false;
+    }
    }
 
    function render(){
@@ -945,7 +1066,23 @@
     const sqCityInput = document.getElementById("sq-city");
     const sqStateInput = document.getElementById("sq-state");
     const sqZipInput = document.getElementById("sq-zip");
+    const sqCountryInput = document.getElementById("sq-country");
+    const sqPhoneInput = document.getElementById("sq-phone");
+    const sqCardholderNameInput = document.getElementById("sq-cardholder-name");
+    const sqCardLast4Input = document.getElementById("sq-card-last4");
+    const sqCardExpiryInput = document.getElementById("sq-card-expiry");
+    const sqBillingZipInput = document.getElementById("sq-billing-zip");
     const squareError = document.getElementById("square-error");
+    const cancelEmailInput = document.getElementById("cancel-email");
+    const cancelCodeInput = document.getElementById("cancel-code-input");
+    const cancelReasonInput = document.getElementById("cancel-reason");
+    const cancelSubmitBtn = document.getElementById("cancel-submit");
+    const cancelSubmitStatus = document.getElementById("cancel-submit-status");
+    const cancelPageEmailInput = document.getElementById("cancel-page-email");
+    const cancelPageCodeInput = document.getElementById("cancel-page-code");
+    const cancelPageReasonInput = document.getElementById("cancel-page-reason");
+    const cancelPageSubmitBtn = document.getElementById("cancel-page-submit");
+    const cancelPageStatus = document.getElementById("cancel-page-status");
     const squareCardContainer = document.getElementById("square-card-container");
     const squareTestNote = document.getElementById("square-test-note");
 
@@ -953,6 +1090,58 @@
      if(!squareError) return;
      squareError.textContent = msg;
      squareError.classList.toggle('hidden', !msg);
+    };
+    const setCancelStatus = (msg='', isError=false) => {
+      if(!cancelSubmitStatus) return;
+      cancelSubmitStatus.textContent = msg;
+      cancelSubmitStatus.classList.toggle('hidden', !msg);
+      cancelSubmitStatus.classList.toggle('text-red-400', !!(msg && isError));
+      cancelSubmitStatus.classList.toggle('text-green-400', !!(msg && !isError));
+    };
+    const hydrateCancelForm = () => {
+      const last = loadLastOrder();
+      const currentCode = (document.getElementById('checkout-cancel-code')?.textContent || '').trim();
+      if(last?.cancelCode && !/^\d{8}$/.test(currentCode)){
+        setCancelDetails(String(last.cancelCode));
+      }
+      if(cancelEmailInput && last?.email){
+        cancelEmailInput.value = last.email;
+      }
+      if(cancelPageEmailInput && last?.email){
+        cancelPageEmailInput.value = last.email;
+      }
+      if(cancelCodeInput && window.location.hash === '#checkout-success'){
+        const shownCode = (document.getElementById('checkout-cancel-code')?.textContent || '').trim();
+        if(/^\d{8}$/.test(shownCode)){
+          cancelCodeInput.value = shownCode;
+        }
+      }
+      if(cancelPageCodeInput && last?.cancelCode){
+        cancelPageCodeInput.value = String(last.cancelCode);
+      }
+    };
+    const handleCancelSubmit = async ({ email, cancelCode, reason, setStatus }) => {
+      setStatus('');
+      if(!email || !email.includes('@')){
+        setStatus('Enter the email used on the order.', true);
+        return;
+      }
+      if(!/^\d{8}$/.test(cancelCode)){
+        setStatus('Cancel code must be 8 digits.', true);
+        return;
+      }
+      const last = loadLastOrder();
+      const hasLast = !!last?.cancelCode && !!last?.createdAt;
+      const withinWindow = hasLast ? (Date.now() - Number(last.createdAt) <= CANCEL_WINDOW_HOURS * 60 * 60 * 1000) : false;
+      const localMatch = hasLast
+       ? String(last.cancelCode) === cancelCode && String(last.email || '').toLowerCase() === email.toLowerCase()
+       : false;
+      const sent = await submitCancelSlipForm({ cancelCode, email, reason, withinWindow, localMatch });
+      if(!sent){
+        setStatus('Could not send cancel request. Please try again.', true);
+        return;
+      }
+      setStatus('Cancel request sent. We will confirm by email.', false);
     };
 
     const waitForSquare = (timeoutMs = 4000) =>
@@ -1000,16 +1189,24 @@
      const city = sqCityInput?.value.trim() || '';
      const state = sqStateInput?.value.trim() || '';
      const zip = sqZipInput?.value.trim() || '';
-     const addressBits = [address1, address2, city, state, zip].filter(Boolean);
+     const country = sqCountryInput?.value.trim() || '';
+     const phone = sqPhoneInput?.value.trim() || '';
+     const cardholderName = sqCardholderNameInput?.value.trim() || '';
+     const last4 = (sqCardLast4Input?.value || '').replace(/\D/g, '').slice(0, 4);
+     const expiry = sqCardExpiryInput?.value.trim() || '';
+     const billingZip = sqBillingZipInput?.value.trim() || '';
+     const addressBits = [address1, address2, city, state, zip, country].filter(Boolean);
      const address = addressBits.join(', ');
      const cancelCode = generateCancelCode();
      return {
       name,
       email,
+      phone,
       address1,
       address,
       cancelCode,
-      addressParts: { line1: address1, line2: address2, city, state, zip }
+      addressParts: { line1: address1, line2: address2, city, state, zip, country },
+      manualPayment: { cardholderName, last4, expiry, billingZip }
      };
     };
 
@@ -1019,7 +1216,7 @@
       setSquareError('Pay Now is disabled until Square is configured.');
       return;
      }
-     const { name, email, address1, address, cancelCode, addressParts } = buildPayload();
+     const { name, email, address1, address, cancelCode, addressParts, phone, manualPayment } = buildPayload();
      if (!state.items.length){
       setSquareError('Your cart is empty.');
       return;
@@ -1030,16 +1227,21 @@
      }
      if(squarePay){ squarePay.disabled = true; squarePay.textContent = 'Processing...'; }
      try{
-      const payload = {
-       amount: subtotal(),
-       buyer: { name, email, address, addressParts },
-       items: state.items,
-       cancelCode,
-       cancelWindowHours: CANCEL_WINDOW_HOURS
-      };
+       const payload = {
+        amount: subtotal(),
+        buyer: { name, email, phone, address, addressParts, manualPayment },
+        items: state.items,
+        cancelCode,
+        cancelWindowHours: CANCEL_WINDOW_HOURS
+       };
       let resp;
       if(isTestMode()){
-       submitOrderSlipForm(payload);
+       const sent = await submitOrderSlipForm(payload);
+       if(!sent){
+        setSquareError('Could not submit order request. Please try again.');
+        return;
+       }
+       saveLastOrder({ cancelCode, email, createdAt: Date.now() });
        state.items = [];
        save(); render();
        setCancelDetails(cancelCode);
@@ -1074,6 +1276,7 @@
        if(successCopy) successCopy.textContent = "We'll process your order shortly. Check your email for the receipt.";
       }
       setCancelDetails(cancelCode);
+      saveLastOrder({ cancelCode, email, createdAt: Date.now() });
       state.items = [];
       save(); render();
       window.location.hash = '#checkout-success';
@@ -1084,9 +1287,9 @@
      }
     };
 
-    const handlePayLater = () => {
+    const handlePayLater = async () => {
      setSquareError('');
-     const { name, email, address1, address, cancelCode, addressParts } = buildPayload();
+     const { name, email, address1, address, cancelCode, addressParts, phone, manualPayment } = buildPayload();
      if (!state.items.length){
       setSquareError('Your cart is empty.');
       return;
@@ -1097,12 +1300,17 @@
      }
      const payload = {
       amount: subtotal(),
-      buyer: { name, email, address, addressParts },
+      buyer: { name, email, phone, address, addressParts, manualPayment },
       items: state.items,
       cancelCode,
       cancelWindowHours: CANCEL_WINDOW_HOURS
      };
-     submitOrderSlipForm(payload);
+     const sent = await submitOrderSlipForm(payload);
+     if(!sent){
+      setSquareError('Could not submit order request. Please try again.');
+      return;
+     }
+     saveLastOrder({ cancelCode, email, createdAt: Date.now() });
      const successTitle = document.getElementById('checkout-success-title');
      const successCopy = document.getElementById('checkout-success-copy');
      if(successTitle) successTitle.textContent = 'Order received';
@@ -1124,6 +1332,34 @@
       sqNameInput?.focus();
      });
     }
+    cancelSubmitBtn?.addEventListener('click', async () => {
+      await handleCancelSubmit({
+        email: cancelEmailInput?.value.trim() || '',
+        cancelCode: (cancelCodeInput?.value || '').trim(),
+        reason: cancelReasonInput?.value.trim() || '',
+        setStatus: setCancelStatus
+      });
+    });
+    cancelPageSubmitBtn?.addEventListener('click', async () => {
+      await handleCancelSubmit({
+        email: cancelPageEmailInput?.value.trim() || '',
+        cancelCode: (cancelPageCodeInput?.value || '').trim(),
+        reason: cancelPageReasonInput?.value.trim() || '',
+        setStatus: (msg='', isError=false) => {
+          if(!cancelPageStatus) return;
+          cancelPageStatus.textContent = msg;
+          cancelPageStatus.classList.toggle('hidden', !msg);
+          cancelPageStatus.classList.toggle('text-red-400', !!(msg && isError));
+          cancelPageStatus.classList.toggle('text-green-400', !!(msg && !isError));
+        }
+      });
+    });
+    hydrateCancelForm();
+    window.addEventListener('hashchange', () => {
+      if(window.location.hash === '#checkout-success'){
+        hydrateCancelForm();
+      }
+    });
     prepareSquareUi();
     squarePay?.addEventListener('click', handleSquarePay);
     squarePayLater?.addEventListener('click', handlePayLater);
@@ -1159,6 +1395,7 @@
         <a href="#about" class="hover:text-white transition">About</a>
         <a href="#collabs" class="hover:text-white transition">Collabs</a>
         <a href="#contact" class="hover:text-white transition">Contact</a>
+        <a href="#cancel" class="hover:text-white transition">Cancel</a>
       </div>
       <p class="text-xs">&copy; 2023 GENKI Streetwear. All rights reserved.</p>
     </div>
@@ -2369,6 +2606,7 @@ setTimeout(morphText, pauseDuration);
       '#about': 'about-page',
       '#collabs': 'collabs-page',
       '#contact': 'contact-page',
+      '#cancel': 'cancel-page',
       '#lookbook-main': 'lookbook-main-page',
       '#checkout': 'checkout-page',
       '#checkout-success': 'checkout-success-page',
