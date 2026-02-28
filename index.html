@@ -80,6 +80,24 @@
     #hero-title.is-out { opacity: 0; transform: translateY(10px); letter-spacing: .25em; }
     /* subtle entrance pop */
     #hero-title.is-in { opacity: 1; transform: translateY(0); letter-spacing: .15em; }
+    #hero-title.is-glitch {
+      animation: hero-glitch 0.36s steps(3, end) 2;
+      text-shadow:
+        -3px 0 rgba(0, 255, 255, 0.65),
+         3px 0 rgba(255, 0, 85, 0.6),
+         0 0 18px rgba(255, 255, 255, 0.08);
+      filter: contrast(1.15) saturate(1.25);
+    }
+    @keyframes hero-glitch {
+      0% { transform: translate(0, 0) skewX(0deg); clip-path: inset(0 0 0 0); opacity: 1; }
+      12% { transform: translate(-1px, 0) skewX(0.8deg); clip-path: inset(6% 0 58% 0); }
+      24% { transform: translate(1px, 0) skewX(-0.8deg); clip-path: inset(48% 0 20% 0); }
+      38% { transform: translate(0, 0) skewX(0.4deg); clip-path: inset(26% 0 38% 0); }
+      52% { transform: translate(1px, 0) skewX(-0.6deg); clip-path: inset(70% 0 10% 0); }
+      66% { transform: translate(-1px, 0) skewX(0.6deg); clip-path: inset(18% 0 50% 0); opacity: 0.92; }
+      82% { transform: translate(0, 0) skewX(-0.3deg); clip-path: inset(40% 0 28% 0); }
+      100% { transform: translate(0, 0) skewX(0deg); clip-path: inset(0 0 0 0); opacity: 1; }
+    }
 
     /* --- Search Bar Visibility Fix --- */
     #search-input-container {
@@ -107,6 +125,63 @@
       100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,255,255,0); }
     }
     .cart-attention { animation: cart-pulse .7s ease-out; }
+
+    /* --- Lookbook: edge-to-edge collage vibe --- */
+    .look-ribbon {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 0 0 6px;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: thin;
+    }
+    .look-ribbon-item {
+      position: relative;
+      flex: 0 0 auto;
+      width: min(72vw, 460px);
+      height: clamp(220px, 48vw, 520px);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.1);
+      scroll-snap-align: start;
+    }
+    .look-ribbon-item.wide { width: min(88vw, 640px); }
+    .look-ribbon-item.tall { height: clamp(280px, 64vw, 640px); }
+    .look-ribbon-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .45s ease, filter .45s ease;
+      filter: saturate(1.08) contrast(1.03);
+    }
+    .look-ribbon-item:hover img { transform: scale(1.04); filter: saturate(1.14) contrast(1.08); }
+    .look-ribbon-shift { margin-top: 12px; transform: translateX(-7vw); width: calc(100% + 7vw); }
+    .look-main-collage { column-count: 1; column-gap: 10px; }
+    .look-main-card {
+      display: inline-block;
+      width: 100%;
+      margin: 0 0 10px;
+      break-inside: avoid;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.12);
+      background: #050505;
+    }
+    .look-main-card img {
+      width: 100%;
+      object-fit: cover;
+      transition: transform .4s ease, filter .4s ease;
+    }
+    .look-main-card:hover img { transform: scale(1.035); filter: brightness(1.06) contrast(1.06); }
+    @media (min-width: 768px) {
+      .look-main-collage { column-count: 2; column-gap: 12px; }
+      .look-ribbon-shift { margin-top: 16px; transform: translateX(-10vw); width: calc(100% + 10vw); }
+    }
+    @media (min-width: 1200px) {
+      .look-main-collage { column-count: 3; column-gap: 14px; }
+    }
+    @media (min-width: 1600px) {
+      .look-main-collage { column-count: 4; column-gap: 14px; }
+    }
   </style>
 </head>
 <body>
@@ -736,8 +811,8 @@
     <!-- 4b. LOOKBOOK MAIN PAGE (Full gallery of user + brand photos) -->
     <!-- ============================================== -->
     <div id="lookbook-main-page" class="page-content py-24">
-      <div class="px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto space-y-6">
-        <div class="flex items-center justify-between">
+      <div class="w-full space-y-8">
+        <div class="px-4 sm:px-6 lg:px-10 flex items-center justify-between">
           <div>
             <p class="text-xs uppercase tracking-[0.35em] text-white/60">Lookbook</p>
             <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">People & Fits</h1>
@@ -746,7 +821,7 @@
           <a href="#home" class="text-sm text-gray-400 hover:text-white transition underline underline-offset-4">Back</a>
         </div>
 
-        <div id="lookbook-main-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        <div id="lookbook-main-grid" class="look-main-collage px-1 sm:px-2 lg:px-3">
           <!-- Cards injected via JS -->
         </div>
       </div>
@@ -2416,7 +2491,7 @@
           'https://uploads.twitchalerts.com/000/115/629/159/21699478-mockup-173602693618730-13.png',
         ],
         colors: [ // Assuming black as a default based on streetwear
-          { name: 'Black', color: 'bg-black' }
+         
         ],
         details: [
           'Unique two-faced design for high contrast styling.',
@@ -2489,6 +2564,7 @@ function morphText() {
  if (isAnimating) return;
  isAnimating = true;
 
+ heroTitle.classList.add('is-glitch');
  heroTitle.classList.remove('is-in');
  heroTitle.classList.add('is-out');
 
@@ -2498,6 +2574,7 @@ function morphText() {
 
   heroTitle.classList.remove('is-out');
   heroTitle.classList.add('is-in');
+  setTimeout(() => heroTitle.classList.remove('is-glitch'), 260);
 
   isAnimating = false;
   setTimeout(morphText, pauseDuration);
@@ -3627,7 +3704,7 @@ setTimeout(morphText, pauseDuration);
         title: 'GENKI TWO\-FACED - Split ',
         image: 'https://res.cloudinary.com/dzhvdoifb/image/upload/v1762066135/WtBAmJy_nidtmq.webp',
         caption: 'Genki Tour Hoodie',
-        linkedProduct: 'genki-tour-hoodie'
+        linkedProduct: 'genki-two-faced-hoodie'
       },
       'lookbook-2': {
         title: 'Genki Skull - Street Essentials',
