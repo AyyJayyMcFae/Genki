@@ -494,8 +494,12 @@
           <section class="lg:col-span-2 border border-white/10 bg-neutral-900/40 p-6">
             <div class="flex items-center justify-between gap-3 mb-4 border-b border-white/10 pb-2">
               <h3 class="text-xl font-bold">Order History</h3>
-              <button id="account-refresh-orders" type="button" class="px-3 py-2 border border-white/20 text-xs uppercase tracking-[0.2em] hover:border-white transition">Refresh</button>
+              <div class="flex items-center gap-2">
+                <a href="#cancel" class="px-3 py-2 border border-white/20 text-xs uppercase tracking-[0.2em] hover:border-white transition">Cancel Order</a>
+                <button id="account-refresh-orders" type="button" class="px-3 py-2 border border-white/20 text-xs uppercase tracking-[0.2em] hover:border-white transition">Refresh</button>
+              </div>
             </div>
+            <p class="text-xs text-gray-500 mb-3">Need to reverse a recent order? Use your 8-digit cancel code within 12 hours.</p>
             <div id="account-orders-list" class="space-y-3">
               <p class="text-sm text-gray-400">No orders yet.</p>
             </div>
@@ -660,8 +664,12 @@
     <!-- ============================================== -->
     <!-- 3d. CHECKOUT PAGE -->
     <!-- ============================================== -->
-    <div id="checkout-page" class="page-content py-24">
-      <div class="px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto space-y-8">
+    <div id="checkout-page" class="hidden fixed inset-0 z-[80] bg-black/80 backdrop-blur-sm p-3 sm:p-6 lg:p-10 overflow-y-auto">
+      <div id="checkout-modal-panel" class="max-w-6xl mx-auto bg-[#0d0d0d] border border-white/15 p-4 sm:p-6 lg:p-8 relative">
+        <button id="checkout-close" type="button" aria-label="Close checkout" class="absolute top-3 right-3 w-10 h-10 border border-white/25 text-white/80 hover:text-white hover:border-white transition flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+        </button>
+        <div class="px-0 max-w-6xl mx-auto space-y-8">
         <div class="flex flex-wrap items-center justify-between gap-4">
           <div class="space-y-2">
             <p class="text-xs uppercase tracking-[0.35em] text-white/60">Checkout</p>
@@ -727,6 +735,7 @@
               <p id="square-error" class="text-sm text-red-400 hidden"></p>
             </div>
           </section>
+        </div>
         </div>
       </div>
     </div>
@@ -900,6 +909,10 @@
                 <!-- details populated by JS -->
               </ul>
             </div>
+            <div class="pt-4 border-t border-white/10">
+              <p class="text-lg font-semibold mb-3">More Like This</p>
+              <div id="related-products-grid" class="grid grid-cols-2 md:grid-cols-4 gap-3"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -986,28 +999,42 @@
   <script src="./genki-config.js"></script>
   <script src="./.genki-secrets.js"></script>
   <script>
-  // ------- Minimal Cart Module (localStorage) -------
+  // ------- Minimal Cart + Checkout Module -------
+  // This self-contained module owns:
+  // 1) cart state in localStorage
+  // 2) checkout form submission (FormSubmit/Square paths)
+  // 3) checkout success + cancel code UX wiring
   (function(){
    const localConfig = window.__GENKI_CONFIG__ || {};
    const SQUARE_APP_ID = localConfig.SQUARE_APP_ID || 'REPLACE_WITH_YOUR_SQUARE_APP_ID';
    const SQUARE_LOCATION_ID = localConfig.SQUARE_LOCATION_ID || 'REPLACE_WITH_YOUR_SQUARE_LOCATION_ID';
 
+   // Persistent storage keys for cart and "latest order" metadata.
    const STORAGE_KEY = 'genki_cart_v1';
    const LAST_ORDER_KEY = 'genki_last_order_v1';
-   const state = { items: [] }; // {id, title, priceCents, qty, color, size, image}
+   // Cart line shape: {id, title, priceCents, qty, color, size, image}
+   const state = { items: [] };
    let squarePayments = null;
    let squareCard = null;
    const $ = sel => document.querySelector(sel);
    const $$ = sel => Array.from(document.querySelectorAll(sel));
 
+   // Test mode is enabled if Square credentials are missing placeholders.
    const isTestMode = () =>
     !SQUARE_APP_ID ||
     SQUARE_APP_ID.startsWith('REPLACE') ||
     !SQUARE_LOCATION_ID ||
     SQUARE_LOCATION_ID.startsWith('REPLACE');
+   const isSquareSandboxAppId = (appId = '') => String(appId).trim().startsWith('sandbox-');
+   const getSquareSdkUrl = () =>
+    isSquareSandboxAppId(SQUARE_APP_ID)
+     ? 'https://sandbox.web.squarecdn.com/v1/square.js'
+     : 'https://web.squarecdn.com/v1/square.js';
+   let squareSdkPromise = null;
 
    const CANCEL_WINDOW_HOURS = 12;
 
+   // Basic formatting helpers used throughout checkout/cart rendering.
    function money(cents){ return `$${(cents/100).toFixed(2)}`; }
    function generateCancelCode(){
     return String(Math.floor(10000000 + Math.random() * 90000000));
@@ -1030,6 +1057,7 @@
     try{ return JSON.parse(localStorage.getItem(LAST_ORDER_KEY) || 'null'); }catch(_e){ return null; }
    }
 
+   // Adds/merges cart lines by id + color + size so quantity stacks correctly.
    function add(item){
     const key = `${item.id}|${item.color||''}|${item.size||''}`;
     const existing = state.items.find(x => `${x.id}|${x.color||''}|${x.size||''}` === key);
@@ -1081,6 +1109,7 @@
     });
     return lines.join('\n');
    }
+   // Submits order details to FormSubmit's AJAX endpoint.
    async function submitOrderSlipForm(payload){
     const form = document.getElementById('order-slip-form');
     if(!form) return false;
@@ -1134,6 +1163,7 @@
      return false;
     }
    }
+   // Sends a cancel request payload to FormSubmit's AJAX endpoint.
    async function submitCancelSlipForm(payload){
     const form = document.getElementById('cancel-slip-form');
     if(!form) return false;
@@ -1174,6 +1204,7 @@
     }
    }
 
+   // Re-renders checkout cart lines, subtotal, and navbar cart badge.
    function render(){
     const list = $('#cart-items');
     const sub = $('#cart-subtotal');
@@ -1226,8 +1257,16 @@
     toggle.classList.add('cart-attention');
    }
 
-   function goToCheckout(){ window.location.hash = '#checkout'; }
+   // Opens checkout modal (preferred), with hash fallback if modal helpers are unavailable.
+   function goToCheckout(){
+    if (typeof window.openCheckoutModal === 'function') {
+      window.openCheckoutModal();
+      return;
+    }
+    window.location.hash = '#checkout';
+   }
 
+   // Wires all cart/checkout/cancel event listeners once on boot.
    function wireBasics(){
     const toggle = $('#cart-toggle');
     if(toggle) toggle.addEventListener('click', () => { nudgeCartIcon(); goToCheckout(); });
@@ -1338,11 +1377,38 @@
       tick();
      });
 
+    const loadSquareSdk = () => {
+     if(isTestMode()) return Promise.resolve();
+     if(window.Square) return Promise.resolve();
+     if(squareSdkPromise) return squareSdkPromise;
+     const sdkUrl = getSquareSdkUrl();
+     squareSdkPromise = new Promise((resolve, reject) => {
+      const existingScript = document.querySelector('script[data-square-sdk="1"]');
+      if(existingScript){
+       if(existingScript.src === sdkUrl){
+        existingScript.addEventListener('load', () => resolve(), { once: true });
+        existingScript.addEventListener('error', () => reject(new Error('Square SDK failed to load.')), { once: true });
+        return;
+       }
+       existingScript.remove();
+      }
+      const script = document.createElement('script');
+      script.src = sdkUrl;
+      script.async = true;
+      script.dataset.squareSdk = '1';
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error('Square SDK failed to load.'));
+      document.body.appendChild(script);
+     });
+     return squareSdkPromise;
+    };
+
     const prepareSquareUi = async () => {
      squareCardContainer?.classList.remove('hidden');
      squareTestNote?.classList.toggle('hidden', !isTestMode());
      if(!isTestMode()){
       try{
+       await loadSquareSdk();
        await waitForSquare();
        await ensureSquareCard();
       }catch(err){
@@ -1353,6 +1419,7 @@
 
     const ensureSquareCard = async () => {
      if(squareCard) return;
+     await loadSquareSdk();
      if(!window.Square){
       throw new Error('Square.js not loaded. Ensure the Square script is included.');
      }
@@ -1428,6 +1495,7 @@
        state.items = [];
        save(); render();
        setCancelDetails(cancelCode);
+       window.closeCheckoutModal?.();
        window.location.hash = '#checkout-success';
        return;
       }else{
@@ -1462,6 +1530,7 @@
       saveLastOrder({ cancelCode, email, createdAt: Date.now() });
       state.items = [];
       save(); render();
+      window.closeCheckoutModal?.();
       window.location.hash = '#checkout-success';
      }catch(err){
       setSquareError(err.message || 'Payment failed.');
@@ -1501,6 +1570,7 @@
      setCancelDetails(cancelCode);
      state.items = [];
      save(); render();
+     window.closeCheckoutModal?.();
      window.location.hash = '#checkout-success';
     };
 
@@ -1575,11 +1645,10 @@
       <div class="flex justify-center space-x-6 text-sm mb-6">
         <!-- Footer links are now functional -->
         <a href="#shop" class="hover:text-white transition">Shop</a>
-        <a href="#account" class="hover:text-white transition">Account</a>
+       
         <a href="#about" class="hover:text-white transition">About</a>
         <a href="#collabs" class="hover:text-white transition">Collabs</a>
         <a href="#contact" class="hover:text-white transition">Contact</a>
-        <a href="#cancel" class="hover:text-white transition">Cancel</a>
       </div>
       <p class="text-xs">&copy; 2023 GENKI Streetwear. All rights reserved.</p>
     </div>
@@ -1589,8 +1658,15 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     // --- JAVASCRIPT FOR DYNAMIC BEHAVIOR ---
+    // High-level map:
+    // 1) Product/catalog data
+    // 2) Hero/nav animations + search
+    // 3) Auth + wishlist + account (Supabase)
+    // 4) Product/listing renderers
+    // 5) Hash-based SPA router + checkout modal controls
 
-    // 1. Centralized Product Data (Updated to be a single source of truth)
+    // 1. Centralized Product Data (single source of truth)
+    // Every catalog view (home featured, shop grid, PDP, related items) reads from this array.
     const PRODUCTS = [
 
       // --- NEW PRODUCT: Genki Sport Champion Long Sleeve Shirt ---
@@ -2586,7 +2662,8 @@ setTimeout(morphText, pauseDuration);
 
 
     
-    // 3. Dynamic Navbar Visibility and Style on Scroll (Smooth compacting)
+    // 3. Dynamic Navbar Visibility/Style on Scroll
+    // Home page uses progressive transparent->opaque header; other routes pin a compact header.
     const header = document.getElementById('main-header');
     const innerNavDiv = document.getElementById('nav-inner');
     const logoContainer = document.getElementById('logo-container');
@@ -2630,7 +2707,8 @@ setTimeout(morphText, pauseDuration);
       });
     }
     
-    // 4. Client-Side Search Functionality (Refactored)
+    // 4. Search + Auth/Wishlist/Account State
+    // This block centralizes UI refs plus Supabase-driven user/session state.
     const searchInput = document.getElementById('header-search-input');
     const searchInputContainer = document.getElementById('search-input-container');
     const searchToggleButton = document.getElementById('search-toggle-button');
@@ -2653,7 +2731,8 @@ setTimeout(morphText, pauseDuration);
     const accountOrdersList = document.getElementById('account-orders-list');
     const accountRefreshOrders = document.getElementById('account-refresh-orders');
 
-    // Supabase setup (replace with your project values)
+    // Supabase setup values are loaded from genki-config.js.
+    // If values are placeholders, auth features gracefully no-op in guest mode.
     const localConfig = window.__GENKI_CONFIG__ || {};
     const SUPABASE_URL = localConfig.SUPABASE_URL || 'REPLACE_WITH_SUPABASE_URL';
     const SUPABASE_ANON_KEY = localConfig.SUPABASE_ANON_KEY || 'REPLACE_WITH_SUPABASE_ANON_KEY';
@@ -2722,6 +2801,7 @@ setTimeout(morphText, pauseDuration);
       `;
     }
 
+    // Syncs nav/account/wishlist UI to current authState after any auth or wishlist change.
     function updateAuthUi() {
       const user = authState.user;
       if (authChip) authChip.textContent = getUserChipLabel(user);
@@ -2839,11 +2919,12 @@ setTimeout(morphText, pauseDuration);
       return true;
     }
 
+    // Binds one-time handlers for auth/account controls.
+    // dataset.bound guards prevent duplicate listeners across re-renders/routes.
     function bindAuthControls() {
       if (authButton && !authButton.dataset.bound) {
         authButton.addEventListener('click', async () => {
-          if (authState.user) window.location.hash = '#account';
-          else await signInWithGoogle();
+          window.location.hash = "#account";
         });
         authButton.dataset.bound = '1';
       }
@@ -2876,6 +2957,7 @@ setTimeout(morphText, pauseDuration);
       }
     }
 
+    // Bootstraps Supabase client/session tracking and initial auth UI hydration.
     async function initSupabaseWishlist() {
       bindAuthControls();
       if (!hasSupabaseConfig() || !window.supabase?.createClient) {
@@ -3034,6 +3116,7 @@ setTimeout(morphText, pauseDuration);
       renderOrdersList(orders || [], itemMap);
     }
 
+    // Account route renderer: shows gate when signed out, profile+orders when signed in.
     async function renderAccountPage() {
       if (!authState.user) {
         setAccountViewSignedIn(false);
@@ -3112,6 +3195,88 @@ setTimeout(morphText, pauseDuration);
      * @param {Array<Object>} productsToRender - The array of products to display.
      * @param {string} title - The title for the shop page.
      */
+    // Shared product helpers used by listing UI and "More Like This" scoring.
+    function getProductPriceNumber(product) {
+      const amount = parseFloat(String(product?.price || '').replace(/[^0-9.]/g, ''));
+      return Number.isFinite(amount) ? amount : 0;
+    }
+
+    function getPrimaryCategory(product) {
+      if (Array.isArray(product?.categories) && product.categories.length) return String(product.categories[0]);
+      if (product?.categories) return String(product.categories);
+      if (product?.category) return String(product.category);
+      return '';
+    }
+
+    function getDefaultOptionLabel(product) {
+      if (Array.isArray(product?.colors) && product.colors.length) {
+        return product.colors[0]?.name || '';
+      }
+      if (Array.isArray(product?.skullOptions) && product.skullOptions.length) {
+        const skull = product.skullOptions[0];
+        const hoodie = Array.isArray(skull?.hoodies) && skull.hoodies.length ? skull.hoodies[0] : null;
+        if (hoodie?.name && skull?.name) return `${skull.name} / ${hoodie.name}`;
+        return skull?.name || '';
+      }
+      return '';
+    }
+
+    // Related ranking heuristic:
+    // - strong weight for same primary category
+    // - softer weight for close price point
+    // - small bonus when badge matches
+    function getRelatedProducts(currentProduct, limit = 4) {
+      const currentCategory = getPrimaryCategory(currentProduct).toLowerCase();
+      const currentPrice = getProductPriceNumber(currentProduct);
+      return PRODUCTS
+        .filter(product => product.id !== currentProduct.id)
+        .map(product => {
+          const category = getPrimaryCategory(product).toLowerCase();
+          const price = getProductPriceNumber(product);
+          const sameCategory = currentCategory && category === currentCategory;
+          const priceDistance = Math.abs(currentPrice - price);
+          const priceScore = Math.max(0, 2 - priceDistance / 20);
+          const badgeBonus = currentProduct.badge && product.badge === currentProduct.badge ? 0.4 : 0;
+          return { product, score: (sameCategory ? 3 : 0) + priceScore + badgeBonus };
+        })
+        .sort((a, b) => b.score - a.score)
+        .slice(0, limit)
+        .map(entry => entry.product);
+    }
+
+    // Renders lightweight related cards on the product detail page.
+    function renderRelatedProducts(currentProduct) {
+      const grid = document.getElementById('related-products-grid');
+      if (!grid) return;
+      const related = getRelatedProducts(currentProduct, 4);
+      grid.innerHTML = '';
+      if (!related.length) {
+        grid.innerHTML = '<p class="col-span-full text-sm text-gray-400">No similar items found yet.</p>';
+        return;
+      }
+      related.forEach(product => {
+        const image = (Array.isArray(product.images) && product.images[0]) ? product.images[0] : 'https://placehold.co/600x600/222222/ffffff?text=Product';
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'text-left border border-white/10 hover:border-white transition bg-transparent';
+        card.innerHTML = `
+          <img src="${image}" alt="${product.title}" class="w-full h-36 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x600/222222/ffffff?text=Product'">
+          <div class="p-2">
+            <p class="text-xs text-white truncate">${product.title}</p>
+            <p class="text-xs text-gray-400">${product.price || ''}</p>
+          </div>
+        `;
+        card.addEventListener('click', () => {
+          window.location.hash = `#${product.id}`;
+        });
+        grid.appendChild(card);
+      });
+    }
+
+    // Main shop grid renderer.
+    // Also wires:
+    // - wishlist toggles per card
+    // - quick add flow (size selection + default colorway)
     function renderShopGrid(productsToRender, title = "ALL PRODUCTS") {
       const gridContainer = document.getElementById('shop-product-grid');
       const shopTitle = document.getElementById('shop-title');
@@ -3127,12 +3292,12 @@ setTimeout(morphText, pauseDuration);
       }
       productsToRender.forEach(product => {
         const colors = Array.isArray(product.colors) ? product.colors : [];
-        // Create product card HTML structure
+        const sizes = Array.isArray(product.sizes) ? product.sizes : [];
+        const defaultOptionLabel = getDefaultOptionLabel(product);
         const card = document.createElement('div');
         card.className = "bg-transparent overflow-hidden shadow-lg border border-white/10 cursor-pointer hover:border-white transition";
         card.onclick = () => { window.location.hash=`#${product.id}`; };
         
-        // Determine the main color for the card preview
         const firstColor = colors.length > 0 ? colors[0] : { name: 'Black', color: 'bg-black' };
 
         const cardHtml = `
@@ -3144,10 +3309,17 @@ setTimeout(morphText, pauseDuration);
           <div class="p-4">
             <h3 class="font-semibold text-white mb-1">${product.title}</h3>
             <p class="text-sm text-gray-400">${product.price}</p>
-            <!-- Render first available color as a dot -->
             <div class="flex justify-start space-x-2 mt-2">
               <div class="w-3 h-3 ${firstColor.color} border border-white/50" title="${firstColor.name}"></div>
               ${colors.length > 1 ? '<span class="text-xs text-gray-500"> + ' + (colors.length - 1) + ' colors</span>' : ''}
+            </div>
+            <div data-quick-controls class="mt-3 flex gap-2">
+              ${sizes.length ? `
+                <select data-quick-size class="flex-1 bg-neutral-900 border border-white/15 p-2 text-white text-xs focus:outline-none focus:border-white/40">
+                  ${sizes.map(size => `<option value="${size}">${size}</option>`).join('')}
+                </select>
+              ` : ''}
+              <button type="button" data-quick-add class="px-3 py-2 border border-white/25 text-white text-xs uppercase tracking-[0.15em] hover:border-white transition">Quick Add</button>
             </div>
           </div>
         `;
@@ -3161,11 +3333,34 @@ setTimeout(morphText, pauseDuration);
             if (changed) renderShopGrid(productsToRender, title);
           });
         }
+        const quickControls = card.querySelector('[data-quick-controls]');
+        quickControls?.addEventListener('click', (event) => {
+          event.stopPropagation();
+        });
+        const quickAddButton = card.querySelector('[data-quick-add]');
+        quickAddButton?.addEventListener('click', (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          if (!window.Cart || typeof window.Cart.add !== 'function') return;
+          const sizeSelect = card.querySelector('[data-quick-size]');
+          const selectedSize = sizeSelect ? sizeSelect.value : undefined;
+          const priceCents = Math.round(getProductPriceNumber(product) * 100) || 0;
+          Cart.add({
+            id: product.id,
+            title: product.title,
+            priceCents,
+            qty: 1,
+            color: defaultOptionLabel || undefined,
+            size: selectedSize || undefined,
+            image: (Array.isArray(product.images) && product.images[0]) ? product.images[0] : undefined
+          });
+          Cart.open();
+        });
         gridContainer.appendChild(card);
-        
       });
     }
 
+    // Route renderer for wishlist page (auth-gated).
     function renderWishlistPage() {
       const gridContainer = document.getElementById('wishlist-product-grid');
       if (!gridContainer) return;
@@ -3241,6 +3436,8 @@ setTimeout(morphText, pauseDuration);
       'genki-america-snapback'
     ];
     const NEW_ARRIVALS_LIMIT = 8;
+    // Home "FEATURED" strip selector.
+    // Uses FEATURED_RULE + fallback IDs to decide which products appear.
     function getFeaturedProducts(limit = 5) {
       const rule = String(FEATURED_RULE || '').toLowerCase();
       const typePatterns = {
@@ -3299,6 +3496,7 @@ setTimeout(morphText, pauseDuration);
       }
       return filtered.slice(0, limit);
     }
+    // Populates homepage featured carousel/cards from PRODUCTS.
     function renderNewArrivalsFromProducts() {
       const container = document.getElementById('new-items-carousel');
       if (!container) return;
@@ -3322,7 +3520,7 @@ setTimeout(morphText, pauseDuration);
         card.innerHTML = `
           <div class="relative overflow-hidden">
             <img src="${image}" alt="${product.title}" class="w-full h-64 object-cover transition duration-300 hover:opacity-80" onerror="this.onerror=null;this.src='https://placehold.co/600x600/222222/ffffff?text=Product'">
-            <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">NEW</span>
+            <span class="absolute top-3 right-3 bg-blue-900 text-white text-xs px-2 py-1 font-medium">FEATURED</span>
           </div>
           <div class="p-4 text-center">
             <h3 class="text-lg font-semibold text-white mb-1">${product.title}</h3>
@@ -3333,6 +3531,7 @@ setTimeout(morphText, pauseDuration);
         container.appendChild(card);
       });
     }
+    // Populates the dedicated "new arrivals" page from the head of PRODUCTS.
     function renderShopNewFromProducts() {
       const grid = document.getElementById('new-page-grid');
       if (!grid) return;
@@ -3363,6 +3562,8 @@ setTimeout(morphText, pauseDuration);
       return PRODUCTS.find(p => p.id === id);
     }
 
+    // Product detail renderer.
+    // Handles variant selectors, gallery switching, add-to-cart payload, and related items.
     function renderProduct(key) {
       const data = getProductDetails(key);
       if (!data) return; // no-op if unknown
@@ -3695,6 +3896,7 @@ setTimeout(morphText, pauseDuration);
         };
       }
       updateProductWishlistButton();
+      renderRelatedProducts(data);
     }
 
     // 6. Lookbook Logic
@@ -3774,7 +3976,8 @@ setTimeout(morphText, pauseDuration);
       }
     }
     
-    // 7. Client-Side Hash Router Logic (Updated to handle header state and logo clickability)
+    // 7. Client-Side Hash Router
+    // Determines which "page-content" block is visible for the current hash.
     const pageMap = {
       '#home': 'home-page',
       '': 'home-page', 
@@ -3787,7 +3990,6 @@ setTimeout(morphText, pauseDuration);
       '#contact': 'contact-page',
       '#cancel': 'cancel-page',
       '#lookbook-main': 'lookbook-main-page',
-      '#checkout': 'checkout-page',
       '#checkout-success': 'checkout-success-page',
       '#size-guide': 'size-guide-page',
     };
@@ -3861,11 +4063,26 @@ setTimeout(morphText, pauseDuration);
       return sorted;
     }
 
+    // Core SPA route handler.
+    // Responsibilities:
+    // - resolve hash -> page
+    // - apply shop filtering/search/sort
+    // - render route-specific content
+    // - manage header behavior and checkout modal edge-cases
     function route() {
       const fullHash = window.location.hash || '#home';
       const hashWithoutQuery = fullHash.split('?')[0];
       const hashParts = hashWithoutQuery.split('/');
       const baseHash = hashParts[0];
+      // '#checkout' is now modal-driven. Intercept hash and open modal instead of routing.
+      if (baseHash === '#checkout') {
+        if (typeof window.openCheckoutModal === 'function') window.openCheckoutModal();
+        const fallbackHash = window.__GENKI_LAST_ROUTE_HASH || '#home';
+        window.location.hash = fallbackHash;
+        return;
+      }
+      window.closeCheckoutModal?.();
+      window.__GENKI_LAST_ROUTE_HASH = baseHash || '#home';
       const categoriesSlug = hashParts[1];
       const urlParams = new URLSearchParams(fullHash.split('?')[1] || '');
       let pageId = pageMap[baseHash] || 'home-page';
@@ -4042,10 +4259,33 @@ setTimeout(morphText, pauseDuration);
     initSupabaseWishlist();
    };
 
+   // Checkout modal controls (open/close via button, backdrop, and Escape key).
+   const checkoutModal = document.getElementById('checkout-page');
+   const checkoutModalPanel = document.getElementById('checkout-modal-panel');
+   const checkoutCloseButton = document.getElementById('checkout-close');
+   const handleCheckoutEscape = (event) => {
+    if (event.key === 'Escape') window.closeCheckoutModal();
+   };
+   window.openCheckoutModal = function() {
+    if (!checkoutModal) return;
+    checkoutModal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', handleCheckoutEscape);
+   };
+   window.closeCheckoutModal = function() {
+    if (!checkoutModal) return;
+    checkoutModal.classList.add('hidden');
+    document.body.style.overflow = '';
+    document.removeEventListener('keydown', handleCheckoutEscape);
+   };
+   checkoutCloseButton?.addEventListener('click', window.closeCheckoutModal);
+   checkoutModal?.addEventListener('click', (event) => {
+    if (event.target === checkoutModal) window.closeCheckoutModal();
+   });
+   checkoutModalPanel?.addEventListener('click', (event) => event.stopPropagation());
+
 
    </script>
-   <!-- Square Web Payments SDK -->
-   <script src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
 </body>
 </html>
 
