@@ -714,7 +714,7 @@
                 <input id="sq-phone" type="tel" placeholder="Phone number" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
               </div>
               <div class="space-y-2 border border-white/10 p-3">
-                <p class="text-xs uppercase tracking-[0.3em] text-white/60">Card details (required for Pay Now)</p>
+                <p class="text-xs uppercase tracking-[0.3em] text-white/60">Order request details (optional)</p>
                
                 <input id="sq-cardholder-name" type="text" placeholder="Cardholder name" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
                 <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -726,8 +726,9 @@
               <textarea id="sq-notes" type="text" placeholder="Extra Notes (optional)" class="w-full bg-neutral-800 border border-white/10 p-2 text-white"></textarea>
               <button id="square-pay-later" class="w-full py-3 bg-white text-black font-bold tracking-widest hover:bg-gray-200">Submit Order</button>
 
-              <div id="square-card-container" class="bg-neutral-800 border border-white/10 p-3 rounded"></div>
+              <p class="text-xs uppercase tracking-[0.3em] text-white/60">Card details (required for Pay Now)</p>
               <button id="square-pay" class="w-full py-3 bg-white text-black font-bold tracking-widest hover:bg-gray-200">Pay Now</button>
+              <div id="square-card-container" class="bg-neutral-800 border border-white/10 p-3 rounded"></div>
               <p class="text-xs text-gray-500">Pay Now uses Square's secure card form. Use Submit Order if you want manual follow-up.</p>
 
               <p id="square-error" class="text-sm text-red-400 hidden"></p>
@@ -1429,35 +1430,7 @@
       throw new Error('Square app/location IDs are not configured.');
      }
      squarePayments = Square.payments(SQUARE_APP_ID, SQUARE_LOCATION_ID);
-     squareCard = await squarePayments.card({
-      style: {
-       '.input-container': {
-        backgroundColor: '#262626',
-        borderColor: 'rgba(255,255,255,0.10)',
-        borderRadius: '0px',
-        borderWidth: '1px'
-       },
-       '.input-container.is-focus': {
-        borderColor: 'rgba(255,255,255,0.40)'
-       },
-       '.input-container.is-error': {
-        borderColor: 'rgba(248,113,113,0.9)'
-       },
-       '.input': {
-        color: '#ffffff',
-        fontFamily: 'Inter, sans-serif',
-        fontSize: '14px',
-        lineHeight: '1.25rem'
-       },
-       '.input::placeholder': {
-        color: '#9ca3af'
-       },
-       '.message-text': {
-        color: '#f87171',
-        fontSize: '12px'
-       }
-      }
-     });
+     squareCard = await squarePayments.card();
      await squareCard.attach('#square-card-container');
     };
 
