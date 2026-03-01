@@ -715,13 +715,16 @@
               </div>
               <div class="space-y-2 border border-white/10 p-3">
                 <p class="text-xs uppercase tracking-[0.3em] text-white/60">Card details (required for Pay Now)</p>
-              <button id="square-pay" class="w-full py-3 bg-white text-black font-bold tracking-widest hover:bg-gray-200">Pay Now</button>
-              <div id="square-card-container" class="bg-neutral-800 border border-white/10 p-3 rounded"></div>
-              <p class="text-xs text-gray-500">Pay Now uses Square's secure card form. Use Submit Order if you want manual follow-up.</p>
-                </div>
+                <input id="sq-cardholder-name" type="text" placeholder="Cardholder name" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
+                <input id="sq-billing-zip" type="text" placeholder="Billing ZIP" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
+                <div id="square-card-container" class="bg-neutral-800 border border-white/10 p-3 rounded"></div>
               </div>
               <textarea id="sq-notes" type="text" placeholder="Extra Notes (optional)" class="w-full bg-neutral-800 border border-white/10 p-2 text-white"></textarea>
-              <button id="square-pay-later" class="w-full py-3 bg-white text-black font-bold tracking-widest hover:bg-gray-200">Submit Order</button>
+              <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <button id="square-pay-later" class="w-full py-3 border border-white/20 text-white font-bold tracking-widest hover:border-white transition">Submit Request (No Payment, No Fulfillment)</button>
+                <button id="square-pay" class="w-full py-3 bg-white text-black font-bold tracking-widest hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed">Pay Now</button>
+              </div>
+              <p class="text-xs text-gray-500">Pay Now captures payment securely. Submit Request does not place a paid order.</p>
 
               
 
@@ -1009,6 +1012,7 @@
    const state = { items: [] };
    let squarePayments = null;
    let squareCard = null;
+   let refreshPayNowButtonState = () => {};
    const $ = sel => document.querySelector(sel);
    const $$ = sel => Array.from(document.querySelectorAll(sel));
 
@@ -1240,6 +1244,7 @@
      checkoutBtn.classList.toggle('opacity-50', !state.items.length);
      checkoutBtn.classList.toggle('cursor-not-allowed', !state.items.length);
     }
+    refreshPayNowButtonState();
    }
 
    function nudgeCartIcon(){
@@ -1313,6 +1318,43 @@
       cancelSubmitStatus.classList.toggle('text-red-400', !!(msg && isError));
       cancelSubmitStatus.classList.toggle('text-green-400', !!(msg && !isError));
     };
+    const applyCheckoutSuccessMessage = (order) => {
+      const successTitle = document.getElementById('checkout-success-title');
+      const successCopy = document.getElementById('checkout-success-copy');
+      if (order?.paymentStatus === 'paid') {
+        if(successTitle) successTitle.textContent = 'Payment received';
+        if(successCopy) successCopy.textContent = "Your payment was successful. We'll process your order shortly.";
+        return;
+      }
+      if (order?.paymentStatus === 'pending') {
+        if(successTitle) successTitle.textContent = 'Order request received';
+        if(successCopy) successCopy.textContent = 'No payment was captured. We only fulfill paid orders.';
+        return;
+      }
+      if(successTitle) successTitle.textContent = 'Order received';
+      if(successCopy) successCopy.textContent = "We'll process your order shortly. Check your email for the receipt.";
+    };
+    const isPayNowReady = () => {
+      if (isTestMode()) return false;
+      if (!state.items.length) return false;
+      const name = sqNameInput?.value.trim() || '';
+      const email = sqEmailInput?.value.trim() || '';
+      const address1 = sqAddressInput?.value.trim() || '';
+      const city = sqCityInput?.value.trim() || '';
+      const stateCode = sqStateInput?.value.trim() || '';
+      const zip = sqZipInput?.value.trim() || '';
+      const cardholderName = sqCardholderNameInput?.value.trim() || '';
+      const billingZip = sqBillingZipInput?.value.trim() || '';
+      return !!(name && email && address1 && city && stateCode && zip && cardholderName && billingZip);
+    };
+    const updatePayNowState = () => {
+      if(!squarePay) return;
+      const enabled = isPayNowReady();
+      squarePay.disabled = !enabled;
+      squarePay.classList.toggle('opacity-50', !enabled);
+      squarePay.classList.toggle('cursor-not-allowed', !enabled);
+    };
+    refreshPayNowButtonState = updatePayNowState;
     const hydrateCancelForm = () => {
       const last = loadLastOrder();
       const currentCode = (document.getElementById('checkout-cancel-code')?.textContent || '').trim();
@@ -1333,6 +1375,9 @@
       }
       if(cancelPageCodeInput && last?.cancelCode){
         cancelPageCodeInput.value = String(last.cancelCode);
+      }
+      if(window.location.hash === '#checkout-success'){
+        applyCheckoutSuccessMessage(last);
       }
     };
     const handleCancelSubmit = async ({ email, cancelCode, reason, setStatus }) => {
@@ -1488,10 +1533,11 @@
         setSquareError('Could not submit order request. Please try again.');
         return;
        }
-       saveLastOrder({ cancelCode, email, createdAt: Date.now() });
+       saveLastOrder({ cancelCode, email, createdAt: Date.now(), paymentStatus: 'pending' });
        state.items = [];
        save(); render();
        setCancelDetails(cancelCode);
+       applyCheckoutSuccessMessage({ paymentStatus: 'pending' });
        window.closeCheckoutModal?.();
        window.location.hash = '#checkout-success';
        return;
@@ -1514,17 +1560,9 @@
         : 'Payment failed. Please try again.';
        throw new Error(data.error || fallback);
       }
-      const successTitle = document.getElementById('checkout-success-title');
-      const successCopy = document.getElementById('checkout-success-copy');
-      if(isTestMode()){
-       if(successTitle) successTitle.textContent = 'Thanks for your interest';
-       if(successCopy) successCopy.textContent = "We got your request. We'll reach out if anything is needed.";
-      }else{
-       if(successTitle) successTitle.textContent = 'Order received';
-       if(successCopy) successCopy.textContent = "We'll process your order shortly. Check your email for the receipt.";
-      }
+      applyCheckoutSuccessMessage({ paymentStatus: 'paid' });
       setCancelDetails(cancelCode);
-      saveLastOrder({ cancelCode, email, createdAt: Date.now() });
+      saveLastOrder({ cancelCode, email, createdAt: Date.now(), paymentStatus: 'paid' });
       state.items = [];
       save(); render();
       window.closeCheckoutModal?.();
@@ -1532,7 +1570,8 @@
      }catch(err){
       setSquareError(err.message || 'Payment failed.');
      }finally{
-      if(squarePay){ squarePay.disabled = false; squarePay.textContent = 'Pay Now'; }
+      if(squarePay){ squarePay.textContent = 'Pay Now'; }
+      updatePayNowState();
      }
     };
 
@@ -1559,11 +1598,8 @@
       setSquareError('Could not submit order request. Please try again.');
       return;
      }
-     saveLastOrder({ cancelCode, email, createdAt: Date.now() });
-     const successTitle = document.getElementById('checkout-success-title');
-     const successCopy = document.getElementById('checkout-success-copy');
-     if(successTitle) successTitle.textContent = 'Order received';
-     if(successCopy) successCopy.textContent = 'We got your order request. Payment is pending.';
+     saveLastOrder({ cancelCode, email, createdAt: Date.now(), paymentStatus: 'pending' });
+     applyCheckoutSuccessMessage({ paymentStatus: 'pending' });
      setCancelDetails(cancelCode);
      state.items = [];
      save(); render();
@@ -1604,12 +1640,24 @@
         }
       });
     });
+    [
+      sqNameInput,
+      sqEmailInput,
+      sqAddressInput,
+      sqCityInput,
+      sqStateInput,
+      sqZipInput,
+      sqCardholderNameInput,
+      sqBillingZipInput
+    ].forEach((el) => el?.addEventListener('input', updatePayNowState));
     hydrateCancelForm();
     window.addEventListener('hashchange', () => {
       if(window.location.hash === '#checkout-success'){
         hydrateCancelForm();
+        applyCheckoutSuccessMessage(loadLastOrder());
       }
     });
+    updatePayNowState();
     prepareSquareUi();
     squarePay?.addEventListener('click', handleSquarePay);
     squarePayLater?.addEventListener('click', handlePayLater);
@@ -1624,11 +1672,19 @@
    wireBasics();
    render();
 
-   if(isTestMode() && window.location.hash === '#checkout-success'){
-    const successTitle = document.getElementById('checkout-success-title');
-    const successCopy = document.getElementById('checkout-success-copy');
-    if(successTitle) successTitle.textContent = 'Thanks for your interest';
-    if(successCopy) successCopy.textContent = "We got your request. We'll reach out if anything is needed.";
+   if(window.location.hash === '#checkout-success'){
+    const last = loadLastOrder();
+    if(last?.paymentStatus === 'paid'){
+      const successTitle = document.getElementById('checkout-success-title');
+      const successCopy = document.getElementById('checkout-success-copy');
+      if(successTitle) successTitle.textContent = 'Payment received';
+      if(successCopy) successCopy.textContent = "Your payment was successful. We'll process your order shortly.";
+    }else if(last?.paymentStatus === 'pending'){
+      const successTitle = document.getElementById('checkout-success-title');
+      const successCopy = document.getElementById('checkout-success-copy');
+      if(successTitle) successTitle.textContent = 'Order request received';
+      if(successCopy) successCopy.textContent = 'No payment was captured. We only fulfill paid orders.';
+    }
    }
   })();
   </script>
