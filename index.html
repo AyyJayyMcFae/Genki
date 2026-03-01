@@ -714,7 +714,7 @@
                 <input id="sq-phone" type="tel" placeholder="Phone number" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
               </div>
               <div class="space-y-2 border border-white/10 p-3">
-                <p class="text-xs uppercase tracking-[0.3em] text-white/60"> Payment Details (optional)</p>
+                <p class="text-xs uppercase tracking-[0.3em] text-white/60">Order request details (optional)</p>
                
                 <input id="sq-cardholder-name" type="text" placeholder="Cardholder name" class="w-full bg-neutral-800 border border-white/10 p-2 text-white" />
                 <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -725,13 +725,12 @@
               </div>
               <textarea id="sq-notes" type="text" placeholder="Extra Notes (optional)" class="w-full bg-neutral-800 border border-white/10 p-2 text-white"></textarea>
               <button id="square-pay-later" class="w-full py-3 bg-white text-black font-bold tracking-widest hover:bg-gray-200">Submit Order</button>
-              
-             <!-- <p class="text-xs uppercase tracking-[0.3em] text-white/60">Card details (required for Pay Now)</p>
+
+              <p class="text-xs uppercase tracking-[0.3em] text-white/60">Card details (required for Pay Now)</p>
               <button id="square-pay" class="w-full py-3 bg-white text-black font-bold tracking-widest hover:bg-gray-200">Pay Now</button>
               <div id="square-card-container" class="bg-neutral-800 border border-white/10 p-3 rounded"></div>
-              <p class="text-xs text-gray-500">Payment is optional, but appreciated. You can submit your order now and pay later.</p> --> 
-              
-              
+              <p class="text-xs text-gray-500">Pay Now uses Square's secure card form. Use Submit Order if you want manual follow-up.</p>
+
               <p id="square-error" class="text-sm text-red-400 hidden"></p>
             </div>
           </section>
@@ -1404,6 +1403,7 @@
     };
 
     const prepareSquareUi = async () => {
+     if(!squareCardContainer || !squarePay) return;
      squareCardContainer?.classList.remove('hidden');
      squareTestNote?.classList.toggle('hidden', !isTestMode());
      if(!isTestMode()){
@@ -1419,6 +1419,9 @@
 
     const ensureSquareCard = async () => {
      if(squareCard) return;
+     if(!squareCardContainer){
+      throw new Error('Square card container is missing from checkout UI.');
+     }
      await loadSquareSdk();
      if(!window.Square){
       throw new Error('Square.js not loaded. Ensure the Square script is included.');
